@@ -11,73 +11,74 @@
       font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
       background: #fff; color: #111; font-size: 13px; line-height: 1.4;
     }
-    .page { max-width: 1080px; margin: 0 auto; padding: 20px 24px; }
+    .page { max-width: 1600px; margin: 0 auto; padding: 10px 20px; }
 
     .hdr {
       display: flex; align-items: flex-start; justify-content: space-between;
-      padding-bottom: 10px; border-bottom: 1.5px solid #111; margin-bottom: 10px;
+      padding-bottom: 8px; border-bottom: 1.5px solid #111; margin-bottom: 8px;
     }
-    .logo { font-size: 20px; font-weight: 900; letter-spacing: -0.5px; }
+    .logo { font-size: 18px; font-weight: 900; letter-spacing: -0.5px; }
     .hdr-sub { font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: #777; margin-top: 2px; }
     .hdr-right { text-align: right; }
-    .hdr-period { font-size: 13px; font-weight: 700; }
+    .hdr-period { font-size: 12px; font-weight: 700; }
     .hdr-date { font-size: 10px; color: #999; letter-spacing: 0.5px; text-transform: uppercase; margin-top: 1px; }
 
-    .alert { background: #f7f7f7; border-left: 2.5px solid #111; padding: 5px 10px; font-size: 11px; color: #555; margin-bottom: 10px; }
+    .alert { background: #f7f7f7; border-left: 2.5px solid #111; padding: 4px 10px; font-size: 10.5px; color: #555; margin-bottom: 8px; }
     .alert strong { color: #111; }
 
-    .kpis { display: grid; grid-template-columns: repeat(5, 1fr); border: 1px solid #e5e5e5; border-radius: 4px; overflow: hidden; margin-bottom: 10px; }
-    .kpi { padding: 10px 14px; border-right: 1px solid #e5e5e5; }
+    .kpis { display: grid; grid-template-columns: repeat(5, 1fr); border: 1px solid #e5e5e5; border-radius: 4px; overflow: hidden; margin-bottom: 8px; }
+    .kpi { padding: 8px 12px; border-right: 1px solid #e5e5e5; }
     .kpi:last-child { border-right: none; }
-    .kpi-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #999; margin-bottom: 4px; }
-    .kpi-val { font-size: 22px; font-weight: 800; letter-spacing: -1px; line-height: 1; }
-    .kpi-note { font-size: 10.5px; color: #999; margin-top: 2px; }
+    .kpi-label { font-size: 9.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #999; margin-bottom: 3px; }
+    .kpi-val { font-size: 20px; font-weight: 800; letter-spacing: -1px; line-height: 1; }
+    .kpi-note { font-size: 10px; color: #999; margin-top: 2px; }
 
-    .mid { display: grid; grid-template-columns: 1.7fr 1fr; gap: 10px; margin-bottom: 10px; align-items: start; }
+    .main { display: grid; grid-template-columns: 1fr 1.6fr 1fr; gap: 7px; margin-bottom: 7px; align-items: start; }
+    .main-left { display: flex; flex-direction: column; gap: 7px; }
+    .main-center { display: flex; flex-direction: column; gap: 7px; }
+    .main-right { display: flex; flex-direction: column; gap: 7px; }
 
-    .card { border: 1px solid #e5e5e5; border-radius: 4px; padding: 11px 14px; }
-    .card-hdr { display: flex; align-items: baseline; justify-content: space-between; padding-bottom: 7px; border-bottom: 1px solid #e5e5e5; margin-bottom: 10px; }
-    .card-title { font-size: 13px; font-weight: 400; }
+    .card { border: 1px solid #e5e5e5; border-radius: 4px; padding: 9px 12px; }
+    .card-hdr { display: flex; align-items: baseline; justify-content: space-between; padding-bottom: 6px; border-bottom: 1px solid #e5e5e5; margin-bottom: 8px; }
+    .card-title { font-size: 12px; font-weight: 400; }
     .card-title em { font-style: italic; }
-    .card-meta { font-size: 10px; font-weight: 700; letter-spacing: 0.5px; color: #999; }
+    .card-meta { font-size: 9.5px; font-weight: 700; letter-spacing: 0.5px; color: #999; }
 
-    .f-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-    .f-label { font-size: 11px; color: #777; width: 120px; flex-shrink: 0; }
-    .f-wrap { flex: 1; background: #f0f0f0; border-radius: 2px; height: 8px; overflow: hidden; }
-    .f-bar { height: 8px; border-radius: 2px; }
-    .f-cnt { width: 22px; text-align: right; font-size: 11px; font-weight: 700; flex-shrink: 0; }
-    .f-val { width: 65px; text-align: right; font-size: 11px; color: #999; flex-shrink: 0; }
+    .f-row { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; }
+    .f-label { font-size: 10px; color: #777; width: 110px; flex-shrink: 0; }
+    .f-wrap { flex: 1; background: #f0f0f0; border-radius: 2px; height: 6px; overflow: hidden; }
+    .f-bar { height: 6px; border-radius: 2px; }
+    .f-cnt { width: 20px; text-align: right; font-size: 10px; font-weight: 700; flex-shrink: 0; }
+    .f-val { width: 55px; text-align: right; font-size: 10px; color: #999; flex-shrink: 0; }
 
-    .bu { margin-bottom: 8px; }
-    .bu-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 3px; }
-    .bu-name { font-size: 12px; font-weight: 700; }
-    .bu-val { font-size: 13px; font-weight: 800; letter-spacing: -0.3px; }
+    .bu { margin-bottom: 6px; }
+    .bu-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 2px; }
+    .bu-name { font-size: 11px; font-weight: 700; }
+    .bu-val { font-size: 12px; font-weight: 800; letter-spacing: -0.3px; }
     .bu-wrap { background: #f0f0f0; height: 4px; border-radius: 2px; overflow: hidden; }
     .bu-fill { height: 4px; border-radius: 2px; }
-    .bu-sub { font-size: 10px; color: #999; font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase; margin-top: 2px; }
-    .bu-dist { margin-top: 8px; padding-top: 8px; border-top: 1px solid #e5e5e5; }
-    .bu-dist-lbl { font-size: 10px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase; color: #999; margin-bottom: 5px; }
-    .bu-note { font-size: 11px; color: #444; margin-bottom: 4px; padding-left: 7px; border-left: 2px solid #ddd; line-height: 1.4; }
+    .bu-sub { font-size: 9.5px; color: #999; font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase; margin-top: 1px; }
+    .bu-dist { margin-top: 6px; padding-top: 6px; border-top: 1px solid #e5e5e5; }
+    .bu-dist-lbl { font-size: 9.5px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase; color: #999; margin-bottom: 4px; }
+    .bu-note { font-size: 10px; color: #444; margin-bottom: 3px; padding-left: 6px; border-left: 2px solid #ddd; line-height: 1.4; }
 
-    .top10 { border: 1px solid #e5e5e5; border-radius: 4px; padding: 11px 14px; margin-bottom: 10px; }
-    table { width: 100%; border-collapse: collapse; }
-    th { font-size: 10px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase; color: #999; text-align: left; padding: 4px 8px; border-bottom: 1px solid #e5e5e5; }
-    td { padding: 6px 8px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+    table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+    th { font-size: 9.5px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase; color: #999; text-align: left; padding: 3px 5px; border-bottom: 1px solid #e5e5e5; white-space: nowrap; overflow: hidden; }
+    td { padding: 4px 5px; border-bottom: 0.5px solid #f5f5f5; vertical-align: middle; }
     tr:last-child td { border-bottom: none; }
-    .rn { color: #ccc; font-size: 11px; width: 22px; }
-    .deal-name { font-weight: 600; font-size: 12px; }
-    .pill { display: inline-block; border-radius: 3px; padding: 2px 6px; font-size: 9.5px; font-weight: 700; letter-spacing: 0.3px; text-transform: uppercase; }
-    .val-r { text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; font-size: 12px; }
+    .rn { color: #ccc; font-size: 10px; width: 18px; }
+    .deal-name { font-weight: 600; font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .deal-co { font-size: 9.5px; color: #aaa; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .pill { display: inline-block; border-radius: 3px; padding: 1px 4px; font-size: 9px; font-weight: 700; letter-spacing: 0.3px; text-transform: uppercase; white-space: nowrap; }
+    .val-r { text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; font-size: 11px; }
 
-    .bot { display: grid; grid-template-columns: 1fr 1fr 1.2fr; gap: 10px; align-items: start; }
-
-    .ytd-won { border: 1px solid #bbf7d0; border-radius: 4px; padding: 7px 10px; margin-bottom: 6px; }
-    .ytd-lost { border: 1px solid #fecaca; border-radius: 4px; padding: 7px 10px; margin-bottom: 8px; }
-    .ytd-lbl { font-size: 10px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase; color: #888; }
-    .ytd-v { font-size: 19px; font-weight: 800; letter-spacing: -0.5px; margin: 2px 0 2px; }
-    .ytd-s { font-size: 10.5px; color: #888; }
-    .conv-big { font-size: 26px; font-weight: 900; text-align: center; margin-top: 8px; }
-    .conv-lbl { font-size: 10px; text-align: center; color: #999; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+    .ytd-won { border: 1px solid #bbf7d0; border-radius: 4px; padding: 6px 8px; margin-bottom: 5px; }
+    .ytd-lost { border: 1px solid #fecaca; border-radius: 4px; padding: 6px 8px; margin-bottom: 6px; }
+    .ytd-lbl { font-size: 9.5px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase; color: #888; }
+    .ytd-v { font-size: 17px; font-weight: 800; letter-spacing: -0.5px; margin: 1px 0; }
+    .ytd-s { font-size: 10px; color: #888; }
+    .conv-big { font-size: 22px; font-weight: 900; text-align: center; margin-top: 6px; }
+    .conv-lbl { font-size: 9.5px; text-align: center; color: #999; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
 
     .ag-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
     .ag-label { font-size: 11px; color: #777; width: 105px; flex-shrink: 0; }
@@ -89,16 +90,16 @@
     .cycle-v { font-size: 19px; font-weight: 800; }
     .cycle-l { font-size: 10px; color: #999; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase; }
 
-    .hz { padding: 7px 9px; border-left: 2.5px solid; margin-bottom: 6px; }
-    .hz-icon { font-size: 11px; font-weight: 700; margin-bottom: 1px; }
-    .hz-title { font-size: 11.5px; font-weight: 700; margin-bottom: 2px; }
-    .hz-text { font-size: 10.5px; color: #555; line-height: 1.45; }
+    .hz { padding: 5px 8px; border-left: 2.5px solid; margin-bottom: 5px; }
+    .hz-icon { font-size: 10px; font-weight: 700; margin-bottom: 1px; }
+    .hz-title { font-size: 10.5px; font-weight: 700; margin-bottom: 2px; }
+    .hz-text { font-size: 9.5px; color: #555; line-height: 1.4; }
 
-    .wow { display: grid; grid-template-columns: repeat(5, 1fr); border: 1px solid #e5e5e5; border-radius: 4px; overflow: hidden; margin-bottom: 10px; background: #fafafa; }
-    .wow-item { padding: 8px 14px; border-right: 1px solid #e5e5e5; }
+    .wow { display: grid; grid-template-columns: repeat(5, 1fr); border: 1px solid #e5e5e5; border-radius: 4px; overflow: hidden; margin-bottom: 8px; background: #fafafa; }
+    .wow-item { padding: 7px 12px; border-right: 1px solid #e5e5e5; }
     .wow-item:last-child { border-right: none; }
-    .wow-label { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: #999; margin-bottom: 4px; }
-    .wow-val { font-size: 18px; font-weight: 800; letter-spacing: -0.5px; line-height: 1; }
+    .wow-label { font-size: 9.5px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: #999; margin-bottom: 3px; }
+    .wow-val { font-size: 16px; font-weight: 800; letter-spacing: -0.5px; line-height: 1; }
     .wow-sub { font-size: 10px; color: #999; margin-top: 2px; }
     .wow-delta { display: inline-flex; align-items: center; gap: 3px; font-size: 11px; font-weight: 700; border-radius: 3px; padding: 1px 5px; }
     .wow-delta.pos { background: #dcfce7; color: #15803d; }
@@ -111,16 +112,16 @@
     .legend { display: flex; align-items: center; gap: 12px; }
     .leg-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; margin-right: 4px; }
 
-    .won-bu { margin-top: 10px; padding-top: 8px; border-top: 1px solid #e5e5e5; }
-    .won-bu-lbl { font-size: 10px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase; color: #999; margin-bottom: 6px; }
-    .won-bu-row { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; }
-    .won-bu-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-    .won-bu-name { font-size: 11.5px; font-weight: 600; flex: 1; }
-    .won-bu-val { font-size: 11.5px; font-weight: 800; }
-    .won-bu-cnt { font-size: 10.5px; color: #999; width: 52px; text-align: right; }
-    .coverage { margin-top: 8px; padding-top: 8px; border-top: 1px solid #e5e5e5; display: flex; align-items: baseline; gap: 6px; }
-    .coverage-val { font-size: 18px; font-weight: 800; color: #067df7; }
-    .coverage-lbl { font-size: 10px; color: #999; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
+    .won-bu { margin-top: 8px; padding-top: 6px; border-top: 1px solid #e5e5e5; }
+    .won-bu-lbl { font-size: 9.5px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase; color: #999; margin-bottom: 5px; }
+    .won-bu-row { display: flex; align-items: center; gap: 5px; margin-bottom: 4px; }
+    .won-bu-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .won-bu-name { font-size: 11px; font-weight: 600; flex: 1; }
+    .won-bu-val { font-size: 11px; font-weight: 800; }
+    .won-bu-cnt { font-size: 10px; color: #999; width: 48px; text-align: right; }
+    .coverage { margin-top: 6px; padding-top: 6px; border-top: 1px solid #e5e5e5; display: flex; align-items: baseline; gap: 6px; }
+    .coverage-val { font-size: 16px; font-weight: 800; color: #067df7; }
+    .coverage-lbl { font-size: 9.5px; color: #999; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
 
     .risk-section { margin-top: 10px; padding-top: 8px; border-top: 1px solid #e5e5e5; }
     .risk-lbl { font-size: 10px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase; color: #999; margin-bottom: 6px; }
@@ -421,177 +422,149 @@ function render() {
       </div>
     </div>
 
-    <div class="mid">
-      <div class="card">
-        <div class="card-hdr">
-          <div class="card-title"><em>Embudo</em> de conversión</div>
-          <div class="card-meta">${DEALS.length} DEALS · ${fmtShort(totalVal)}</div>
+    <div class="main">
+
+      <div class="main-left">
+        <div class="card">
+          <div class="card-hdr">
+            <div class="card-title"><em>Embudo</em> de conversión</div>
+            <div class="card-meta">${DEALS.length} DEALS · ${fmtShort(totalVal)}</div>
+          </div>
+          ${FUNNEL_STAGES.map(s => {
+            const sd = byStage[s]||{count:0,value:0};
+            const pct = sd.value>0 ? Math.max(2,(sd.value/maxFunnelVal)*100) : (sd.count>0?3:1);
+            return `<div class="f-row">
+              <div class="f-label">${s}</div>
+              <div class="f-wrap"><div class="f-bar" style="width:${pct}%;background:${STAGE_BAR[s]||'#ccc'}"></div></div>
+              <div class="f-cnt">${sd.count}</div>
+              <div class="f-val">${sd.value>0 ? fmtShort(sd.value) : '—'}</div>
+            </div>`;
+          }).join('')}
         </div>
-        ${FUNNEL_STAGES.map(s => {
-          const sd = byStage[s]||{count:0,value:0};
-          const pct = sd.value>0 ? Math.max(2,(sd.value/maxFunnelVal)*100) : (sd.count>0?3:1);
-          return `<div class="f-row">
-            <div class="f-label">${s}</div>
-            <div class="f-wrap"><div class="f-bar" style="width:${pct}%;background:${STAGE_BAR[s]||'#ccc'}"></div></div>
-            <div class="f-cnt">${sd.count}</div>
-            <div class="f-val">${sd.value>0 ? fmtShort(sd.value) : '—'}</div>
-          </div>`;
-        }).join('')}
+
+        <div class="card">
+          <div class="card-hdr">
+            <div class="card-title"><em>Unidades</em> de negocio</div>
+            <div class="card-meta">Por valor de pipe</div>
+          </div>
+          ${buList.map(([bu, d]) => {
+            const pct = totalVal>0 ? Math.round(d.value/totalVal*100) : 0;
+            const col = BU_COLOR[bu]||'#aaa';
+            return `<div class="bu">
+              <div class="bu-header">
+                <div class="bu-name">${bu}</div>
+                <div class="bu-val" style="color:${col}">${fmtShort(d.value)}</div>
+              </div>
+              <div class="bu-wrap"><div class="bu-fill" style="width:${Math.max(2,(d.value/maxBUVal)*100)}%;background:${col}"></div></div>
+              <div class="bu-sub">${d.count} DEAL${d.count!==1?'S':''} · ${pct}% DEL PIPE</div>
+            </div>`;
+          }).join('')}
+          <div class="bu-dist">
+            <div class="bu-dist-lbl">Distribución por etapa</div>
+            ${buNotes.map(({bu,note,color}) => `
+              <div class="bu-note" style="border-left-color:${color}">
+                <strong>${bu.split(' ')[0]}:</strong> ${note}
+              </div>
+            `).join('')}
+          </div>
+        </div>
       </div>
 
-      <div class="card">
-        <div class="card-hdr">
-          <div class="card-title"><em>Unidades</em> de negocio</div>
-          <div class="card-meta">Por valor de pipe</div>
+      <div class="main-center">
+        <div class="card">
+          <div class="card-hdr">
+            <div class="card-title"><em>Top 10 oportunidades</em> activas</div>
+            <div class="card-meta">Prioridad de cierre · ${pipeDeals.length} en pipe</div>
+          </div>
+          <table>
+            <colgroup>
+              <col style="width:18px">
+              <col style="width:auto">
+              <col style="width:68px">
+              <col style="width:42px">
+              <col style="width:58px">
+            </colgroup>
+            <thead>
+              <tr>
+                <th>#</th><th>Deal / Empresa</th><th>Etapa</th><th>BU</th><th style="text-align:right">Valor MXN</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${top10.map((d,i) => {
+                const sc = STAGE_PILL[d.stage]||{bg:'#f0f0f0',text:'#555'};
+                const bc = BU_COLOR[d.bu]||'#aaa';
+                return `<tr>
+                  <td class="rn">${i+1}</td>
+                  <td style="max-width:0">
+                    <div class="deal-name">${d.name}</div>
+                    ${d.company ? `<div class="deal-co">${d.company}</div>` : ''}
+                  </td>
+                  <td><span class="pill" style="background:${sc.bg};color:${sc.text}">${d.stage.replace(/^\d\.\s*/,'').replace(' 🎉','')}</span></td>
+                  <td><span class="pill" style="background:${bc}18;color:${bc}">${d.bu.split(' ')[0]}</span></td>
+                  <td class="val-r">${fmtFull(d.val)}</td>
+                </tr>`;
+              }).join('')}
+            </tbody>
+          </table>
         </div>
-        ${buList.map(([bu, d]) => {
-          const pct = totalVal>0 ? Math.round(d.value/totalVal*100) : 0;
-          const col = BU_COLOR[bu]||'#aaa';
-          return `<div class="bu">
-            <div class="bu-header">
-              <div class="bu-name">${bu}</div>
-              <div class="bu-val" style="color:${col}">${fmtShort(d.value)}</div>
+      </div>
+
+      <div class="main-right">
+        <div class="card">
+          <div class="card-hdr">
+            <div class="card-title"><em>Cierres</em> YTD</div>
+            <div class="card-meta">Won vs Lost</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:7px">
+            <div class="ytd-won">
+              <div class="ytd-lbl">WON 🎉</div>
+              <div class="ytd-v" style="color:#15803d">${fmtShort(wonVal)}</div>
+              <div class="ytd-s">${wonDeals.length} deals · prom ${fmtShort(wonDeals.length>0?wonVal/wonDeals.length:0)}</div>
             </div>
-            <div class="bu-wrap"><div class="bu-fill" style="width:${Math.max(2,(d.value/maxBUVal)*100)}%;background:${col}"></div></div>
-            <div class="bu-sub">${d.count} DEAL${d.count!==1?'S':''} · ${pct}% DEL PIPE</div>
-          </div>`;
-        }).join('')}
-        <div class="bu-dist">
-          <div class="bu-dist-lbl">Distribución por etapa</div>
-          ${buNotes.map(({bu,note,color}) => `
-            <div class="bu-note" style="border-left-color:${color}">
-              <strong>${bu.split(' ')[0]}:</strong> ${note}
+            <div class="ytd-lost">
+              <div class="ytd-lbl">LOST</div>
+              <div class="ytd-v" style="color:#b91c1c">${fmtShort(lostVal)}</div>
+              <div class="ytd-s">${lostDeals.length} deals · prom ${fmtShort(lostDeals.length>0?lostVal/lostDeals.length:0)}</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:14px">
+            <div>
+              <div class="conv-big" style="text-align:left;margin-top:0">${convRate.toFixed(1)}%</div>
+              <div class="conv-lbl" style="text-align:left">Conv. Rate · Won / Total</div>
+            </div>
+            <div class="coverage" style="margin-top:0;padding-top:0;border-top:none">
+              <span class="coverage-val">${pipeVal > 0 && wonVal > 0 ? (pipeVal/wonVal).toFixed(1)+'x' : '—'}</span>
+              <span class="coverage-lbl">Coverage</span>
+            </div>
+          </div>
+          <div class="won-bu">
+            <div class="won-bu-lbl">Won por unidad</div>
+            ${Object.entries(wonDeals.reduce((acc,d)=>{if(!acc[d.bu])acc[d.bu]={val:0,count:0};acc[d.bu].val+=d.val;acc[d.bu].count++;return acc;},{}))
+              .sort((a,b)=>b[1].val-a[1].val).map(([bu,bud])=>`
+              <div class="won-bu-row">
+                <span class="won-bu-dot" style="background:${BU_COLOR[bu]||'#aaa'}"></span>
+                <span class="won-bu-name">${bu}</span>
+                <span class="won-bu-val">${fmtShort(bud.val)}</span>
+                <span class="won-bu-cnt">${bud.count} deals</span>
+              </div>`).join('')}
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-hdr">
+            <div class="card-title"><em>Hallazgos</em> & acciones</div>
+            <div class="card-meta">Prioridades</div>
+          </div>
+          ${hz.map(h => `
+            <div class="hz" style="border-left-color:${h.color}">
+              <div class="hz-icon" style="color:${h.color}">${h.icon}</div>
+              <div class="hz-title">${h.title}</div>
+              <div class="hz-text">${h.text}</div>
             </div>
           `).join('')}
         </div>
       </div>
-    </div>
 
-    <div class="top10">
-      <div class="card-hdr" style="margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #e5e5e5">
-        <div class="card-title"><em>Top 10 oportunidades</em> activas</div>
-        <div class="card-meta">Prioridad de cierre</div>
-      </div>
-      <table>
-        <thead>
-          <tr>
-            <th>#</th><th>Deal</th><th>Etapa</th><th>Unidad</th><th>Solución</th><th style="text-align:right">Valor MXN</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${top10.map((d,i) => {
-            const sc = STAGE_PILL[d.stage]||{bg:'#f0f0f0',text:'#555'};
-            const bc = BU_COLOR[d.bu]||'#aaa';
-            return `<tr>
-              <td class="rn">${String(i+1).padStart(2,'0')}</td>
-              <td>
-                <div class="deal-name">${d.name}</div>
-                ${d.company ? `<div style="font-size:10.5px;color:#999;margin-top:1px">${d.company}</div>` : ''}
-              </td>
-              <td><span class="pill" style="background:${sc.bg};color:${sc.text}">${d.stage.replace(/^\d\.\s*/,'').replace(' 🎉','')}</span></td>
-              <td><span class="pill" style="background:${bc}15;color:${bc}">${d.bu.split(' ')[0]}</span></td>
-              <td style="color:#888;font-size:11.5px">${d.sol}</td>
-              <td class="val-r">${fmtFull(d.val)}</td>
-            </tr>`;
-          }).join('')}
-        </tbody>
-      </table>
-    </div>
-
-    <div class="bot">
-      <div class="card">
-        <div class="card-hdr">
-          <div class="card-title"><em>Cierres</em> YTD</div>
-          <div class="card-meta">Won vs Lost</div>
-        </div>
-        <div class="ytd-won">
-          <div class="ytd-lbl">WON 🎉</div>
-          <div class="ytd-v" style="color:#15803d">${fmtShort(wonVal)}</div>
-          <div class="ytd-s">${wonDeals.length} deal${wonDeals.length!==1?'s':''} · ticket prom ${fmtShort(wonDeals.length>0?wonVal/wonDeals.length:0)}</div>
-        </div>
-        <div class="ytd-lost">
-          <div class="ytd-lbl">LOST</div>
-          <div class="ytd-v" style="color:#b91c1c">${fmtShort(lostVal)}</div>
-          <div class="ytd-s">${lostDeals.length} deal${lostDeals.length!==1?'s':''} · ticket prom ${fmtShort(lostDeals.length>0?lostVal/lostDeals.length:0)}</div>
-        </div>
-        <div class="conv-big">${convRate.toFixed(1)}%</div>
-        <div class="conv-lbl">Conversion Rate · Won / Total</div>
-        <div class="won-bu">
-          <div class="won-bu-lbl">Won por unidad</div>
-          ${Object.entries(
-              wonDeals.reduce((acc, d) => {
-                if (!acc[d.bu]) acc[d.bu] = {val:0, count:0};
-                acc[d.bu].val += d.val; acc[d.bu].count++;
-                return acc;
-              }, {})
-            ).sort((a,b) => b[1].val - a[1].val).map(([bu, bud]) => `
-            <div class="won-bu-row">
-              <span class="won-bu-dot" style="background:${BU_COLOR[bu]||'#aaa'}"></span>
-              <span class="won-bu-name">${bu}</span>
-              <span class="won-bu-val">${fmtShort(bud.val)}</span>
-              <span class="won-bu-cnt">${bud.count} deal${bud.count!==1?'s':''}</span>
-            </div>`).join('')}
-        </div>
-        <div class="coverage">
-          <span class="coverage-val">${pipeVal > 0 && wonVal > 0 ? (pipeVal/wonVal).toFixed(1)+'x' : '—'}</span>
-          <span class="coverage-lbl">Pipeline coverage (pipe / won)</span>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-hdr">
-          <div class="card-title"><em>Antigüedad</em> en pipe</div>
-          <div class="card-meta">Días desde creación</div>
-        </div>
-        ${PIPE_STAGES.filter(s => byStage[s]?.deals?.length).map(s => {
-          const sd   = byStage[s]?.deals||[];
-          const days = avgAge(sd);
-          const high = days > 20;
-          const pct  = Math.min(100, (days/90)*100);
-          return `<div class="ag-row">
-            <div class="ag-label">${s}</div>
-            <div class="ag-wrap"><div class="ag-bar" style="width:${pct}%;background:${high?'#f97316':'#067df7'}"></div></div>
-            <div class="ag-days ${high?'ag-warn':''}">${days>0?days+'d':'—'}</div>
-          </div>`;
-        }).join('')}
-        <div class="cycle">
-          <div>
-            <div class="cycle-v">${avgAge(wonDeals)}d</div>
-            <div class="cycle-l">Prom. Won</div>
-          </div>
-          <div>
-            <div class="cycle-v">${avgAge(lostDeals)}d</div>
-            <div class="cycle-l">Prom. Lost</div>
-          </div>
-        </div>
-        <div class="risk-section">
-          <div class="risk-lbl">Deals estancados · más tiempo en pipe</div>
-          ${[...pipeDeals]
-              .map(d => ({...d, age: daysSince(d.created)}))
-              .sort((a,b) => b.age - a.age)
-              .slice(0, 4)
-              .map(d => `
-            <div class="risk-item">
-              <span class="risk-name">${d.company || d.name}</span>
-              <span class="risk-stage">${d.stage.replace(/^\d\.\s*/,'')}</span>
-              <span class="risk-days">${d.age}d</span>
-            </div>`).join('')}
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-hdr">
-          <div class="card-title"><em>Hallazgos</em> & acciones</div>
-          <div class="card-meta">Prioridades</div>
-        </div>
-        ${hz.map(h => `
-          <div class="hz" style="border-left-color:${h.color}">
-            <div class="hz-icon" style="color:${h.color}">${h.icon}</div>
-            <div class="hz-title">${h.title}</div>
-            <div class="hz-text">${h.text}</div>
-          </div>
-        `).join('')}
-      </div>
     </div>
 
     <div class="footer">
