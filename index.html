@@ -480,9 +480,9 @@ function render() {
             <colgroup>
               <col style="width:18px">
               <col style="width:auto">
-              <col style="width:68px">
-              <col style="width:42px">
-              <col style="width:58px">
+              <col style="width:44px">
+              <col style="width:40px">
+              <col style="width:62px">
             </colgroup>
             <thead>
               <tr>
@@ -499,8 +499,8 @@ function render() {
                     <div class="deal-name">${d.name}</div>
                     ${d.company ? `<div class="deal-co">${d.company}</div>` : ''}
                   </td>
-                  <td><span class="pill" style="background:${sc.bg};color:${sc.text}">${d.stage.replace(/^\d\.\s*/,'').replace(' 🎉','')}</span></td>
-                  <td><span class="pill" style="background:${bc}18;color:${bc}">${d.bu.split(' ')[0]}</span></td>
+                  <td><span class="pill" style="background:${sc.bg};color:${sc.text}">${{'2. Proposal':'Prop','3. In Progress':'IP','4. Due Diligence':'DD','5. Won 🎉':'Won','6. Lost':'Lost'}[d.stage]||d.stage}</span></td>
+                  <td><span class="pill" style="background:${bc}18;color:${bc}">${{'Web & App Development':'Web','Marketing':'Mktg','Design':'Design'}[d.bu]||d.bu.split(' ')[0]}</span></td>
                   <td class="val-r">${fmtFull(d.val)}</td>
                 </tr>`;
               }).join('')}
