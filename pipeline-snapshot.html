@@ -29,37 +29,159 @@
       justify-content: space-between;
       align-items: center;
     }
-    .logo { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.5px; color: #fff; }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: #fff;
+    }
     .logo span { color: var(--accent); }
-    .timestamp { font-size: 0.8rem; color: var(--muted); }
+    .timestamp {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
     .container { max-width: 1200px; margin: 0 auto; padding: 2rem 3rem; }
-    .section-title { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 1rem; margin-top: 2.5rem; }
-    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
-    .kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; }
+    .section-title {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      margin-top: 2.5rem;
+    }
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .kpi {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
     .kpi-label { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; }
     .kpi-value { font-size: 2rem; font-weight: 700; color: #fff; }
     .kpi-sub { font-size: 0.8rem; color: var(--muted); margin-top: 0.25rem; }
-    .stage-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.75rem; margin-bottom: 2rem; }
-    .stage-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.25rem; }
+    .stage-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+    .stage-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+    }
     .stage-name { font-size: 0.8rem; font-weight: 600; margin-bottom: 0.25rem; }
     .stage-count { font-size: 1.25rem; font-weight: 700; color: #fff; }
     .stage-value { font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem; }
-    table { width: 100%; border-collapse: collapse; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--surface);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
     thead tr { background: var(--surface2); }
-    th { text-align: left; padding: 0.875rem 1.25rem; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 600; }
-    td { padding: 0.875rem 1.25rem; border-top: 1px solid var(--border); font-size: 0.9rem; vertical-align: middle; }
+    th {
+      text-align: left;
+      padding: 0.875rem 1.25rem;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    td {
+      padding: 0.875rem 1.25rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.9rem;
+      vertical-align: middle;
+    }
     tr:hover td { background: rgba(108,99,255,0.03); }
     .deal-name { font-weight: 500; }
-    .badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.72rem; font-weight: 600; white-space: nowrap; }
-    .new-badge { display: inline-block; margin-left: 0.5rem; padding: 0.1rem 0.4rem; background: #6c63ff20; color: #6c63ff; border: 1px solid #6c63ff40; border-radius: 4px; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.05em; vertical-align: middle; }
-    .unit-tag { font-size: 0.75rem; color: var(--muted); background: var(--surface2); padding: 0.15rem 0.5rem; border-radius: 4px; border: 1px solid var(--border); }
-    .footer { margin-top: 3rem; padding: 2rem 3rem; border-top: 1px solid var(--border); text-align: center; font-size: 0.75rem; color: var(--muted); }
+    .badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .new-badge {
+      display: inline-block;
+      margin-left: 0.5rem;
+      padding: 0.1rem 0.4rem;
+      background: #6c63ff20;
+      color: #6c63ff;
+      border: 1px solid #6c63ff40;
+      border-radius: 4px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      vertical-align: middle;
+    }
+    .unit-tag {
+      font-size: 0.75rem;
+      color: var(--muted);
+      background: var(--surface2);
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+    .footer {
+      margin-top: 3rem;
+      padding: 2rem 3rem;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 12px;
+    }
+    .table-wrap table {
+      min-width: 560px;
+    }
+    @media (max-width: 640px) {
+      .header {
+        padding: 1.25rem 1.25rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+      .header > div:last-child {
+        text-align: left;
+      }
+      .container {
+        padding: 1.25rem 1.25rem;
+      }
+      .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .kpi-value {
+        font-size: 1.5rem;
+      }
+      .stage-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .footer {
+        padding: 1.5rem 1.25rem;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="header">
     <div>
-      <div class="logo">dink<span>bit</span> &middot; Pipeline</div>
+      <div class="logo">dink<span>bit</span> · Pipeline</div>
       <div class="timestamp">Updated June 07, 2026</div>
     </div>
     <div style="text-align:right">
@@ -67,57 +189,245 @@
       <div style="font-size:0.75rem;color:#6b7280;margin-top:0.25rem">2026-06-07T00:26:35Z</div>
     </div>
   </div>
+
   <div class="container">
     <div class="section-title">Executive Summary</div>
     <div class="kpi-grid">
-      <div class="kpi"><div class="kpi-label">Active Deals</div><div class="kpi-value">18</div><div class="kpi-sub">in pipeline</div></div>
-      <div class="kpi"><div class="kpi-label">Total Pipeline Value</div><div class="kpi-value">MX$1,701,850</div><div class="kpi-sub">weighted total</div></div>
-      <div class="kpi"><div class="kpi-label">New This Month</div><div class="kpi-value">3</div><div class="kpi-sub">added since May 7</div></div>
-      <div class="kpi"><div class="kpi-label">Business Units</div><div class="kpi-value">3</div><div class="kpi-sub">active areas</div></div>
+      <div class="kpi">
+        <div class="kpi-label">Active Deals</div>
+        <div class="kpi-value">18</div>
+        <div class="kpi-sub">in pipeline</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Total Pipeline Value</div>
+        <div class="kpi-value">MX$1,701,850</div>
+        <div class="kpi-sub">weighted total</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">New This Month</div>
+        <div class="kpi-value">3</div>
+        <div class="kpi-sub">added since May 7</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Business Units</div>
+        <div class="kpi-value">3</div>
+        <div class="kpi-sub">active areas</div>
+      </div>
     </div>
+
     <div class="section-title">Pipeline by Stage</div>
     <div class="stage-grid">
-      <div class="stage-card" style="border-left:3px solid #3b82f6"><div class="stage-name" style="color:#3b82f6">2. Proposal</div><div class="stage-count">2 deals</div><div class="stage-value">MX$15,000</div></div>
-      <div class="stage-card" style="border-left:3px solid #8b5cf6"><div class="stage-name" style="color:#8b5cf6">3. In Progress</div><div class="stage-count">2 deals</div><div class="stage-value">MX$19,700</div></div>
-      <div class="stage-card" style="border-left:3px solid #f59e0b"><div class="stage-name" style="color:#f59e0b">4. Due Diligence</div><div class="stage-count">1 deal</div><div class="stage-value">MX$129,000</div></div>
-      <div class="stage-card" style="border-left:3px solid #10b981"><div class="stage-name" style="color:#10b981">5. Won</div><div class="stage-count">5 deals</div><div class="stage-value">MX$338,750</div></div>
-      <div class="stage-card" style="border-left:3px solid #ef4444"><div class="stage-name" style="color:#ef4444">6. Lost</div><div class="stage-count">3 deals</div><div class="stage-value">MX$744,000</div></div>
-      <div class="stage-card" style="border-left:3px solid #6b7280"><div class="stage-name" style="color:#6b7280">7. On Hold</div><div class="stage-count">5 deals</div><div class="stage-value">MX$455,400</div></div>
+      
+        <div class="stage-card" style="border-left:3px solid #3b82f6">
+          <div class="stage-name" style="color:#3b82f6">2. Proposal</div>
+          <div class="stage-count">2 deals</div>
+          <div class="stage-value">MX$15,000</div>
+        </div>
+        <div class="stage-card" style="border-left:3px solid #8b5cf6">
+          <div class="stage-name" style="color:#8b5cf6">3. In Progress</div>
+          <div class="stage-count">2 deals</div>
+          <div class="stage-value">MX$19,700</div>
+        </div>
+        <div class="stage-card" style="border-left:3px solid #f59e0b">
+          <div class="stage-name" style="color:#f59e0b">4. Due Diligence</div>
+          <div class="stage-count">1 deal</div>
+          <div class="stage-value">MX$129,000</div>
+        </div>
+        <div class="stage-card" style="border-left:3px solid #10b981">
+          <div class="stage-name" style="color:#10b981">5. Won 🎉</div>
+          <div class="stage-count">5 deals</div>
+          <div class="stage-value">MX$338,750</div>
+        </div>
+        <div class="stage-card" style="border-left:3px solid #ef4444">
+          <div class="stage-name" style="color:#ef4444">6. Lost</div>
+          <div class="stage-count">3 deals</div>
+          <div class="stage-value">MX$744,000</div>
+        </div>
+        <div class="stage-card" style="border-left:3px solid #6b7280">
+          <div class="stage-name" style="color:#6b7280">7. On Hold</div>
+          <div class="stage-count">5 deals</div>
+          <div class="stage-value">MX$455,400</div>
+        </div>
     </div>
+
     <div class="section-title">Active Deals</div>
-    <table>
-      <thead><tr><th>Deal</th><th>Stage</th><th>Value</th><th>Business Unit</th><th>Last Contact</th></tr></thead>
+    <div class="table-wrap"><table>
+      <thead>
+        <tr>
+          <th>Deal</th>
+          <th>Stage</th>
+          <th>Value</th>
+          <th>Business Unit</th>
+          <th>Last Contact</th>
+        </tr>
+      </thead>
       <tbody>
-        <tr><td><span class="deal-name">Branding y Papeleria Corporativa</span><span class="new-badge">NEW</span></td><td><span class="badge" style="background:#3b82f620;color:#3b82f6;border:1px solid #3b82f640">2. Proposal</span></td><td><span style="color:#6b7280">TBD</span></td><td><span class="unit-tag">Design</span></td><td style="color:#9ca3af;font-size:0.8rem">2026-06-02</td></tr>
-        <tr><td><span class="deal-name">Diseno de Sitio Web | A.I.</span></td><td><span class="badge" style="background:#3b82f620;color:#3b82f6;border:1px solid #3b82f640">2. Proposal</span></td><td><span style="color:#10b981">MX$15,000</span></td><td><span class="unit-tag">Web &amp; App Development</span></td><td style="color:#9ca3af;font-size:0.8rem">2026-05-05</td></tr>
-        <tr><td><span class="deal-name">Capacitacion de Google Workspace</span><span class="new-badge">NEW</span></td><td><span class="badge" style="background:#8b5cf620;color:#8b5cf6;border:1px solid #8b5cf640">3. In Progress</span></td><td><span style="color:#10b981">MX$19,700</span></td><td><span class="unit-tag">Marketing</span></td><td style="color:#9ca3af;font-size:0.8rem">2026-05-13</td></tr>
-        <tr><td><span class="deal-name">Bolsa de Horas y Poliza de Mantenimiento | Shopify</span></td><td><span class="badge" style="background:#8b5cf620;color:#8b5cf6;border:1px solid #8b5cf640">3. In Progress</span></td><td><span style="color:#6b7280">TBD</span></td><td><span class="unit-tag">Web &amp; App Development</span></td><td style="color:#9ca3af;font-size:0.8rem">2026-05-05</td></tr>
-        <tr><td><span class="deal-name">Estrategia Digital para captacion de Leads</span></td><td><span class="badge" style="background:#f59e0b20;color:#f59e0b;border:1px solid #f59e0b40">4. Due Diligence</span></td><td><span style="color:#10b981">MX$129,000</span></td><td><span class="unit-tag">Marketing</span></td><td style="color:#9ca3af;font-size:0.8rem">2026-03-24</td></tr>
-        <tr><td><span class="deal-name">Estrategia Digital para eCommerce</span></td><td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won</span></td><td><span style="color:#10b981">MX$136,000</span></td><td><span class="unit-tag">Marketing</span></td><td style="color:#9ca3af;font-size:0.8rem">2026-03-31</td></tr>
-        <tr><td><span class="deal-name">Diseno y Desarrollo de Sitio Web</span></td><td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won</span></td><td><span style="color:#10b981">MX$78,500</span></td><td><span class="unit-tag">Web &amp; App Development</span></td><td style="color:#9ca3af;font-size:0.8rem">2026-03-31</td></tr>
-        <tr><td><span class="deal-name">Desarrollo de Tienda en Linea</span><span class="new-badge">NEW</span></td><td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won</span></td><td><span style="color:#10b981">MX$45,000</span></td><td><span class="unit-tag">Web &amp; App Development</span></td><td style="color:#9ca3af;font-size:0.8rem">2026-05-12</td></tr>
-        <tr><td><span class="deal-name">Desarrollo de Nuevo Sitio Web</span></td><td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won</span></td><td><span style="color:#10b981">MX$42,750</span></td><td><span class="unit-tag">Web &amp; App Development</span></td><td style="color:#9ca3af;font-size:0.8rem">2026-03-02</td></tr>
-        <tr><td><span class="deal-name">Desarrollo de Nuevo Sitio Web</span></td><td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won</span></td><td><span style="color:#10b981">MX$36,500</span></td><td><span class="unit-tag">Web &amp; App Development</span></td><td style="color:#9ca3af;font-size:0.8rem">2026-03-25</td></tr>
-        <tr><td><span class="deal-name">Licitacion para Estrategia Digital 2026</span></td><td><span class="badge" style="background:#ef444420;color:#ef4444;border:1px solid #ef444440">6. Lost</span></td><td><span style="color:#10b981">MX$600,000</span></td><td><span class="unit-tag">Marketing</span></td><td style="color:#9ca3af;font-size:0.8rem">2026-03-24</td></tr>
-        <tr><td><span class="deal-name">Estrategia de Captacion de Leads</span></td><td><span class="badge" style="background:#ef444420;color:#ef4444;border:1px solid #ef444440">6. Lost</span></td><td><span style="color:#10b981">MX$144,000</span></td><td><span class="unit-tag">Marketing</span></td><td style="color:#9ca3af;font-size:0.8rem">2026-05-04</td></tr>
-        <tr><td><span class="deal-name">Licitacion de Marcas</span></td><td><span class="badge" style="background:#ef444420;color:#ef4444;border:1px solid #ef444440">6. Lost</span></td><td><span style="color:#6b7280">TBD</span></td><td><span class="unit-tag">Marketing</span></td><td style="color:#9ca3af;font-size:0.8rem">2026-03-24</td></tr>
-        <tr><td><span class="deal-name">Nuevo Sitio Web</span></td><td><span class="badge" style="background:#6b728020;color:#6b7280;border:1px solid #6b728040">7. On Hold</span></td><td><span style="color:#10b981">MX$224,000</span></td><td><span class="unit-tag">Web &amp; App Development</span></td><td style="color:#9ca3af;font-size:0.8rem">2026-03-26</td></tr>
-        <tr><td><span class="deal-name">Tienda en Linea | Shopify</span></td><td><span class="badge" style="background:#6b728020;color:#6b7280;border:1px solid #6b728040">7. On Hold</span></td><td><span style="color:#10b981">MX$121,500</span></td><td><span class="unit-tag">Web &amp; App Development</span></td><td style="color:#9ca3af;font-size:0.8rem">2026-03-25</td></tr>
-        <tr><td><span class="deal-name">Sitio Web - Peltre</span></td><td><span class="badge" style="background:#6b728020;color:#6b7280;border:1px solid #6b728040">7. On Hold</span></td><td><span style="color:#10b981">MX$49,500</span></td><td><span class="unit-tag">Web &amp; App Development</span></td><td style="color:#9ca3af;font-size:0.8rem">2025-04-01</td></tr>
-        <tr><td><span class="deal-name">Consultoria - FILORGA - Colgate Palmolive</span></td><td><span class="badge" style="background:#6b728020;color:#6b7280;border:1px solid #6b728040">7. On Hold</span></td><td><span style="color:#10b981">MX$31,900</span></td><td><span class="unit-tag">Web &amp; App Development</span></td><td style="color:#9ca3af;font-size:0.8rem">2025-04-01</td></tr>
-        <tr><td><span class="deal-name">Rebranding y Logotipo de Aniversario</span></td><td><span class="badge" style="background:#6b728020;color:#6b7280;border:1px solid #6b728040">7. On Hold</span></td><td><span style="color:#10b981">MX$28,500</span></td><td><span class="unit-tag">Design</span></td><td style="color:#9ca3af;font-size:0.8rem">2026-03-26</td></tr>
+        
+      <tr>
+        <td><span class="deal-name">Diseño de Sitio Web | A.I.</span></td>
+        <td><span class="badge" style="background:#3b82f620;color:#3b82f6;border:1px solid #3b82f640">2. Proposal</span></td>
+        <td><span style="color:#10b981">MX$15,000</span></td>
+        <td><span class="unit-tag">Web & App Development</span></td>
+        <td style="color:#9ca3af;font-size:0.8rem">2026-05-05</td>
+      </tr>
+      <tr>
+        <td><span class="deal-name">Branding y Papelería Corporativa</span><span class="new-badge">NEW</span></td>
+        <td><span class="badge" style="background:#3b82f620;color:#3b82f6;border:1px solid #3b82f640">2. Proposal</span></td>
+        <td><span style="color:#6b7280">TBD</span></td>
+        <td><span class="unit-tag">Design</span></td>
+        <td style="color:#9ca3af;font-size:0.8rem">2026-06-02</td>
+      </tr>
+      <tr>
+        <td><span class="deal-name">Capacitación de Google Workspace</span><span class="new-badge">NEW</span></td>
+        <td><span class="badge" style="background:#8b5cf620;color:#8b5cf6;border:1px solid #8b5cf640">3. In Progress</span></td>
+        <td><span style="color:#10b981">MX$19,700</span></td>
+        <td><span class="unit-tag">Marketing</span></td>
+        <td style="color:#9ca3af;font-size:0.8rem">2026-05-13</td>
+      </tr>
+      <tr>
+        <td><span class="deal-name">Bolsa de Horas y Póliza de Mantenimiento | Shopify</span></td>
+        <td><span class="badge" style="background:#8b5cf620;color:#8b5cf6;border:1px solid #8b5cf640">3. In Progress</span></td>
+        <td><span style="color:#6b7280">TBD</span></td>
+        <td><span class="unit-tag">Web & App Development</span></td>
+        <td style="color:#9ca3af;font-size:0.8rem">2026-05-05</td>
+      </tr>
+      <tr>
+        <td><span class="deal-name">Estrategia Digital para captación de Leads</span></td>
+        <td><span class="badge" style="background:#f59e0b20;color:#f59e0b;border:1px solid #f59e0b40">4. Due Diligence</span></td>
+        <td><span style="color:#10b981">MX$129,000</span></td>
+        <td><span class="unit-tag">Marketing</span></td>
+        <td style="color:#9ca3af;font-size:0.8rem">2026-03-24</td>
+      </tr>
+      <tr>
+        <td><span class="deal-name">Estrategia Digital para eCommerce</span></td>
+        <td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won 🎉</span></td>
+        <td><span style="color:#10b981">MX$136,000</span></td>
+        <td><span class="unit-tag">Marketing</span></td>
+        <td style="color:#9ca3af;font-size:0.8rem">2026-03-31</td>
+      </tr>
+      <tr>
+        <td><span class="deal-name">Diseño y Desarrollo de Sitio Web</span></td>
+        <td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won 🎉</span></td>
+        <td><span style="color:#10b981">MX$78,500</span></td>
+        <td><span class="unit-tag">Web & App Development</span></td>
+        <td style="color:#9ca3af;font-size:0.8rem">2026-03-31</td>
+      </tr>
+      <tr>
+        <td><span class="deal-name">Desarrollo de Tienda en Línea</span><span class="new-badge">NEW</span></td>
+        <td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won 🎉</span></td>
+        <td><span style="color:#10b981">MX$45,000</span></td>
+        <td><span class="unit-tag">Web & App Development</span></td>
+        <td style="color:#9ca3af;font-size:0.8rem">2026-05-12</td>
+      </tr>
+      <tr>
+        <td><span class="deal-name">Desarrollo de Nuevo Sitio Web</span></td>
+        <td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won 🎉</span></td>
+        <td><span style="color:#10b981">MX$42,750</span></td>
+        <td><span class="unit-tag">Web & App Development</span></td>
+        <td style="color:#9ca3af;font-size:0.8rem">2026-03-02</td>
+      </tr>
+      <tr>
+        <td><span class="deal-name">Desarrollo de Nuevo Sitio Web</span></td>
+        <td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won 🎉</span></td>
+        <td><span style="color:#10b981">MX$36,500</span></td>
+        <td><span class="unit-tag">Web & App Development</span></td>
+        <td style="color:#9ca3af;font-size:0.8rem">2026-03-25</td>
+      </tr>
+      <tr>
+        <td><span class="deal-name">Licitación para Estrategia Digital 2026</span></td>
+        <td><span class="badge" style="background:#ef444420;color:#ef4444;border:1px solid #ef444440">6. Lost</span></td>
+        <td><span style="color:#10b981">MX$600,000</span></td>
+        <td><span class="unit-tag">Marketing</span></td>
+        <td style="color:#9ca3af;font-size:0.8rem">2026-03-24</td>
+      </tr>
+      <tr>
+        <td><span class="deal-name">Estrategia de Captación de Leads</span></td>
+        <td><span class="badge" style="background:#ef444420;color:#ef4444;border:1px solid #ef444440">6. Lost</span></td>
+        <td><span style="color:#10b981">MX$144,000</span></td>
+        <td><span class="unit-tag">Marketing</span></td>
+        <td style="color:#9ca3af;font-size:0.8rem">2026-05-04</td>
+      </tr>
+      <tr>
+        <td><span class="deal-name">Licitación de Marcas</span></td>
+        <td><span class="badge" style="background:#ef444420;color:#ef4444;border:1px solid #ef444440">6. Lost</span></td>
+        <td><span style="color:#6b7280">TBD</span></td>
+        <td><span class="unit-tag">Marketing</span></td>
+        <td style="color:#9ca3af;font-size:0.8rem">2026-03-24</td>
+      </tr>
+      <tr>
+        <td><span class="deal-name">Nuevo Sitio Web</span></td>
+        <td><span class="badge" style="background:#6b728020;color:#6b7280;border:1px solid #6b728040">7. On Hold</span></td>
+        <td><span style="color:#10b981">MX$224,000</span></td>
+        <td><span class="unit-tag">Web & App Development</span></td>
+        <td style="color:#9ca3af;font-size:0.8rem">2026-03-26</td>
+      </tr>
+      <tr>
+        <td><span class="deal-name">Tienda en Línea | Shopify</span></td>
+        <td><span class="badge" style="background:#6b728020;color:#6b7280;border:1px solid #6b728040">7. On Hold</span></td>
+        <td><span style="color:#10b981">MX$121,500</span></td>
+        <td><span class="unit-tag">Web & App Development</span></td>
+        <td style="color:#9ca3af;font-size:0.8rem">2026-03-25</td>
+      </tr>
+      <tr>
+        <td><span class="deal-name">Sitio Web - Peltre</span></td>
+        <td><span class="badge" style="background:#6b728020;color:#6b7280;border:1px solid #6b728040">7. On Hold</span></td>
+        <td><span style="color:#10b981">MX$49,500</span></td>
+        <td><span class="unit-tag">Web & App Development</span></td>
+        <td style="color:#9ca3af;font-size:0.8rem">2025-04-01</td>
+      </tr>
+      <tr>
+        <td><span class="deal-name">Consultoría - FILORGA - Colgate Palmolive</span></td>
+        <td><span class="badge" style="background:#6b728020;color:#6b7280;border:1px solid #6b728040">7. On Hold</span></td>
+        <td><span style="color:#10b981">MX$31,900</span></td>
+        <td><span class="unit-tag">Web & App Development</span></td>
+        <td style="color:#9ca3af;font-size:0.8rem">2025-04-01</td>
+      </tr>
+      <tr>
+        <td><span class="deal-name">Rebranding y Logotipo de Aniversario</span></td>
+        <td><span class="badge" style="background:#6b728020;color:#6b7280;border:1px solid #6b728040">7. On Hold</span></td>
+        <td><span style="color:#10b981">MX$28,500</span></td>
+        <td><span class="unit-tag">Design</span></td>
+        <td style="color:#9ca3af;font-size:0.8rem">2026-03-26</td>
+      </tr>
       </tbody>
-    </table>
+    </table></div>
+
     <div class="section-title">Recently Added (Last 30 Days)</div>
-    <table>
-      <thead><tr><th>Deal</th><th>Stage</th><th>Value</th><th>Date Added</th></tr></thead>
+    <div class="table-wrap"><table>
+      <thead>
+        <tr>
+          <th>Deal</th>
+          <th>Stage</th>
+          <th>Value</th>
+          <th>Date Added</th>
+        </tr>
+      </thead>
       <tbody>
-        <tr><td><span class="deal-name">Branding y Papeleria Corporativa</span></td><td><span class="badge" style="background:#3b82f620;color:#3b82f6;border:1px solid #3b82f640">2. Proposal</span></td><td><span style="color:#6b7280">TBD</span></td><td style="color:#9ca3af;font-size:0.8rem">2026-06-05</td></tr>
-        <tr><td><span class="deal-name">Capacitacion de Google Workspace</span></td><td><span class="badge" style="background:#8b5cf620;color:#8b5cf6;border:1px solid #8b5cf640">3. In Progress</span></td><td><span style="color:#10b981">MX$19,700</span></td><td style="color:#9ca3af;font-size:0.8rem">2026-05-13</td></tr>
-        <tr><td><span class="deal-name">Desarrollo de Tienda en Linea</span></td><td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won</span></td><td><span style="color:#10b981">MX$45,000</span></td><td style="color:#9ca3af;font-size:0.8rem">2026-05-12</td></tr>
+
+      <tr>
+        <td><span class="deal-name">Branding y Papelería Corporativa</span></td>
+        <td><span class="badge" style="background:#3b82f620;color:#3b82f6;border:1px solid #3b82f640">2. Proposal</span></td>
+        <td><span style="color:#6b7280">TBD</span></td>
+        <td style="color:#9ca3af;font-size:0.8rem">2026-06-05</td>
+      </tr>
+      <tr>
+        <td><span class="deal-name">Capacitación de Google Workspace</span></td>
+        <td><span class="badge" style="background:#8b5cf620;color:#8b5cf6;border:1px solid #8b5cf640">3. In Progress</span></td>
+        <td><span style="color:#10b981">MX$19,700</span></td>
+        <td style="color:#9ca3af;font-size:0.8rem">2026-05-13</td>
+      </tr>
+      <tr>
+        <td><span class="deal-name">Desarrollo de Tienda en Línea</span></td>
+        <td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won 🎉</span></td>
+        <td><span style="color:#10b981">MX$45,000</span></td>
+        <td style="color:#9ca3af;font-size:0.8rem">2026-05-12</td>
+      </tr>
       </tbody>
-    </table>
+    </table></div>
   </div>
-  <div class="footer">Dinkbit Pipeline Report &middot; Auto-generated June 07, 2026 &middot; Data from Attio CRM</div>
+
+  <div class="footer">
+    Dinkbit Pipeline Report · Auto-generated June 07, 2026 · Data from Attio CRM
+  </div>
 </body>
 </html>
