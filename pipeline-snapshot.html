@@ -3,431 +3,629 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dinkbit Pipeline Report</title>
+  <title>Pipeline de Ventas · dinkbit</title>
   <style>
-    :root {
-      --bg: #0f1117;
-      --surface: #1a1d27;
-      --surface2: #21253a;
-      --border: #2a2d3e;
-      --text: #e2e8f0;
-      --muted: #6b7280;
-      --accent: #6c63ff;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root { color-scheme: light; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      line-height: 1.6;
+      font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+      background: #fff; color: #111; font-size: 13px; line-height: 1.4;
     }
-    .header {
-      background: linear-gradient(135deg, #1a1d27 0%, #0f1117 100%);
-      border-bottom: 1px solid var(--border);
-      padding: 2rem 3rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .page { max-width: 1600px; margin: 0 auto; padding: 10px 20px; }
+
+    .hdr {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      padding-bottom: 8px; border-bottom: 1.5px solid #111; margin-bottom: 8px;
     }
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      color: #fff;
-    }
-    .logo span { color: var(--accent); }
-    .timestamp {
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
-    .container { max-width: 1200px; margin: 0 auto; padding: 2rem 3rem; }
-    .section-title {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-      margin-bottom: 1rem;
-      margin-top: 2.5rem;
-    }
-    .kpi-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-    .kpi {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.5rem;
-    }
-    .kpi-label { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; }
-    .kpi-value { font-size: 2rem; font-weight: 700; color: #fff; }
-    .kpi-sub { font-size: 0.8rem; color: var(--muted); margin-top: 0.25rem; }
-    .stage-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 0.75rem;
-      margin-bottom: 2rem;
-    }
-    .stage-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1rem 1.25rem;
-    }
-    .stage-name { font-size: 0.8rem; font-weight: 600; margin-bottom: 0.25rem; }
-    .stage-count { font-size: 1.25rem; font-weight: 700; color: #fff; }
-    .stage-value { font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem; }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: var(--surface);
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-    }
-    thead tr { background: var(--surface2); }
-    th {
-      text-align: left;
-      padding: 0.875rem 1.25rem;
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-      font-weight: 600;
-    }
-    td {
-      padding: 0.875rem 1.25rem;
-      border-top: 1px solid var(--border);
-      font-size: 0.9rem;
-      vertical-align: middle;
-    }
-    tr:hover td { background: rgba(108,99,255,0.03); }
-    .deal-name { font-weight: 500; }
-    .badge {
-      display: inline-block;
-      padding: 0.2rem 0.6rem;
-      border-radius: 20px;
-      font-size: 0.72rem;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-    .new-badge {
-      display: inline-block;
-      margin-left: 0.5rem;
-      padding: 0.1rem 0.4rem;
-      background: #6c63ff20;
-      color: #6c63ff;
-      border: 1px solid #6c63ff40;
-      border-radius: 4px;
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      vertical-align: middle;
-    }
-    .unit-tag {
-      font-size: 0.75rem;
-      color: var(--muted);
-      background: var(--surface2);
-      padding: 0.15rem 0.5rem;
-      border-radius: 4px;
-      border: 1px solid var(--border);
-    }
-    .footer {
-      margin-top: 3rem;
-      padding: 2rem 3rem;
-      border-top: 1px solid var(--border);
-      text-align: center;
-      font-size: 0.75rem;
-      color: var(--muted);
-    }
-    .table-wrap {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      border-radius: 12px;
-    }
-    .table-wrap table {
-      min-width: 560px;
-    }
-    @media (max-width: 640px) {
-      .header {
-        padding: 1.25rem 1.25rem;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
-      }
-      .header > div:last-child {
-        text-align: left;
-      }
-      .container {
-        padding: 1.25rem 1.25rem;
-      }
-      .kpi-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .kpi-value {
-        font-size: 1.5rem;
-      }
-      .stage-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .footer {
-        padding: 1.5rem 1.25rem;
-      }
-    }
+    .logo { font-size: 18px; font-weight: 900; letter-spacing: -0.5px; }
+    .hdr-sub { font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: #777; margin-top: 2px; }
+    .hdr-right { text-align: right; }
+    .hdr-period { font-size: 12px; font-weight: 700; }
+    .hdr-date { font-size: 10px; color: #999; letter-spacing: 0.5px; text-transform: uppercase; margin-top: 1px; }
+
+    .alert { background: #f7f7f7; border-left: 2.5px solid #111; padding: 4px 10px; font-size: 10.5px; color: #555; margin-bottom: 8px; }
+    .alert strong { color: #111; }
+
+    .kpis { display: grid; grid-template-columns: repeat(5, 1fr); border: 1px solid #e5e5e5; border-radius: 4px; overflow: hidden; margin-bottom: 8px; }
+    .kpi { padding: 8px 12px; border-right: 1px solid #e5e5e5; }
+    .kpi:last-child { border-right: none; }
+    .kpi-label { font-size: 9.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #999; margin-bottom: 3px; }
+    .kpi-val { font-size: 20px; font-weight: 800; letter-spacing: -1px; line-height: 1; }
+    .kpi-note { font-size: 10px; color: #999; margin-top: 2px; }
+
+    .main { display: grid; grid-template-columns: 1fr 1.6fr 1fr; gap: 7px; margin-bottom: 7px; align-items: start; }
+    .main-left { display: flex; flex-direction: column; gap: 7px; }
+    .main-center { display: flex; flex-direction: column; gap: 7px; }
+    .main-right { display: flex; flex-direction: column; gap: 7px; }
+
+    .card { border: 1px solid #e5e5e5; border-radius: 4px; padding: 9px 12px; }
+    .card-hdr { display: flex; align-items: baseline; justify-content: space-between; padding-bottom: 6px; border-bottom: 1px solid #e5e5e5; margin-bottom: 8px; }
+    .card-title { font-size: 12px; font-weight: 400; }
+    .card-title em { font-style: italic; }
+    .card-meta { font-size: 9.5px; font-weight: 700; letter-spacing: 0.5px; color: #999; }
+
+    .f-row { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; }
+    .f-label { font-size: 10px; color: #777; width: 110px; flex-shrink: 0; }
+    .f-wrap { flex: 1; background: #f0f0f0; border-radius: 2px; height: 6px; overflow: hidden; }
+    .f-bar { height: 6px; border-radius: 2px; }
+    .f-cnt { width: 20px; text-align: right; font-size: 10px; font-weight: 700; flex-shrink: 0; }
+    .f-val { width: 55px; text-align: right; font-size: 10px; color: #999; flex-shrink: 0; }
+
+    .bu { margin-bottom: 6px; }
+    .bu-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 2px; }
+    .bu-name { font-size: 11px; font-weight: 700; }
+    .bu-val { font-size: 12px; font-weight: 800; letter-spacing: -0.3px; }
+    .bu-wrap { background: #f0f0f0; height: 4px; border-radius: 2px; overflow: hidden; }
+    .bu-fill { height: 4px; border-radius: 2px; }
+    .bu-sub { font-size: 9.5px; color: #999; font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase; margin-top: 1px; }
+    .bu-dist { margin-top: 6px; padding-top: 6px; border-top: 1px solid #e5e5e5; }
+    .bu-dist-lbl { font-size: 9.5px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase; color: #999; margin-bottom: 4px; }
+    .bu-note { font-size: 10px; color: #444; margin-bottom: 3px; padding-left: 6px; border-left: 2px solid #ddd; line-height: 1.4; }
+
+    table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+    th { font-size: 9.5px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase; color: #999; text-align: left; padding: 3px 5px; border-bottom: 1px solid #e5e5e5; white-space: nowrap; overflow: hidden; }
+    td { padding: 4px 5px; border-bottom: 0.5px solid #f5f5f5; vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+    .rn { color: #ccc; font-size: 10px; width: 18px; }
+    .deal-name { font-weight: 600; font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .deal-co { font-size: 9.5px; color: #aaa; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .pill { display: inline-block; border-radius: 3px; padding: 1px 4px; font-size: 9px; font-weight: 700; letter-spacing: 0.3px; text-transform: uppercase; white-space: nowrap; }
+    .val-r { text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; font-size: 11px; }
+
+    .ytd-won { border: 1px solid #bbf7d0; border-radius: 4px; padding: 6px 8px; margin-bottom: 5px; }
+    .ytd-lost { border: 1px solid #fecaca; border-radius: 4px; padding: 6px 8px; margin-bottom: 6px; }
+    .ytd-lbl { font-size: 9.5px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase; color: #888; }
+    .ytd-v { font-size: 17px; font-weight: 800; letter-spacing: -0.5px; margin: 1px 0; }
+    .ytd-s { font-size: 10px; color: #888; }
+    .conv-big { font-size: 22px; font-weight: 900; text-align: center; margin-top: 6px; }
+    .conv-lbl { font-size: 9.5px; text-align: center; color: #999; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+
+    .ag-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .ag-label { font-size: 11px; color: #777; width: 105px; flex-shrink: 0; }
+    .ag-wrap { flex: 1; background: #f0f0f0; height: 5px; border-radius: 2px; overflow: hidden; }
+    .ag-bar { height: 5px; border-radius: 2px; }
+    .ag-days { width: 32px; text-align: right; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+    .ag-warn { color: #f97316; }
+    .cycle { display: flex; gap: 18px; margin-top: 9px; padding-top: 8px; border-top: 1px solid #e5e5e5; }
+    .cycle-v { font-size: 19px; font-weight: 800; }
+    .cycle-l { font-size: 10px; color: #999; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase; }
+
+    .hz { padding: 5px 8px; border-left: 2.5px solid; margin-bottom: 5px; }
+    .hz-icon { font-size: 10px; font-weight: 700; margin-bottom: 1px; }
+    .hz-title { font-size: 10.5px; font-weight: 700; margin-bottom: 2px; }
+    .hz-text { font-size: 9.5px; color: #555; line-height: 1.4; }
+
+    .wow { display: grid; grid-template-columns: repeat(5, 1fr); border: 1px solid #e5e5e5; border-radius: 4px; margin-bottom: 8px; background: #fafafa; }
+    .wow-item { padding: 7px 12px; border-right: 1px solid #e5e5e5; }
+    .wow-item:last-child { border-right: none; }
+    .wow-label { font-size: 9.5px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: #999; margin-bottom: 3px; }
+    .wow-val { font-size: 16px; font-weight: 800; letter-spacing: -0.5px; line-height: 1; }
+    .wow-sub { font-size: 10px; color: #999; margin-top: 2px; }
+    .wow-delta { display: inline-flex; align-items: center; gap: 3px; font-size: 11px; font-weight: 700; border-radius: 3px; padding: 1px 5px; }
+    .wow-delta.pos { background: #dcfce7; color: #15803d; }
+    .wow-delta.neg { background: #fee2e2; color: #b91c1c; }
+    .wow-delta.neu { background: #f0f0f0; color: #666; }
+    .wow-delta.na  { background: #f0f0f0; color: #bbb; font-weight: 600; font-size: 10px; }
+    .wow-first { font-size: 10px; color: #bbb; font-style: italic; margin-top: 3px; }
+
+    .wow-item { cursor: pointer; user-select: none; }
+    .wow-item:hover { background: #f5f5f5; }
+    .wow-caret { font-size: 9px; color: #ccc; margin-left: 3px; vertical-align: middle; }
+    .wow-drop { display: none; position: absolute; top: calc(100% + 2px); left: -1px; z-index: 200; background: #fff; border: 1px solid #e5e5e5; border-radius: 4px; box-shadow: 0 4px 16px rgba(0,0,0,0.10); min-width: 260px; max-height: 280px; overflow-y: auto; }
+    .wow-drop.open { display: block; }
+    .wow-drop-item { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 6px 10px; border-bottom: 0.5px solid #f5f5f5; }
+    .wow-drop-item:last-child { border-bottom: none; }
+    .wow-drop-name { font-size: 11px; font-weight: 600; color: #111; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; }
+    .wow-drop-co { font-size: 9.5px; color: #999; }
+    .wow-drop-val { font-size: 11px; font-weight: 700; color: #555; flex-shrink: 0; }
+    .wow-drop-stage { display: inline-block; font-size: 9px; font-weight: 700; padding: 1px 4px; border-radius: 3px; margin-left: 4px; }
+    .wow-drop-empty { padding: 10px; font-size: 11px; color: #999; text-align: center; }
+
+    .footer { margin-top: 12px; padding-top: 8px; border-top: 1px solid #e5e5e5; display: flex; align-items: center; justify-content: space-between; font-size: 10px; color: #999; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase; }
+    .legend { display: flex; align-items: center; gap: 12px; }
+    .leg-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; margin-right: 4px; }
+
+    .won-bu { margin-top: 8px; padding-top: 6px; border-top: 1px solid #e5e5e5; }
+    .won-bu-lbl { font-size: 9.5px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase; color: #999; margin-bottom: 5px; }
+    .won-bu-row { display: flex; align-items: center; gap: 5px; margin-bottom: 4px; }
+    .won-bu-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .won-bu-name { font-size: 11px; font-weight: 600; flex: 1; }
+    .won-bu-val { font-size: 11px; font-weight: 800; }
+    .won-bu-cnt { font-size: 10px; color: #999; width: 48px; text-align: right; }
+    .coverage { margin-top: 6px; padding-top: 6px; border-top: 1px solid #e5e5e5; display: flex; align-items: baseline; gap: 6px; }
+    .coverage-val { font-size: 16px; font-weight: 800; color: #067df7; }
+    .coverage-lbl { font-size: 9.5px; color: #999; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
+
+    .risk-section { margin-top: 10px; padding-top: 8px; border-top: 1px solid #e5e5e5; }
+    .risk-lbl { font-size: 10px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase; color: #999; margin-bottom: 6px; }
+    .risk-item { display: flex; align-items: center; justify-content: space-between; margin-bottom: 5px; gap: 8px; }
+    .risk-name { font-size: 11px; color: #333; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .risk-stage { font-size: 9.5px; color: #999; flex-shrink: 0; }
+    .risk-days { font-size: 10.5px; font-weight: 800; color: #f97316; flex-shrink: 0; background: #fff7ed; border-radius: 3px; padding: 1px 5px; }
   </style>
 </head>
 <body>
-  <div class="header">
-    <div>
-      <div class="logo">dink<span>bit</span> · Pipeline</div>
-      <div class="timestamp">Updated June 07, 2026</div>
-    </div>
-    <div style="text-align:right">
-      <div style="font-size:0.8rem;color:var(--muted)">Source: Attio CRM</div>
-      <div style="font-size:0.75rem;color:#6b7280;margin-top:0.25rem">2026-06-07T00:26:35Z</div>
-    </div>
-  </div>
+<div class="page" id="root"></div>
 
-  <div class="container">
-    <div class="section-title">Executive Summary</div>
-    <div class="kpi-grid">
+<script>
+const SNAPSHOT_DATE = "2026-06-05";
+const WEEK_START    = "2026-05-30"; // lunes de la semana
+
+// Snapshot de la semana anterior (null = primer reporte, sin comparativa)
+// Formato futuro: { totalVal, pipeVal, wonVal, lostVal, pipeCount, wonCount, lostCount,
+//                   byStageCount: { '2. Proposal': N, '3. In Progress': N, '4. Due Diligence': N } }
+const PREV_WEEK = null;
+
+const DEALS = [
+  // 2. Proposal
+  {name:"Branding y Papelería Corporativa",         company:"Rodriguez Davalos Abogados",      stage:"2. Proposal",      bu:"Design",                src:"Former Client",  sol:"Branding",                val:0,       created:"2026-06-05"},
+  {name:"Diseño de Sitio Web | A.I.",               company:"MBS Textil",                      stage:"2. Proposal",      bu:"Web & App Development", src:"Network",        sol:"Website",                 val:15000,   created:"2026-05-05"},
+  {name:"Desarrollo de Sitio Web + Contenido",      company:"QM+3",                            stage:"2. Proposal",      bu:"Web & App Development", src:"Direct Contact", sol:"Website",                 val:0,       created:"2026-05-29"},
+  {name:"Desarrollo de Plataforma de Asset Management", company:"Rainbow Lobster",             stage:"2. Proposal",      bu:"Web & App Development", src:"Network",        sol:"Digital Platform",        val:0,       created:"2026-05-28"},
+  {name:"Desarrollo de Sitio Web",                  company:"Rodriguez Davalos Abogados",      stage:"2. Proposal",      bu:"Web & App Development", src:"Former Client",  sol:"Website",                 val:0,       created:"2026-06-05"},
+  {name:"Estrategia Digital de TikTok",             company:"Church's Texas Chicken",          stage:"2. Proposal",      bu:"Marketing",             src:"Former Client",  sol:"Marketing Strategy",      val:0,       created:"2026-05-20"},
+  {name:"Generación de Videos Educativos",          company:"RF Travel Group",                 stage:"2. Proposal",      bu:"Design",                src:"Network",        sol:"Graphic Digital Materials",val:0,       created:"2026-06-05"},
+  {name:"Desarrollo de Tienda en Línea",            company:"Frenos Ismael",                   stage:"2. Proposal",      bu:"Web & App Development", src:"Direct Contact", sol:"Online Store",             val:0,       created:"2026-06-05"},
+  // 3. In Progress
+  {name:"Capacitación de Google Workspace",         company:"DiferenciArte",                   stage:"3. In Progress",   bu:"Marketing",             src:"Network",        sol:"Google Workspace",        val:19700,   created:"2026-05-13"},
+  {name:"Bolsa de Horas y Póliza de Mantenimiento | Shopify", company:"Grupo Pochteca",        stage:"3. In Progress",   bu:"Web & App Development", src:"PR and Events",  sol:"Online Store",            val:0,       created:"2026-05-05"},
+  {name:"Migración a Shopify y Desarrollo de Tienda en Línea", company:"Proviamiga México",    stage:"3. In Progress",   bu:"Web & App Development", src:"Shopify",        sol:"Online Store",            val:147800,  created:"2026-03-27"},
+  {name:"Estrategia Digital Integral",              company:"PM Steele",                       stage:"3. In Progress",   bu:"Marketing",             src:"Direct Contact", sol:"Marketing Strategy",      val:0,       created:"2026-05-20"},
+  {name:"Desarrollo de Nuevo Sitio Web y Tienda en Línea", company:"Pioneer Electronics De Mexico", stage:"3. In Progress", bu:"Web & App Development", src:"Active Client", sol:"Online Store",         val:172500,  created:"2026-03-27"},
+  {name:"Estrategia Digital",                       company:"DiferenciArte",                   stage:"3. In Progress",   bu:"Marketing",             src:"Network",        sol:"Marketing Strategy",      val:182400,  created:"2026-05-12"},
+  {name:"Diseño y Desarrollo de Sitio Web",         company:"BASHAM",                          stage:"3. In Progress",   bu:"Web & App Development", src:"Direct Contact", sol:"Website",                 val:147000,  created:"2026-03-27"},
+  {name:"Migración a Google Workspace",             company:"Link International",              stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Google Workspace",        val:0,       created:"2026-05-21"},
+  {name:"Desarrollo de Sitio Web",                  company:"DiferenciArte",                   stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Website",                 val:49275,   created:"2026-05-13"},
+  {name:"Sitio Web - Bradescard",                   company:"Bradescard",                      stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Website",                 val:288400,  created:"2026-04-17"},
+  {name:"Estrategia de Paid Media para eCommerce",  company:"Novelty Corp México",             stage:"3. In Progress",   bu:"Marketing",             src:"PR and Events",  sol:"Marketing Strategy",      val:137000,  created:"2026-03-27"},
+  {name:"Desarrollo de Sitio Web",                  company:"PM Steele",                       stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Website",                 val:231250,  created:"2026-03-27"},
+  {name:"Estrategia Digital para eCommerce",        company:"Healthical",                      stage:"3. In Progress",   bu:"Marketing",             src:"Active Client",  sol:"Marketing Strategy",      val:464032,  created:"2026-05-20"},
+  {name:"Desarrollo de Tienda en Línea",            company:"REAC Automatizaciones",           stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Online Store",             val:121500,  created:"2026-04-15"},
+  {name:"Rediseño de Sitio Web",                    company:"Novygi",                          stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Website",                 val:68500,   created:"2026-04-17"},
+  {name:"Estrategia Digital de Captación de Leads", company:"Filup RH",                        stage:"3. In Progress",   bu:"Marketing",             src:"Direct Contact", sol:"Marketing Strategy",      val:0,       created:"2026-05-13"},
+  // 4. Due Diligence
+  {name:"Estrategia Digital para captación de Leads", company:"Centro Mexicano de Fertilidad", stage:"4. Due Diligence", bu:"Marketing",             src:"Former Client",  sol:"Marketing Strategy",      val:129000,  created:"2026-03-27"},
+  {name:"Distribuidoras | B Hermanos",              company:"Grupo Batta",                     stage:"4. Due Diligence", bu:"Marketing",             src:"Active Client",  sol:"Marketing Strategy",      val:117200,  created:"2026-03-26"},
+  // 5. Won
+  {name:"Desarrollo de Nuevo Sitio Web",            company:"Tulum Fishing",                   stage:"5. Won 🎉",        bu:"Web & App Development", src:"Active Client",  sol:"Website",                 val:42750,   created:"2026-04-08"},
+  {name:"Estrategia Digital para eCommerce",        company:"Cybex",                           stage:"5. Won 🎉",        bu:"Marketing",             src:"Network",        sol:"Marketing Strategy",      val:136000,  created:"2026-04-01"},
+  {name:"Desarrollo de Tienda en Línea",            company:"Quickshark&Bombastika",           stage:"5. Won 🎉",        bu:"Web & App Development", src:"Network",        sol:"Online Store",             val:45000,   created:"2026-05-12"},
+  {name:"Desarrollo de Nuevo Sitio Web",            company:"Viento Capital",                  stage:"5. Won 🎉",        bu:"Web & App Development", src:"Network",        sol:"Website",                 val:36500,   created:"2026-03-27"},
+  {name:"Diseño y Desarrollo de Sitio Web",         company:null,                              stage:"5. Won 🎉",        bu:"Web & App Development", src:"Former Client",  sol:"Website",                 val:78500,   created:"2026-04-01"},
+  {name:"Desarrollo de Nuevo Sitio Web",            company:"Grupo Novo Casas",                stage:"5. Won 🎉",        bu:"Web & App Development", src:"Direct Contact", sol:"Website",                 val:50000,   created:"2026-03-27"},
+  {name:"Estrategia Digital en Google Ads",         company:"Grupo Novo Casas",                stage:"5. Won 🎉",        bu:"Marketing",             src:"Direct Contact", sol:"Marketing Strategy",      val:122100,  created:"2026-03-27"},
+  {name:"Rediseño de Tienda en Línea",              company:"Cybex",                           stage:"5. Won 🎉",        bu:"Web & App Development", src:"Network",        sol:"Online Store",             val:130125,  created:"2026-03-27"},
+  {name:"Rediseño de Sitio Web",                    company:"Petland",                         stage:"5. Won 🎉",        bu:"Web & App Development", src:"Active Client",  sol:"Website",                 val:74500,   created:"2026-03-27"},
+  {name:"Estrategia Digital para Descargas y Transacciones", company:"IsiBai",                 stage:"5. Won 🎉",        bu:"Marketing",             src:"Active Client",  sol:"Marketing Strategy",      val:138250,  created:"2026-04-10"},
+  {name:"Reconstrucción de Tienda en Línea",        company:"Dídiamant",                       stage:"5. Won 🎉",        bu:"Web & App Development", src:"Active Client",  sol:"Online Store",             val:112995,  created:"2026-03-27"},
+  {name:"Hoyer | Sitio Web + Tienda en Línea",      company:"Insurgent Artists",               stage:"5. Won 🎉",        bu:"Web & App Development", src:"Active Client",  sol:"Website",                 val:5400,    created:"2026-05-12"},
+  {name:"Desarrollo de Tienda en Línea para México y Costa Rica", company:"Healthical",        stage:"5. Won 🎉",        bu:"Web & App Development", src:"Network",        sol:"Online Store",             val:297185,  created:"2026-04-08"},
+  {name:"Estrategia de Paid Media para Bailey International", company:"Studio Enova",          stage:"5. Won 🎉",        bu:"Marketing",             src:"Network",        sol:"Marketing Strategy",      val:5100,    created:"2026-03-27"},
+  {name:"Rediseño y Desarrollo de Nuevo Sitio Web", company:"Centro Mexicano de Fertilidad",  stage:"5. Won 🎉",        bu:"Web & App Development", src:"Former Client",  sol:"Website",                 val:69500,   created:"2026-03-27"},
+  {name:"Consultoría para Desarrollo de Plataforma Financiera", company:"Sahara Capital",      stage:"5. Won 🎉",        bu:"Web & App Development", src:"Network",        sol:"Development Consultancy",  val:20300,   created:"2026-04-08"},
+  {name:"DANNA | Creación de Tienda en Línea",      company:"Insurgent Artists",               stage:"5. Won 🎉",        bu:"Web & App Development", src:"Active Client",  sol:"Online Store",             val:52500,   created:"2026-05-05"},
+  {name:"DANNA | Sitio Web para Lanzamiento de EP", company:"Insurgent Artists",               stage:"5. Won 🎉",        bu:"Web & App Development", src:"Network",        sol:"Website",                 val:43250,   created:"2026-03-27"},
+  {name:"Desarrollo de Tienda en Línea",            company:"AXA Lock Center",                 stage:"5. Won 🎉",        bu:"Web & App Development", src:"Former Client",  sol:"Online Store",             val:99500,   created:"2026-04-08"},
+  {name:"Naming y Branding de Nueva Empresa",       company:null,                              stage:"5. Won 🎉",        bu:"Design",                src:"Former Client",  sol:"Branding",                val:21500,   created:"2026-03-27"},
+  // 6. Lost
+  {name:"Licitación de Marcas",                     company:"Stellantis",                      stage:"6. Lost",          bu:"Marketing",             src:"Direct Contact", sol:"Marketing Strategy",      val:0,       created:"2026-03-26"},
+  {name:"Estrategia de Captación de Leads",         company:"Shopology",                       stage:"6. Lost",          bu:"Marketing",             src:"Direct Contact", sol:"Marketing Strategy",      val:144000,  created:"2026-05-05"},
+  {name:"Licitación para Estrategia Digital 2026",  company:"Lapisa",                          stage:"6. Lost",          bu:"Marketing",             src:"Linked In",      sol:"Marketing Strategy",      val:600000,  created:"2026-03-27"},
+  {name:"Estragia Digital | Mundial 2026",          company:"Estado Natural",                  stage:"6. Lost",          bu:"Marketing",             src:"Former Client",  sol:"Marketing Strategy",      val:68250,   created:"2026-05-05"},
+  {name:"Desarrollo de Tienda en Línea",            company:"Corporativo DL",                  stage:"6. Lost",          bu:"Web & App Development", src:"PR and Events",  sol:"Online Store",             val:127500,  created:"2026-04-14"},
+  {name:"Estrategia de Contenidos Rumbo al Mundial 2026", company:null,                        stage:"6. Lost",          bu:"Marketing",             src:"Network",        sol:"Graphic Digital Materials",val:96000,   created:"2026-04-10"},
+];
+
+const BU_COLOR = {
+  'Web & App Development': '#067df7',
+  'Marketing':             '#d946ef',
+  'Design':                '#f59e0b',
+};
+const STAGE_PILL = {
+  '2. Proposal':      { bg:'#dbeafe', text:'#1d4ed8' },
+  '3. In Progress':   { bg:'#e0f2fe', text:'#0369a1' },
+  '4. Due Diligence': { bg:'#fef3c7', text:'#b45309' },
+  '5. Won 🎉':        { bg:'#dcfce7', text:'#15803d' },
+  '6. Lost':          { bg:'#fee2e2', text:'#b91c1c' },
+};
+const STAGE_BAR = {
+  '1. Lead':          '#ccc',
+  '2. Proposal':      '#93c5fd',
+  '3. In Progress':   '#067df7',
+  '4. Due Diligence': '#1d4ed8',
+  '5. Won 🎉':        '#22c55e',
+  '6. Lost':          '#ef4444',
+};
+const FUNNEL_STAGES = ['1. Lead','2. Proposal','3. In Progress','4. Due Diligence','5. Won 🎉','6. Lost'];
+const PIPE_STAGES   = ['1. Lead','2. Proposal','3. In Progress','4. Due Diligence'];
+
+function fmtBig(v) {
+  if (v >= 1000000) return (v/1000000).toFixed(2)+'M';
+  if (v >= 1000)    return (v/1000).toFixed(0)+'K';
+  return v.toFixed(0);
+}
+function fmtShort(v) {
+  if (!v) return '—';
+  if (v >= 1000000) return '$'+(v/1000000).toFixed(1)+'M';
+  if (v >= 1000)    return '$'+(v/1000).toFixed(0)+'K';
+  return '$'+v.toFixed(0);
+}
+function fmtFull(v) {
+  if (!v) return '—';
+  return '$'+v.toLocaleString('es-MX', {maximumFractionDigits:0});
+}
+function daysSince(str) {
+  return Math.round((new Date(SNAPSHOT_DATE) - new Date(str)) / 86400000);
+}
+function avgAge(arr) {
+  const valid = arr.filter(d => d.created);
+  if (!valid.length) return 0;
+  return Math.round(valid.reduce((s,d) => s + daysSince(d.created), 0) / valid.length);
+}
+
+function render() {
+  const pipeDeals = DEALS.filter(d => PIPE_STAGES.includes(d.stage));
+  const wonDeals  = DEALS.filter(d => d.stage === '5. Won 🎉');
+  const lostDeals = DEALS.filter(d => d.stage === '6. Lost');
+
+  const totalVal  = DEALS.reduce((s,d) => s+d.val, 0);
+  const pipeVal   = pipeDeals.reduce((s,d) => s+d.val, 0);
+  const wonVal    = wonDeals.reduce((s,d) => s+d.val, 0);
+  const lostVal   = lostDeals.reduce((s,d) => s+d.val, 0);
+  const convRate  = DEALS.length > 0 ? wonDeals.length / DEALS.length * 100 : 0;
+  const avgTicket = wonDeals.length > 0 ? wonVal / wonDeals.length : 0;
+
+  // By stage
+  const byStage = {};
+  DEALS.forEach(d => {
+    if (!byStage[d.stage]) byStage[d.stage] = {count:0, value:0, deals:[]};
+    byStage[d.stage].count++;
+    byStage[d.stage].value += d.val;
+    byStage[d.stage].deals.push(d);
+  });
+  const maxFunnelVal = Math.max(1, ...FUNNEL_STAGES.map(s => byStage[s]?.value || 0));
+
+  // By BU
+  const byBU = {};
+  DEALS.forEach(d => {
+    if (!byBU[d.bu]) byBU[d.bu] = {count:0, value:0, pipeDeals:[]};
+    byBU[d.bu].count++;
+    byBU[d.bu].value += d.val;
+    if (PIPE_STAGES.includes(d.stage)) byBU[d.bu].pipeDeals.push(d);
+  });
+  const buList   = Object.entries(byBU).sort((a,b) => b[1].value - a[1].value);
+  const maxBUVal = Math.max(1, ...buList.map(([,v]) => v.value));
+
+  // Top 10 pipeline by value
+  const top10 = [...pipeDeals].sort((a,b) => b.val - a.val).slice(0, 10);
+
+  // BU notes
+  const buNotes = buList.map(([bu, d]) => {
+    const sf = {};
+    d.pipeDeals.forEach(x => { sf[x.stage] = (sf[x.stage]||0)+1; });
+    const top = Object.entries(sf).sort((a,b)=>b[1]-a[1])[0];
+    const note = top
+      ? `mayor concentración en ${top[0].replace(/^\d\.\s*/,'')} (${top[1]})`
+      : 'sin deals en pipeline activo';
+    return { bu, note, color: BU_COLOR[bu]||'#aaa' };
+  });
+
+  // Hallazgos
+  const hz = [];
+  const leadCount = byStage['1. Lead']?.count || 0;
+  if (leadCount <= 1)
+    hz.push({icon:'!', color:'#ef4444', title:'Generación de demanda en alerta',
+      text:`Solo ${leadCount||'ningún'} lead nuevo en pipe. El embudo está concentrado en etapas medias-altas. Reforzar prospección y marketing de captación.`});
+
+  hz.push({icon:'✓', color:'#22c55e', title:`Conversion rate ${convRate>=35?'saludable':'por mejorar'}`,
+    text:`${convRate.toFixed(1)}% de los deals trabajados se convierten en venta. ${convRate>=35?'Indica buena calidad en calificación y proceso comercial.':'Revisar el proceso de calificación y seguimiento.'}`});
+
+  const ipCount = byStage['3. In Progress']?.count||0;
+  const ipVal   = byStage['3. In Progress']?.value||0;
+  if (ipCount >= 3)
+    hz.push({icon:'→', color:'#f59e0b', title:'Cuello de botella en "In Progress"',
+      text:`${ipCount} deals (${fmtShort(ipVal)}) concentrados en In Progress. Es la etapa con mayor acumulación — revisar bloqueos y acelerar avance a Due Diligence.`});
+
+  const noVal = pipeDeals.filter(d => d.val === 0).length;
+  if (noVal > 0)
+    hz.push({icon:'!', color:'#888', title:'Higiene de datos',
+      text:`${noVal} deal${noVal>1?'s':''} activo${noVal>1?'s':''} sin valor asignado. Completar los montos para mejorar el accuracy del forecast.`});
+
+  // Date display
+  const d    = new Date(SNAPSHOT_DATE);
+  const dEnd = d;
+  const dStart = new Date(WEEK_START);
+  const fmtDay = (dt) => dt.toLocaleDateString('es-MX',{day:'numeric',month:'short'}).toUpperCase();
+  const weekRange = `${fmtDay(dStart)} – ${fmtDay(dEnd)} ${dEnd.getFullYear()}`;
+  const qtr = 'Q'+Math.ceil((d.getMonth()+1)/3)+' '+d.getFullYear();
+  const dateStr = d.toLocaleDateString('es-MX',{day:'2-digit',month:'short',year:'numeric'}).toUpperCase();
+
+  // Week-over-week
+  const newThisWeek = DEALS.filter(x => new Date(x.created) >= dStart);
+  const wonThisWeek = wonDeals.filter(x => new Date(x.created) >= dStart);
+  const lostThisWeek = lostDeals.filter(x => new Date(x.created) >= dStart);
+
+  function dlt(cur, prev) {
+    if (PREV_WEEK === null || prev == null) return null;
+    return cur - prev;
+  }
+  function renderD(diff, fmtFn) {
+    if (diff === null) return `<span class="wow-delta na">Primer reporte</span>`;
+    if (diff === 0)    return `<span class="wow-delta neu">→ Sin cambio</span>`;
+    const cls = diff > 0 ? 'pos' : 'neg';
+    const arrow = diff > 0 ? '↑' : '↓';
+    return `<span class="wow-delta ${cls}">${arrow} ${fmtFn(Math.abs(diff))}</span>`;
+  }
+
+  function dealListHtml(deals, stagePill) {
+    if (!deals || !deals.length) return `<div class="wow-drop-empty">Sin deals</div>`;
+    return deals.map(d => {
+      const sc = stagePill ? (STAGE_PILL[d.stage]||{bg:'#f0f0f0',text:'#555'}) : null;
+      return `<div class="wow-drop-item">
+        <div style="min-width:0;flex:1">
+          <div class="wow-drop-name">${d.name}${sc ? `<span class="wow-drop-stage" style="background:${sc.bg};color:${sc.text}">${{'2. Proposal':'Prop','3. In Progress':'IP','4. Due Diligence':'DD','5. Won 🎉':'Won','6. Lost':'Lost'}[d.stage]||''}</span>` : ''}</div>
+          ${d.company ? `<div class="wow-drop-co">${d.company}</div>` : ''}
+        </div>
+        <div class="wow-drop-val">${d.val ? fmtShort(d.val) : '—'}</div>
+      </div>`;
+    }).join('');
+  }
+
+  const dPipe    = dlt(pipeVal,   PREV_WEEK?.pipeVal);
+  const dWon     = dlt(wonDeals.length, PREV_WEEK?.wonCount);
+  const dLost    = dlt(lostDeals.length, PREV_WEEK?.lostCount);
+  const dIP      = dlt(byStage['3. In Progress']?.count||0, PREV_WEEK?.byStageCount?.['3. In Progress']);
+  const dDD      = dlt(byStage['4. Due Diligence']?.count||0, PREV_WEEK?.byStageCount?.['4. Due Diligence']);
+
+  document.getElementById('root').innerHTML = `
+    <div class="hdr">
+      <div>
+        <div class="logo">dinkbit</div>
+        <div class="hdr-sub">Pipeline de Ventas · Snapshot Semanal</div>
+      </div>
+      <div class="hdr-right">
+        <div class="hdr-period">${weekRange}</div>
+        <div class="hdr-date">${qtr} · Generado el ${dateStr}</div>
+      </div>
+    </div>
+
+    <div class="alert">
+      <strong>Alcance del análisis:</strong> Se excluyen los deals con estatus <em>"On Hold"</em> para enfocar el reporte en el pipe activo y en cierres del periodo.
+    </div>
+
+    <div class="kpis">
       <div class="kpi">
-        <div class="kpi-label">Active Deals</div>
-        <div class="kpi-value">18</div>
-        <div class="kpi-sub">in pipeline</div>
+        <div class="kpi-label">Pipe Total</div>
+        <div class="kpi-val">MXN${fmtBig(totalVal)}</div>
+        <div class="kpi-note">${DEALS.length} oportunidades</div>
       </div>
       <div class="kpi">
-        <div class="kpi-label">Total Pipeline Value</div>
-        <div class="kpi-value">MX$1,701,850</div>
-        <div class="kpi-sub">weighted total</div>
+        <div class="kpi-label">Pipe Activo</div>
+        <div class="kpi-val">MXN${fmtBig(pipeVal)}</div>
+        <div class="kpi-note">${pipeDeals.length} deals en negociación</div>
       </div>
       <div class="kpi">
-        <div class="kpi-label">New This Month</div>
-        <div class="kpi-value">3</div>
-        <div class="kpi-sub">added since May 7</div>
+        <div class="kpi-label">Won YTD</div>
+        <div class="kpi-val">MXN${fmtBig(wonVal)}</div>
+        <div class="kpi-note">${wonDeals.length} deals cerrados</div>
       </div>
       <div class="kpi">
-        <div class="kpi-label">Business Units</div>
-        <div class="kpi-value">3</div>
-        <div class="kpi-sub">active areas</div>
+        <div class="kpi-label">Conversion Rate</div>
+        <div class="kpi-val">${convRate.toFixed(1)}%</div>
+        <div class="kpi-note">${wonDeals.length} won / ${DEALS.length} totales</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Ticket Promedio</div>
+        <div class="kpi-val">MXN${fmtBig(avgTicket)}</div>
+        <div class="kpi-note">deals cerrados (Won)</div>
       </div>
     </div>
 
-    <div class="section-title">Pipeline by Stage</div>
-    <div class="stage-grid">
-      
-        <div class="stage-card" style="border-left:3px solid #3b82f6">
-          <div class="stage-name" style="color:#3b82f6">2. Proposal</div>
-          <div class="stage-count">2 deals</div>
-          <div class="stage-value">MX$15,000</div>
-        </div>
-        <div class="stage-card" style="border-left:3px solid #8b5cf6">
-          <div class="stage-name" style="color:#8b5cf6">3. In Progress</div>
-          <div class="stage-count">2 deals</div>
-          <div class="stage-value">MX$19,700</div>
-        </div>
-        <div class="stage-card" style="border-left:3px solid #f59e0b">
-          <div class="stage-name" style="color:#f59e0b">4. Due Diligence</div>
-          <div class="stage-count">1 deal</div>
-          <div class="stage-value">MX$129,000</div>
-        </div>
-        <div class="stage-card" style="border-left:3px solid #10b981">
-          <div class="stage-name" style="color:#10b981">5. Won 🎉</div>
-          <div class="stage-count">5 deals</div>
-          <div class="stage-value">MX$338,750</div>
-        </div>
-        <div class="stage-card" style="border-left:3px solid #ef4444">
-          <div class="stage-name" style="color:#ef4444">6. Lost</div>
-          <div class="stage-count">3 deals</div>
-          <div class="stage-value">MX$744,000</div>
-        </div>
-        <div class="stage-card" style="border-left:3px solid #6b7280">
-          <div class="stage-name" style="color:#6b7280">7. On Hold</div>
-          <div class="stage-count">5 deals</div>
-          <div class="stage-value">MX$455,400</div>
-        </div>
+    <div class="wow" style="position:relative">
+      <div class="wow-item" style="position:relative">
+        <div class="wow-label">Nuevos esta semana <span class="wow-caret">▾</span></div>
+        <div class="wow-val">${newThisWeek.length}</div>
+        <div class="wow-sub" style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${newThisWeek.length > 0 ? newThisWeek.map(x=>x.company||x.name).join(', ') : 'Ninguno'}</div>
+        <div class="wow-drop">${dealListHtml(newThisWeek, true)}</div>
+      </div>
+      <div class="wow-item" style="position:relative">
+        <div class="wow-label">Δ Pipe Activo <span class="wow-caret">▾</span></div>
+        <div class="wow-val">${PREV_WEEK ? 'MXN'+fmtBig(Math.abs(dPipe)) : '—'}</div>
+        <div class="wow-sub">${renderD(dPipe, v => 'MXN'+fmtBig(v))}${PREV_WEEK===null ? '<span class="wow-first"> Primer reporte</span>' : ''}</div>
+        <div class="wow-drop">${dealListHtml(pipeDeals, true)}</div>
+      </div>
+      <div class="wow-item" style="position:relative">
+        <div class="wow-label">Δ In Progress <span class="wow-caret">▾</span></div>
+        <div class="wow-val">${byStage['3. In Progress']?.count||0}</div>
+        <div class="wow-sub">${renderD(dIP, v => v+' deals')}</div>
+        <div class="wow-drop">${dealListHtml(byStage['3. In Progress']?.deals||[])}</div>
+      </div>
+      <div class="wow-item" style="position:relative">
+        <div class="wow-label">Δ Due Diligence <span class="wow-caret">▾</span></div>
+        <div class="wow-val">${byStage['4. Due Diligence']?.count||0}</div>
+        <div class="wow-sub">${renderD(dDD, v => v+' deals')}</div>
+        <div class="wow-drop">${dealListHtml(byStage['4. Due Diligence']?.deals||[])}</div>
+      </div>
+      <div class="wow-item" style="position:relative">
+        <div class="wow-label">Won / Lost esta semana <span class="wow-caret">▾</span></div>
+        <div class="wow-val"><span style="color:#15803d">${wonThisWeek.length}</span> <span style="color:#ddd;font-weight:400">/</span> <span style="color:#b91c1c">${lostThisWeek.length}</span></div>
+        <div class="wow-sub">${wonThisWeek.length+lostThisWeek.length > 0 ? fmtShort(wonThisWeek.reduce((s,x)=>s+x.val,0)) + ' ganado' : PREV_WEEK===null ? '<span class="wow-first">Primer reporte</span>' : 'Sin cierres'}</div>
+        <div class="wow-drop">${dealListHtml([...wonThisWeek,...lostThisWeek], true)}</div>
+      </div>
     </div>
 
-    <div class="section-title">Active Deals</div>
-    <div class="table-wrap"><table>
-      <thead>
-        <tr>
-          <th>Deal</th>
-          <th>Stage</th>
-          <th>Value</th>
-          <th>Business Unit</th>
-          <th>Last Contact</th>
-        </tr>
-      </thead>
-      <tbody>
-        
-      <tr>
-        <td><span class="deal-name">Diseño de Sitio Web | A.I.</span></td>
-        <td><span class="badge" style="background:#3b82f620;color:#3b82f6;border:1px solid #3b82f640">2. Proposal</span></td>
-        <td><span style="color:#10b981">MX$15,000</span></td>
-        <td><span class="unit-tag">Web & App Development</span></td>
-        <td style="color:#9ca3af;font-size:0.8rem">2026-05-05</td>
-      </tr>
-      <tr>
-        <td><span class="deal-name">Branding y Papelería Corporativa</span><span class="new-badge">NEW</span></td>
-        <td><span class="badge" style="background:#3b82f620;color:#3b82f6;border:1px solid #3b82f640">2. Proposal</span></td>
-        <td><span style="color:#6b7280">TBD</span></td>
-        <td><span class="unit-tag">Design</span></td>
-        <td style="color:#9ca3af;font-size:0.8rem">2026-06-02</td>
-      </tr>
-      <tr>
-        <td><span class="deal-name">Capacitación de Google Workspace</span><span class="new-badge">NEW</span></td>
-        <td><span class="badge" style="background:#8b5cf620;color:#8b5cf6;border:1px solid #8b5cf640">3. In Progress</span></td>
-        <td><span style="color:#10b981">MX$19,700</span></td>
-        <td><span class="unit-tag">Marketing</span></td>
-        <td style="color:#9ca3af;font-size:0.8rem">2026-05-13</td>
-      </tr>
-      <tr>
-        <td><span class="deal-name">Bolsa de Horas y Póliza de Mantenimiento | Shopify</span></td>
-        <td><span class="badge" style="background:#8b5cf620;color:#8b5cf6;border:1px solid #8b5cf640">3. In Progress</span></td>
-        <td><span style="color:#6b7280">TBD</span></td>
-        <td><span class="unit-tag">Web & App Development</span></td>
-        <td style="color:#9ca3af;font-size:0.8rem">2026-05-05</td>
-      </tr>
-      <tr>
-        <td><span class="deal-name">Estrategia Digital para captación de Leads</span></td>
-        <td><span class="badge" style="background:#f59e0b20;color:#f59e0b;border:1px solid #f59e0b40">4. Due Diligence</span></td>
-        <td><span style="color:#10b981">MX$129,000</span></td>
-        <td><span class="unit-tag">Marketing</span></td>
-        <td style="color:#9ca3af;font-size:0.8rem">2026-03-24</td>
-      </tr>
-      <tr>
-        <td><span class="deal-name">Estrategia Digital para eCommerce</span></td>
-        <td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won 🎉</span></td>
-        <td><span style="color:#10b981">MX$136,000</span></td>
-        <td><span class="unit-tag">Marketing</span></td>
-        <td style="color:#9ca3af;font-size:0.8rem">2026-03-31</td>
-      </tr>
-      <tr>
-        <td><span class="deal-name">Diseño y Desarrollo de Sitio Web</span></td>
-        <td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won 🎉</span></td>
-        <td><span style="color:#10b981">MX$78,500</span></td>
-        <td><span class="unit-tag">Web & App Development</span></td>
-        <td style="color:#9ca3af;font-size:0.8rem">2026-03-31</td>
-      </tr>
-      <tr>
-        <td><span class="deal-name">Desarrollo de Tienda en Línea</span><span class="new-badge">NEW</span></td>
-        <td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won 🎉</span></td>
-        <td><span style="color:#10b981">MX$45,000</span></td>
-        <td><span class="unit-tag">Web & App Development</span></td>
-        <td style="color:#9ca3af;font-size:0.8rem">2026-05-12</td>
-      </tr>
-      <tr>
-        <td><span class="deal-name">Desarrollo de Nuevo Sitio Web</span></td>
-        <td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won 🎉</span></td>
-        <td><span style="color:#10b981">MX$42,750</span></td>
-        <td><span class="unit-tag">Web & App Development</span></td>
-        <td style="color:#9ca3af;font-size:0.8rem">2026-03-02</td>
-      </tr>
-      <tr>
-        <td><span class="deal-name">Desarrollo de Nuevo Sitio Web</span></td>
-        <td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won 🎉</span></td>
-        <td><span style="color:#10b981">MX$36,500</span></td>
-        <td><span class="unit-tag">Web & App Development</span></td>
-        <td style="color:#9ca3af;font-size:0.8rem">2026-03-25</td>
-      </tr>
-      <tr>
-        <td><span class="deal-name">Licitación para Estrategia Digital 2026</span></td>
-        <td><span class="badge" style="background:#ef444420;color:#ef4444;border:1px solid #ef444440">6. Lost</span></td>
-        <td><span style="color:#10b981">MX$600,000</span></td>
-        <td><span class="unit-tag">Marketing</span></td>
-        <td style="color:#9ca3af;font-size:0.8rem">2026-03-24</td>
-      </tr>
-      <tr>
-        <td><span class="deal-name">Estrategia de Captación de Leads</span></td>
-        <td><span class="badge" style="background:#ef444420;color:#ef4444;border:1px solid #ef444440">6. Lost</span></td>
-        <td><span style="color:#10b981">MX$144,000</span></td>
-        <td><span class="unit-tag">Marketing</span></td>
-        <td style="color:#9ca3af;font-size:0.8rem">2026-05-04</td>
-      </tr>
-      <tr>
-        <td><span class="deal-name">Licitación de Marcas</span></td>
-        <td><span class="badge" style="background:#ef444420;color:#ef4444;border:1px solid #ef444440">6. Lost</span></td>
-        <td><span style="color:#6b7280">TBD</span></td>
-        <td><span class="unit-tag">Marketing</span></td>
-        <td style="color:#9ca3af;font-size:0.8rem">2026-03-24</td>
-      </tr>
-      <tr>
-        <td><span class="deal-name">Nuevo Sitio Web</span></td>
-        <td><span class="badge" style="background:#6b728020;color:#6b7280;border:1px solid #6b728040">7. On Hold</span></td>
-        <td><span style="color:#10b981">MX$224,000</span></td>
-        <td><span class="unit-tag">Web & App Development</span></td>
-        <td style="color:#9ca3af;font-size:0.8rem">2026-03-26</td>
-      </tr>
-      <tr>
-        <td><span class="deal-name">Tienda en Línea | Shopify</span></td>
-        <td><span class="badge" style="background:#6b728020;color:#6b7280;border:1px solid #6b728040">7. On Hold</span></td>
-        <td><span style="color:#10b981">MX$121,500</span></td>
-        <td><span class="unit-tag">Web & App Development</span></td>
-        <td style="color:#9ca3af;font-size:0.8rem">2026-03-25</td>
-      </tr>
-      <tr>
-        <td><span class="deal-name">Sitio Web - Peltre</span></td>
-        <td><span class="badge" style="background:#6b728020;color:#6b7280;border:1px solid #6b728040">7. On Hold</span></td>
-        <td><span style="color:#10b981">MX$49,500</span></td>
-        <td><span class="unit-tag">Web & App Development</span></td>
-        <td style="color:#9ca3af;font-size:0.8rem">2025-04-01</td>
-      </tr>
-      <tr>
-        <td><span class="deal-name">Consultoría - FILORGA - Colgate Palmolive</span></td>
-        <td><span class="badge" style="background:#6b728020;color:#6b7280;border:1px solid #6b728040">7. On Hold</span></td>
-        <td><span style="color:#10b981">MX$31,900</span></td>
-        <td><span class="unit-tag">Web & App Development</span></td>
-        <td style="color:#9ca3af;font-size:0.8rem">2025-04-01</td>
-      </tr>
-      <tr>
-        <td><span class="deal-name">Rebranding y Logotipo de Aniversario</span></td>
-        <td><span class="badge" style="background:#6b728020;color:#6b7280;border:1px solid #6b728040">7. On Hold</span></td>
-        <td><span style="color:#10b981">MX$28,500</span></td>
-        <td><span class="unit-tag">Design</span></td>
-        <td style="color:#9ca3af;font-size:0.8rem">2026-03-26</td>
-      </tr>
-      </tbody>
-    </table></div>
+    <div class="main">
 
-    <div class="section-title">Recently Added (Last 30 Days)</div>
-    <div class="table-wrap"><table>
-      <thead>
-        <tr>
-          <th>Deal</th>
-          <th>Stage</th>
-          <th>Value</th>
-          <th>Date Added</th>
-        </tr>
-      </thead>
-      <tbody>
+      <div class="main-left">
+        <div class="card">
+          <div class="card-hdr">
+            <div class="card-title"><em>Embudo</em> de conversión</div>
+            <div class="card-meta">${DEALS.length} DEALS · ${fmtShort(totalVal)}</div>
+          </div>
+          ${FUNNEL_STAGES.map(s => {
+            const sd = byStage[s]||{count:0,value:0};
+            const pct = sd.value>0 ? Math.max(2,(sd.value/maxFunnelVal)*100) : (sd.count>0?3:1);
+            return `<div class="f-row">
+              <div class="f-label">${s}</div>
+              <div class="f-wrap"><div class="f-bar" style="width:${pct}%;background:${STAGE_BAR[s]||'#ccc'}"></div></div>
+              <div class="f-cnt">${sd.count}</div>
+              <div class="f-val">${sd.value>0 ? fmtShort(sd.value) : '—'}</div>
+            </div>`;
+          }).join('')}
+        </div>
 
-      <tr>
-        <td><span class="deal-name">Branding y Papelería Corporativa</span></td>
-        <td><span class="badge" style="background:#3b82f620;color:#3b82f6;border:1px solid #3b82f640">2. Proposal</span></td>
-        <td><span style="color:#6b7280">TBD</span></td>
-        <td style="color:#9ca3af;font-size:0.8rem">2026-06-05</td>
-      </tr>
-      <tr>
-        <td><span class="deal-name">Capacitación de Google Workspace</span></td>
-        <td><span class="badge" style="background:#8b5cf620;color:#8b5cf6;border:1px solid #8b5cf640">3. In Progress</span></td>
-        <td><span style="color:#10b981">MX$19,700</span></td>
-        <td style="color:#9ca3af;font-size:0.8rem">2026-05-13</td>
-      </tr>
-      <tr>
-        <td><span class="deal-name">Desarrollo de Tienda en Línea</span></td>
-        <td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won 🎉</span></td>
-        <td><span style="color:#10b981">MX$45,000</span></td>
-        <td style="color:#9ca3af;font-size:0.8rem">2026-05-12</td>
-      </tr>
-      </tbody>
-    </table></div>
-  </div>
+        <div class="card">
+          <div class="card-hdr">
+            <div class="card-title"><em>Unidades</em> de negocio</div>
+            <div class="card-meta">Por valor de pipe</div>
+          </div>
+          ${buList.map(([bu, d]) => {
+            const pct = totalVal>0 ? Math.round(d.value/totalVal*100) : 0;
+            const col = BU_COLOR[bu]||'#aaa';
+            return `<div class="bu">
+              <div class="bu-header">
+                <div class="bu-name">${bu}</div>
+                <div class="bu-val" style="color:${col}">${fmtShort(d.value)}</div>
+              </div>
+              <div class="bu-wrap"><div class="bu-fill" style="width:${Math.max(2,(d.value/maxBUVal)*100)}%;background:${col}"></div></div>
+              <div class="bu-sub">${d.count} DEAL${d.count!==1?'S':''} · ${pct}% DEL PIPE</div>
+            </div>`;
+          }).join('')}
+          <div class="bu-dist">
+            <div class="bu-dist-lbl">Distribución por etapa</div>
+            ${buNotes.map(({bu,note,color}) => `
+              <div class="bu-note" style="border-left-color:${color}">
+                <strong>${bu.split(' ')[0]}:</strong> ${note}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
 
-  <div class="footer">
-    Dinkbit Pipeline Report · Auto-generated June 07, 2026 · Data from Attio CRM
-  </div>
+      <div class="main-center">
+        <div class="card">
+          <div class="card-hdr">
+            <div class="card-title"><em>Top 10 oportunidades</em> activas</div>
+            <div class="card-meta">Prioridad de cierre · ${pipeDeals.length} en pipe</div>
+          </div>
+          <table>
+            <colgroup>
+              <col style="width:18px">
+              <col style="width:auto">
+              <col style="width:44px">
+              <col style="width:40px">
+              <col style="width:62px">
+            </colgroup>
+            <thead>
+              <tr>
+                <th>#</th><th>Deal / Empresa</th><th>Etapa</th><th>BU</th><th style="text-align:right">Valor MXN</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${top10.map((d,i) => {
+                const sc = STAGE_PILL[d.stage]||{bg:'#f0f0f0',text:'#555'};
+                const bc = BU_COLOR[d.bu]||'#aaa';
+                return `<tr>
+                  <td class="rn">${i+1}</td>
+                  <td style="max-width:0">
+                    <div class="deal-name">${d.name}</div>
+                    ${d.company ? `<div class="deal-co">${d.company}</div>` : ''}
+                  </td>
+                  <td><span class="pill" style="background:${sc.bg};color:${sc.text}">${{'2. Proposal':'Prop','3. In Progress':'IP','4. Due Diligence':'DD','5. Won 🎉':'Won','6. Lost':'Lost'}[d.stage]||d.stage}</span></td>
+                  <td><span class="pill" style="background:${bc}18;color:${bc}">${{'Web & App Development':'Web','Marketing':'Mktg','Design':'Design'}[d.bu]||d.bu.split(' ')[0]}</span></td>
+                  <td class="val-r">${fmtFull(d.val)}</td>
+                </tr>`;
+              }).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="main-right">
+        <div class="card">
+          <div class="card-hdr">
+            <div class="card-title"><em>Cierres</em> YTD</div>
+            <div class="card-meta">Won vs Lost</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:7px">
+            <div class="ytd-won">
+              <div class="ytd-lbl">WON 🎉</div>
+              <div class="ytd-v" style="color:#15803d">${fmtShort(wonVal)}</div>
+              <div class="ytd-s">${wonDeals.length} deals · prom ${fmtShort(wonDeals.length>0?wonVal/wonDeals.length:0)}</div>
+            </div>
+            <div class="ytd-lost">
+              <div class="ytd-lbl">LOST</div>
+              <div class="ytd-v" style="color:#b91c1c">${fmtShort(lostVal)}</div>
+              <div class="ytd-s">${lostDeals.length} deals · prom ${fmtShort(lostDeals.length>0?lostVal/lostDeals.length:0)}</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:14px">
+            <div>
+              <div class="conv-big" style="text-align:left;margin-top:0">${convRate.toFixed(1)}%</div>
+              <div class="conv-lbl" style="text-align:left">Conv. Rate · Won / Total</div>
+            </div>
+            <div class="coverage" style="margin-top:0;padding-top:0;border-top:none">
+              <span class="coverage-val">${pipeVal > 0 && wonVal > 0 ? (pipeVal/wonVal).toFixed(1)+'x' : '—'}</span>
+              <span class="coverage-lbl">Coverage</span>
+            </div>
+          </div>
+          <div class="won-bu">
+            <div class="won-bu-lbl">Won por unidad</div>
+            ${Object.entries(wonDeals.reduce((acc,d)=>{if(!acc[d.bu])acc[d.bu]={val:0,count:0};acc[d.bu].val+=d.val;acc[d.bu].count++;return acc;},{}))
+              .sort((a,b)=>b[1].val-a[1].val).map(([bu,bud])=>`
+              <div class="won-bu-row">
+                <span class="won-bu-dot" style="background:${BU_COLOR[bu]||'#aaa'}"></span>
+                <span class="won-bu-name">${bu}</span>
+                <span class="won-bu-val">${fmtShort(bud.val)}</span>
+                <span class="won-bu-cnt">${bud.count} deals</span>
+              </div>`).join('')}
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-hdr">
+            <div class="card-title"><em>Hallazgos</em> & acciones</div>
+            <div class="card-meta">Prioridades</div>
+          </div>
+          ${hz.map(h => `
+            <div class="hz" style="border-left-color:${h.color}">
+              <div class="hz-icon" style="color:${h.color}">${h.icon}</div>
+              <div class="hz-title">${h.title}</div>
+              <div class="hz-text">${h.text}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer">
+      <div>dinkbit · Pipeline Analytics · ${qtr}</div>
+      <div class="legend">
+        ${Object.entries(BU_COLOR).map(([bu,c]) => `
+          <span><span class="leg-dot" style="background:${c}"></span>${bu.split(' ')[0].toUpperCase()}</span>
+        `).join('')}
+      </div>
+      <div>Fuente · Attio CRM · ${dateStr}</div>
+    </div>
+  `;
+}
+
+render();
+
+// Dropdown toggle
+document.querySelectorAll('.wow-item').forEach(item => {
+  item.addEventListener('click', e => {
+    const drop = item.querySelector('.wow-drop');
+    const wasOpen = drop.classList.contains('open');
+    document.querySelectorAll('.wow-drop').forEach(d => d.classList.remove('open'));
+    if (!wasOpen) drop.classList.add('open');
+    e.stopPropagation();
+  });
+});
+document.addEventListener('click', () => {
+  document.querySelectorAll('.wow-drop').forEach(d => d.classList.remove('open'));
+});
+</script>
 </body>
 </html>
