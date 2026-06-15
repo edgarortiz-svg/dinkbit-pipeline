@@ -1,865 +1,713 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dinkbit Pipeline Report</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-      background: #0a0f1e;
-      color: #e2e8f0;
-      min-height: 100vh;
-    }
-    .header {
-      background: linear-gradient(135deg, #0f1729 0%, #1a2040 100%);
-      border-bottom: 1px solid #1e2a4a;
-      padding: 28px 40px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .header-left { display: flex; align-items: center; gap: 16px; }
-    .logo { width: 40px; height: 40px; background: linear-gradient(135deg, #6366f1, #8b5cf6); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px; color: white; }
-    .header-title { font-size: 22px; font-weight: 700; color: #f1f5f9; }
-    .header-subtitle { font-size: 13px; color: #64748b; margin-top: 2px; }
-    .timestamp { font-size: 12px; color: #475569; background: #1e2a4a; padding: 6px 14px; border-radius: 20px; border: 1px solid #2d3f6b; }
-    .main { padding: 32px 40px; max-width: 1400px; margin: 0 auto; }
-    .section-title { font-size: 11px; font-weight: 600; color: #64748b; letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 16px; }
-    
-    /* KPI Cards */
-    .kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px; }
-    .kpi-card {
-      background: linear-gradient(135deg, #0f1729 0%, #131d35 100%);
-      border: 1px solid #1e2a4a;
-      border-radius: 14px;
-      padding: 24px;
-      position: relative;
-      overflow: hidden;
-    }
-    .kpi-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
-    .kpi-label { font-size: 12px; color: #64748b; font-weight: 500; margin-bottom: 8px; }
-    .kpi-value { font-size: 32px; font-weight: 800; color: var(--accent); font-variant-numeric: tabular-nums; }
-    .kpi-sub { font-size: 12px; color: #475569; margin-top: 4px; }
-
-    /* Stage Summary */
-    .stage-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 32px; }
-    .stage-card {
-      background: #0f1729;
-      border: 1px solid #1e2a4a;
-      border-radius: 12px;
-      padding: 16px;
-      text-align: center;
-    }
-    .stage-count { font-size: 28px; font-weight: 800; font-variant-numeric: tabular-nums; }
-    .stage-label { font-size: 10px; color: #64748b; margin-top: 4px; }
-
-    /* BU Cards */
-    .bu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px; }
-    .bu-card {
-      background: #0f1729;
-      border: 1px solid #1e2a4a;
-      border-radius: 12px;
-      padding: 20px;
-    }
-    .bu-name { font-size: 13px; font-weight: 600; color: #cbd5e1; }
-    .bu-count { font-size: 12px; color: #64748b; margin-top: 4px; }
-    .bu-value { font-size: 20px; font-weight: 700; color: #e2e8f0; margin-top: 8px; }
-
-    /* Table */
-    .table-wrap {
-      background: #0f1729;
-      border: 1px solid #1e2a4a;
-      border-radius: 16px;
-      overflow: hidden;
-      margin-bottom: 40px;
-    }
-    .table-header {
-      padding: 20px 24px;
-      border-bottom: 1px solid #1e2a4a;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .table-title { font-size: 15px; font-weight: 600; color: #f1f5f9; }
-    .table-count { font-size: 12px; color: #64748b; background: #1e2a4a; padding: 4px 10px; border-radius: 20px; }
-    table { width: 100%; border-collapse: collapse; }
-    th {
-      padding: 12px 24px;
-      text-align: left;
-      font-size: 11px;
-      font-weight: 600;
-      color: #475569;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      border-bottom: 1px solid #1e2a4a;
-      background: #0a0f1e;
-    }
-    td {
-      padding: 13px 24px;
-      font-size: 13px;
-      border-bottom: 1px solid #0d1629;
-      vertical-align: middle;
-    }
-    tr:last-child td { border-bottom: none; }
-    tr:hover td { background: #131d35; }
-    .deal-name { font-weight: 500; color: #cbd5e1; max-width: 280px; }
-    .value-cell { font-weight: 600; color: #10b981; font-variant-numeric: tabular-nums; white-space: nowrap; }
-    .date-cell { color: #475569; font-size: 12px; white-space: nowrap; }
-    .solution-cell { color: #64748b; font-size: 12px; }
-    .badge {
-      display: inline-block;
-      padding: 3px 10px;
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-    .bu-badge {
-      display: inline-block;
-      padding: 3px 8px;
-      border-radius: 6px;
-      font-size: 10px;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-    .footer {
-      text-align: center;
-      padding: 24px;
-      font-size: 12px;
-      color: #334155;
-      border-top: 1px solid #1e2a4a;
-    }
-    .divider { height: 1px; background: #1e2a4a; margin: 0 0 24px 0; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dinkbit Pipeline Report</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f0f1a; color: #e2e8f0; min-height: 100vh; }
+  table { border-collapse: collapse; width: 100%; }
+  th { text-align: left; color: #64748b; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; padding: 8px 12px; font-weight: 600; border-bottom: 1px solid #2a2a3a; }
+  th:last-child { text-align: right; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #1a1a2e; }
+  a { color: #6366f1; text-decoration: none; }
+</style>
 </head>
 <body>
-  <div class="header">
-    <div class="header-left">
-      <div class="logo">D</div>
-      <div>
-        <div class="header-title">Dinkbit Pipeline Report</div>
-        <div class="header-subtitle">Sales &amp; Business Development Dashboard</div>
+
+<!-- Header -->
+<div style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);padding:32px 40px;border-bottom:1px solid #2a2a3a">
+  <div style="max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center">
+    <div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+        <div style="background:#6366f1;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px">◆</div>
+        <span style="font-size:13px;color:#6366f1;font-weight:700;letter-spacing:0.1em;text-transform:uppercase">Dinkbit</span>
       </div>
+      <h1 style="font-size:28px;font-weight:700;color:#f8fafc">Pipeline Report</h1>
+      <p style="color:#64748b;font-size:13px;margin-top:2px">Última actualización: June 15, 2026</p>
     </div>
-    <div class="timestamp">Actualizado: 2026-06-14</div>
+    <div style="text-align:right">
+      <div style="background:#10b981;color:#fff;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;display:inline-block">✓ Auto-updated</div>
+    </div>
+  </div>
+</div>
+
+<!-- KPI Cards -->
+<div style="max-width:1200px;margin:32px auto;padding:0 40px">
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px">
+    
+    <div style="background:#1a1a2e;border:1px solid #2a2a3a;border-radius:12px;padding:20px">
+      <p style="color:#64748b;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;font-weight:600">Total Deals Activos</p>
+      <p style="font-size:36px;font-weight:700;color:#f8fafc;margin:8px 0">75</p>
+      <p style="color:#64748b;font-size:12px">pipeline_status: Active</p>
+    </div>
+
+    <div style="background:#1a1a2e;border:1px solid #2a2a3a;border-radius:12px;padding:20px">
+      <p style="color:#64748b;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;font-weight:600">Valor Total Pipeline</p>
+      <p style="font-size:24px;font-weight:700;color:#10b981;margin:8px 0">MX$6,728,067</p>
+      <p style="color:#64748b;font-size:12px">excl. Lost</p>
+    </div>
+
+    <div style="background:#1a1a2e;border:1px solid #2a2a3a;border-radius:12px;padding:20px">
+      <p style="color:#64748b;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;font-weight:600">Pipeline Activo</p>
+      <p style="font-size:24px;font-weight:700;color:#6366f1;margin:8px 0">MX$2,796,857</p>
+      <p style="color:#64748b;font-size:12px">Proposal + In Progress + Due Diligence</p>
+    </div>
+
+    <div style="background:#1a1a2e;border:1px solid #2a2a3a;border-radius:12px;padding:20px">
+      <p style="color:#64748b;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;font-weight:600">Deals Ganados</p>
+      <p style="font-size:36px;font-weight:700;color:#f8fafc;margin:8px 0">20</p>
+      <p style="color:#10b981;font-size:12px">MX$1,580,955</p>
+    </div>
+
   </div>
 
-  <div class="main">
-
-    <!-- KPIs -->
-    <div class="section-title">Resumen Ejecutivo</div>
-    <div class="kpi-grid">
-      <div class="kpi-card" style="--accent:#6366f1">
-        <div class="kpi-label">Total Deals Activos</div>
-        <div class="kpi-value">76</div>
-        <div class="kpi-sub">en seguimiento</div>
+  <!-- Main grid -->
+  <div style="display:grid;grid-template-columns:2fr 1fr;gap:24px;margin-bottom:24px">
+    
+    <!-- Deals table -->
+    <div style="background:#1a1a2e;border:1px solid #2a2a3a;border-radius:12px;overflow:hidden">
+      <div style="padding:16px 20px;border-bottom:1px solid #2a2a3a;display:flex;justify-content:space-between;align-items:center">
+        <h2 style="font-size:15px;font-weight:600;color:#f8fafc">Todos los Deals Activos</h2>
+        <span style="color:#64748b;font-size:12px">68 sin Lost</span>
       </div>
-      <div class="kpi-card" style="--accent:#10b981">
-        <div class="kpi-label">Valor Total del Pipeline</div>
-        <div class="kpi-value" style="font-size:24px">MX$7,532,917</div>
-        <div class="kpi-sub">suma de deals con valor</div>
-      </div>
-      <div class="kpi-card" style="--accent:#0ea5e9">
-        <div class="kpi-label">Deals En Progreso</div>
-        <div class="kpi-value">18</div>
-        <div class="kpi-sub">In Progress + Due Diligence</div>
-      </div>
-    </div>
-
-    <!-- Stage Breakdown -->
-    <div class="section-title">Deals por Etapa</div>
-    <div class="stage-grid">
-      
-        <div class="stage-card" style="border-left:3px solid #6366f1">
-          <div class="stage-count" style="color:#6366f1">8</div>
-          <div class="stage-label">2. Proposal</div>
-        </div>
-        <div class="stage-card" style="border-left:3px solid #0ea5e9">
-          <div class="stage-count" style="color:#0ea5e9">16</div>
-          <div class="stage-label">3. In Progress</div>
-        </div>
-        <div class="stage-card" style="border-left:3px solid #f59e0b">
-          <div class="stage-count" style="color:#f59e0b">2</div>
-          <div class="stage-label">4. Due Diligence</div>
-        </div>
-        <div class="stage-card" style="border-left:3px solid #10b981">
-          <div class="stage-count" style="color:#10b981">20</div>
-          <div class="stage-label">5. Won &#x1F389;</div>
-        </div>
-        <div class="stage-card" style="border-left:3px solid #ef4444">
-          <div class="stage-count" style="color:#ef4444">6</div>
-          <div class="stage-label">6. Lost</div>
-        </div>
-        <div class="stage-card" style="border-left:3px solid #8b5cf6">
-          <div class="stage-count" style="color:#8b5cf6">24</div>
-          <div class="stage-label">7. On Hold</div>
-        </div>
-    </div>
-
-    <!-- BU Breakdown -->
-    <div class="section-title">Por Unidad de Negocio</div>
-    <div class="bu-grid">
-      
-        <div class="bu-card">
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-            <div style="width:10px;height:10px;border-radius:50%;background:#0ea5e9"></div>
-            <span class="bu-name">Web &amp; App Development</span>
-          </div>
-          <div class="bu-count">49 deals</div>
-          <div class="bu-value">MX$4,551,885</div>
-        </div>
-        <div class="bu-card">
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-            <div style="width:10px;height:10px;border-radius:50%;background:#f59e0b"></div>
-            <span class="bu-name">Marketing</span>
-          </div>
-          <div class="bu-count">23 deals</div>
-          <div class="bu-value">MX$2,931,032</div>
-        </div>
-        <div class="bu-card">
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-            <div style="width:10px;height:10px;border-radius:50%;background:#ec4899"></div>
-            <span class="bu-name">Design</span>
-          </div>
-          <div class="bu-count">4 deals</div>
-          <div class="bu-value">MX$50,000</div>
-        </div>
-    </div>
-
-    <!-- Deals Table -->
-    <div class="table-wrap">
-      <div class="table-header">
-        <span class="table-title">Todos los Deals Activos</span>
-        <span class="table-count">76 deals</span>
-      </div>
-      <table>
-        <thead>
-          <tr>
+      <div style="max-height:480px;overflow-y:auto">
+        <table>
+          <thead><tr>
             <th>Deal</th>
+            <th>Área</th>
             <th>Etapa</th>
-            <th>Valor</th>
-            <th>Unidad</th>
-            <th>Soluci&#xF3;n</th>
-            <th>&#xDA;ltimo Contacto</th>
-          </tr>
-        </thead>
-        <tbody>
-          
-        <tr>
-          <td class="deal-name">Capacitaci&#xF3;n de Google Workspace</td>
-          <td><span class="badge" style="background:#0ea5e920;color:#0ea5e9;border:1px solid #0ea5e940">3. In Progress</span></td>
-          <td class="value-cell">MX$19,700</td>
-          <td><span class="bu-badge" style="background:#f59e0b15;color:#f59e0b">Marketing</span></td>
-          <td class="solution-cell">Google Workspace</td>
-          <td class="date-cell">2026-05-13</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Bolsa de Horas y P&#xF3;liza de Mantenimiento | Shopify</td>
-          <td><span class="badge" style="background:#0ea5e920;color:#0ea5e9;border:1px solid #0ea5e940">3. In Progress</span></td>
-          <td class="value-cell"><span style="color:#4b5563">&#x2014;</span></td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Online Store</td>
-          <td class="date-cell">2026-05-05</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Migraci&#xF3;n a Shopify y Desarrollo de Tienda en L&#xED;nea</td>
-          <td><span class="badge" style="background:#0ea5e920;color:#0ea5e9;border:1px solid #0ea5e940">3. In Progress</span></td>
-          <td class="value-cell">MX$147,800</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Online Store</td>
-          <td class="date-cell">2026-03-24</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Estrategia Digital Integral</td>
-          <td><span class="badge" style="background:#0ea5e920;color:#0ea5e9;border:1px solid #0ea5e940">3. In Progress</span></td>
-          <td class="value-cell"><span style="color:#4b5563">&#x2014;</span></td>
-          <td><span class="bu-badge" style="background:#f59e0b15;color:#f59e0b">Marketing</span></td>
-          <td class="solution-cell">Marketing Strategy</td>
-          <td class="date-cell">2026-05-20</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Desarrollo de Nuevo Sitio Web y Tienda en L&#xED;nea</td>
-          <td><span class="badge" style="background:#0ea5e920;color:#0ea5e9;border:1px solid #0ea5e940">3. In Progress</span></td>
-          <td class="value-cell">MX$172,500</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Online Store</td>
-          <td class="date-cell">2026-02-16</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Estrategia Digital</td>
-          <td><span class="badge" style="background:#0ea5e920;color:#0ea5e9;border:1px solid #0ea5e940">3. In Progress</span></td>
-          <td class="value-cell">MX$182,400</td>
-          <td><span class="bu-badge" style="background:#f59e0b15;color:#f59e0b">Marketing</span></td>
-          <td class="solution-cell">Marketing Strategy</td>
-          <td class="date-cell">2026-05-13</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Dise&#xF1;o y Desarrollo de Sitio Web</td>
-          <td><span class="badge" style="background:#0ea5e920;color:#0ea5e9;border:1px solid #0ea5e940">3. In Progress</span></td>
-          <td class="value-cell">MX$147,000</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Website</td>
-          <td class="date-cell">2026-03-25</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Migraci&#xF3;n a Google Workspace</td>
-          <td><span class="badge" style="background:#0ea5e920;color:#0ea5e9;border:1px solid #0ea5e940">3. In Progress</span></td>
-          <td class="value-cell"><span style="color:#4b5563">&#x2014;</span></td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Google Workspace</td>
-          <td class="date-cell">2026-05-20</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Desarrollo de Sitio Web</td>
-          <td><span class="badge" style="background:#0ea5e920;color:#0ea5e9;border:1px solid #0ea5e940">3. In Progress</span></td>
-          <td class="value-cell">MX$49,275</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Website</td>
-          <td class="date-cell">2026-05-13</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Sitio Web - Bradescard</td>
-          <td><span class="badge" style="background:#0ea5e920;color:#0ea5e9;border:1px solid #0ea5e940">3. In Progress</span></td>
-          <td class="value-cell">MX$288,400</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Website</td>
-          <td class="date-cell">2025-07-01</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Estrategia de Paid Media para eCommerce</td>
-          <td><span class="badge" style="background:#0ea5e920;color:#0ea5e9;border:1px solid #0ea5e940">3. In Progress</span></td>
-          <td class="value-cell">MX$137,000</td>
-          <td><span class="bu-badge" style="background:#f59e0b15;color:#f59e0b">Marketing</span></td>
-          <td class="solution-cell">Marketing Strategy</td>
-          <td class="date-cell">2026-03-23</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Desarrollo de Sitio Web</td>
-          <td><span class="badge" style="background:#0ea5e920;color:#0ea5e9;border:1px solid #0ea5e940">3. In Progress</span></td>
-          <td class="value-cell">MX$231,250</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Website</td>
-          <td class="date-cell">2026-03-27</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Estrategia Digital para eCommerce</td>
-          <td><span class="badge" style="background:#0ea5e920;color:#0ea5e9;border:1px solid #0ea5e940">3. In Progress</span></td>
-          <td class="value-cell">MX$464,032</td>
-          <td><span class="bu-badge" style="background:#f59e0b15;color:#f59e0b">Marketing</span></td>
-          <td class="solution-cell">Marketing Strategy</td>
-          <td class="date-cell">2026-05-19</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Desarrollo de Tienda en L&#xED;nea</td>
-          <td><span class="badge" style="background:#0ea5e920;color:#0ea5e9;border:1px solid #0ea5e940">3. In Progress</span></td>
-          <td class="value-cell">MX$121,500</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Online Store</td>
-          <td class="date-cell">2026-04-15</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Redise&#xF1;o de Sitio Web</td>
-          <td><span class="badge" style="background:#0ea5e920;color:#0ea5e9;border:1px solid #0ea5e940">3. In Progress</span></td>
-          <td class="value-cell">MX$68,500</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Website</td>
-          <td class="date-cell">2026-04-15</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Estrategia Digital de Captaci&#xF3;n de Leads</td>
-          <td><span class="badge" style="background:#0ea5e920;color:#0ea5e9;border:1px solid #0ea5e940">3. In Progress</span></td>
-          <td class="value-cell"><span style="color:#4b5563">&#x2014;</span></td>
-          <td><span class="bu-badge" style="background:#f59e0b15;color:#f59e0b">Marketing</span></td>
-          <td class="solution-cell">Marketing Strategy</td>
-          <td class="date-cell">2026-05-13</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Estrategia Digital para captaci&#xF3;n de Leads</td>
-          <td><span class="badge" style="background:#f59e0b20;color:#f59e0b;border:1px solid #f59e0b40">4. Due Diligence</span></td>
-          <td class="value-cell">MX$129,000</td>
-          <td><span class="bu-badge" style="background:#f59e0b15;color:#f59e0b">Marketing</span></td>
-          <td class="solution-cell">Marketing Strategy</td>
-          <td class="date-cell">2026-03-24</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Distribuidoras | B Hermanos</td>
-          <td><span class="badge" style="background:#f59e0b20;color:#f59e0b;border:1px solid #f59e0b40">4. Due Diligence</span></td>
-          <td class="value-cell">MX$117,200</td>
-          <td><span class="bu-badge" style="background:#f59e0b15;color:#f59e0b">Marketing</span></td>
-          <td class="solution-cell">Marketing Strategy</td>
-          <td class="date-cell">2026-03-23</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Branding y Papeler&#xED;a Corporativa</td>
-          <td><span class="badge" style="background:#6366f120;color:#6366f1;border:1px solid #6366f140">2. Proposal</span></td>
-          <td class="value-cell"><span style="color:#4b5563">&#x2014;</span></td>
-          <td><span class="bu-badge" style="background:#ec489915;color:#ec4899">Design</span></td>
-          <td class="solution-cell">Branding</td>
-          <td class="date-cell">2026-06-02</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Dise&#xF1;o de Sitio Web | A.I.</td>
-          <td><span class="badge" style="background:#6366f120;color:#6366f1;border:1px solid #6366f140">2. Proposal</span></td>
-          <td class="value-cell">MX$15,000</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Website</td>
-          <td class="date-cell">2026-05-05</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Desarrollo de Sitio Web + Contenido</td>
-          <td><span class="badge" style="background:#6366f120;color:#6366f1;border:1px solid #6366f140">2. Proposal</span></td>
-          <td class="value-cell"><span style="color:#4b5563">&#x2014;</span></td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Website</td>
-          <td class="date-cell">2026-05-29</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Desarrollo de Plataforma de Asset Management</td>
-          <td><span class="badge" style="background:#6366f120;color:#6366f1;border:1px solid #6366f140">2. Proposal</span></td>
-          <td class="value-cell"><span style="color:#4b5563">&#x2014;</span></td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Digital Platform</td>
-          <td class="date-cell">2026-05-28</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Desarrollo de Sitio Web</td>
-          <td><span class="badge" style="background:#6366f120;color:#6366f1;border:1px solid #6366f140">2. Proposal</span></td>
-          <td class="value-cell"><span style="color:#4b5563">&#x2014;</span></td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Website</td>
-          <td class="date-cell">2026-06-02</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Estrategia Digital de TikTok</td>
-          <td><span class="badge" style="background:#6366f120;color:#6366f1;border:1px solid #6366f140">2. Proposal</span></td>
-          <td class="value-cell"><span style="color:#4b5563">&#x2014;</span></td>
-          <td><span class="bu-badge" style="background:#f59e0b15;color:#f59e0b">Marketing</span></td>
-          <td class="solution-cell">Marketing Strategy</td>
-          <td class="date-cell">2026-05-15</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Generaci&#xF3;n de Videos Educativos</td>
-          <td><span class="badge" style="background:#6366f120;color:#6366f1;border:1px solid #6366f140">2. Proposal</span></td>
-          <td class="value-cell"><span style="color:#4b5563">&#x2014;</span></td>
-          <td><span class="bu-badge" style="background:#ec489915;color:#ec4899">Design</span></td>
-          <td class="solution-cell">Graphic Digital Materials</td>
-          <td class="date-cell">2026-06-05</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Desarrollo de Tienda en L&#xED;nea</td>
-          <td><span class="badge" style="background:#6366f120;color:#6366f1;border:1px solid #6366f140">2. Proposal</span></td>
-          <td class="value-cell"><span style="color:#4b5563">&#x2014;</span></td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Online Store</td>
-          <td class="date-cell">2026-06-04</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Desarrollo de Nuevo Sitio Web</td>
-          <td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won &#x1F389;</span></td>
-          <td class="value-cell">MX$42,750</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Website</td>
-          <td class="date-cell">2026-03-02</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Estrategia Digital para eCommerce</td>
-          <td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won &#x1F389;</span></td>
-          <td class="value-cell">MX$136,000</td>
-          <td><span class="bu-badge" style="background:#f59e0b15;color:#f59e0b">Marketing</span></td>
-          <td class="solution-cell">Marketing Strategy</td>
-          <td class="date-cell">2026-03-31</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Desarrollo de Tienda en L&#xED;nea</td>
-          <td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won &#x1F389;</span></td>
-          <td class="value-cell">MX$45,000</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Online Store</td>
-          <td class="date-cell">2026-05-12</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Desarrollo de Nuevo Sitio Web</td>
-          <td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won &#x1F389;</span></td>
-          <td class="value-cell">MX$36,500</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Website</td>
-          <td class="date-cell">2026-03-25</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Dise&#xF1;o y Desarrollo de Sitio Web</td>
-          <td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won &#x1F389;</span></td>
-          <td class="value-cell">MX$78,500</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Website</td>
-          <td class="date-cell">2026-03-31</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Desarrollo de Nuevo Sitio Web</td>
-          <td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won &#x1F389;</span></td>
-          <td class="value-cell">MX$50,000</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Website</td>
-          <td class="date-cell">2026-03-23</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Estrategia Digital en Google Ads</td>
-          <td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won &#x1F389;</span></td>
-          <td class="value-cell">MX$122,100</td>
-          <td><span class="bu-badge" style="background:#f59e0b15;color:#f59e0b">Marketing</span></td>
-          <td class="solution-cell">Marketing Strategy</td>
-          <td class="date-cell">2026-03-23</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Redise&#xF1;o de Tienda en L&#xED;nea</td>
-          <td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won &#x1F389;</span></td>
-          <td class="value-cell">MX$130,125</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Online Store</td>
-          <td class="date-cell">2026-03-24</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Redise&#xF1;o de Sitio Web</td>
-          <td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won &#x1F389;</span></td>
-          <td class="value-cell">MX$74,500</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Website</td>
-          <td class="date-cell"><span style="color:#4b5563">&#x2014;</span></td>
-        </tr>
-        <tr>
-          <td class="deal-name">Estrategia Digital para Descargas y Transacciones</td>
-          <td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won &#x1F389;</span></td>
-          <td class="value-cell">MX$138,250</td>
-          <td><span class="bu-badge" style="background:#f59e0b15;color:#f59e0b">Marketing</span></td>
-          <td class="solution-cell">Marketing Strategy</td>
-          <td class="date-cell"><span style="color:#4b5563">&#x2014;</span></td>
-        </tr>
-        <tr>
-          <td class="deal-name">Reconstrucci&#xF3;n de Tienda en L&#xED;nea</td>
-          <td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won &#x1F389;</span></td>
-          <td class="value-cell">MX$112,995</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Online Store</td>
-          <td class="date-cell">2026-03-26</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Hoyer | Sitio Web + Tienda en L&#xED;nea</td>
-          <td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won &#x1F389;</span></td>
-          <td class="value-cell">MX$5,400</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Website</td>
-          <td class="date-cell">2026-05-12</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Desarrollo de Tienda en L&#xED;nea para M&#xE9;xico y Costa Rica</td>
-          <td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won &#x1F389;</span></td>
-          <td class="value-cell">MX$297,185</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Online Store</td>
-          <td class="date-cell">2026-04-08</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Estrategia de Paid Media para Bailey International</td>
-          <td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won &#x1F389;</span></td>
-          <td class="value-cell">MX$5,100</td>
-          <td><span class="bu-badge" style="background:#f59e0b15;color:#f59e0b">Marketing</span></td>
-          <td class="solution-cell">Marketing Strategy</td>
-          <td class="date-cell">2026-03-26</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Redise&#xF1;o y Desarrollo de Nuevo Sitio Web</td>
-          <td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won &#x1F389;</span></td>
-          <td class="value-cell">MX$69,500</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Website</td>
-          <td class="date-cell">2026-03-24</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Consultor&#xED;a para Desarrollo de Plataforma Financiera</td>
-          <td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won &#x1F389;</span></td>
-          <td class="value-cell">MX$20,300</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Development Consultancy</td>
-          <td class="date-cell">2026-01-12</td>
-        </tr>
-        <tr>
-          <td class="deal-name">DANNA | Creaci&#xF3;n de Tienda en L&#xED;nea</td>
-          <td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won &#x1F389;</span></td>
-          <td class="value-cell">MX$52,500</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Online Store</td>
-          <td class="date-cell">2026-05-04</td>
-        </tr>
-        <tr>
-          <td class="deal-name">DANNA | Sitio Web para Lanzamiento de EP</td>
-          <td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won &#x1F389;</span></td>
-          <td class="value-cell">MX$43,250</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Website</td>
-          <td class="date-cell">2026-03-27</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Desarrollo de Tienda en L&#xED;nea</td>
-          <td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won &#x1F389;</span></td>
-          <td class="value-cell">MX$99,500</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Online Store</td>
-          <td class="date-cell">2026-01-12</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Naming y Branding de Nueva Empresa</td>
-          <td><span class="badge" style="background:#10b98120;color:#10b981;border:1px solid #10b98140">5. Won &#x1F389;</span></td>
-          <td class="value-cell">MX$21,500</td>
-          <td><span class="bu-badge" style="background:#ec489915;color:#ec4899">Design</span></td>
-          <td class="solution-cell">Branding</td>
-          <td class="date-cell">2026-03-27</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Consultor&#xED;a - FILORGA - Colgate Palmolive</td>
-          <td><span class="badge" style="background:#8b5cf620;color:#8b5cf6;border:1px solid #8b5cf640">7. On Hold</span></td>
-          <td class="value-cell">MX$31,900</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Development Consultancy</td>
-          <td class="date-cell">2025-04-01</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Nuevo Sitio Web</td>
-          <td><span class="badge" style="background:#8b5cf620;color:#8b5cf6;border:1px solid #8b5cf640">7. On Hold</span></td>
-          <td class="value-cell">MX$224,000</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Website</td>
-          <td class="date-cell">2026-03-26</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Sitio Web - Peltre</td>
-          <td><span class="badge" style="background:#8b5cf620;color:#8b5cf6;border:1px solid #8b5cf640">7. On Hold</span></td>
-          <td class="value-cell">MX$49,500</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Website</td>
-          <td class="date-cell">2025-04-01</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Tienda en L&#xED;nea | Shopify</td>
-          <td><span class="badge" style="background:#8b5cf620;color:#8b5cf6;border:1px solid #8b5cf640">7. On Hold</span></td>
-          <td class="value-cell">MX$121,500</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Online Store</td>
-          <td class="date-cell">2026-03-25</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Rebranding y Logotipo de Aniversario</td>
-          <td><span class="badge" style="background:#8b5cf620;color:#8b5cf6;border:1px solid #8b5cf640">7. On Hold</span></td>
-          <td class="value-cell">MX$28,500</td>
-          <td><span class="bu-badge" style="background:#ec489915;color:#ec4899">Design</span></td>
-          <td class="solution-cell">Branding</td>
-          <td class="date-cell">2026-03-26</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Desarrollo de Plataforma Operativa</td>
-          <td><span class="badge" style="background:#8b5cf620;color:#8b5cf6;border:1px solid #8b5cf640">7. On Hold</span></td>
-          <td class="value-cell">MX$24,850</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Digital Platform</td>
-          <td class="date-cell">2026-03-20</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Desarrollo de Plataforma para Gesti&#xF3;n de Proyectos</td>
-          <td><span class="badge" style="background:#8b5cf620;color:#8b5cf6;border:1px solid #8b5cf640">7. On Hold</span></td>
-          <td class="value-cell">MX$522,375</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Digital Platform</td>
-          <td class="date-cell">2026-03-23</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Sitio Web - JUMAN Construction</td>
-          <td><span class="badge" style="background:#8b5cf620;color:#8b5cf6;border:1px solid #8b5cf640">7. On Hold</span></td>
-          <td class="value-cell">MX$81,900</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Website</td>
-          <td class="date-cell">2025-03-13</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Sitio Web - Rozen</td>
-          <td><span class="badge" style="background:#8b5cf620;color:#8b5cf6;border:1px solid #8b5cf640">7. On Hold</span></td>
-          <td class="value-cell">MX$49,500</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Website</td>
-          <td class="date-cell"><span style="color:#4b5563">&#x2014;</span></td>
-        </tr>
-        <tr>
-          <td class="deal-name">Desarrollo de Tienda en L&#xED;nea B2B</td>
-          <td><span class="badge" style="background:#8b5cf620;color:#8b5cf6;border:1px solid #8b5cf640">7. On Hold</span></td>
-          <td class="value-cell"><span style="color:#4b5563">&#x2014;</span></td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Online Store</td>
-          <td class="date-cell">2026-03-23</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Plataforma - My Oppo</td>
-          <td><span class="badge" style="background:#8b5cf620;color:#8b5cf6;border:1px solid #8b5cf640">7. On Hold</span></td>
-          <td class="value-cell">MX$225,000</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Digital Platform</td>
-          <td class="date-cell">2025-07-01</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Desarrollo Flexible - Grupo Atenci&#xF3;n</td>
-          <td><span class="badge" style="background:#8b5cf620;color:#8b5cf6;border:1px solid #8b5cf640">7. On Hold</span></td>
-          <td class="value-cell">MX$405,000</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">&#x2014;</td>
-          <td class="date-cell">2025-04-01</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Estrategia Digital - Centro Mexicano de Fertilidad</td>
-          <td><span class="badge" style="background:#8b5cf620;color:#8b5cf6;border:1px solid #8b5cf640">7. On Hold</span></td>
-          <td class="value-cell">MX$45,000</td>
-          <td><span class="bu-badge" style="background:#f59e0b15;color:#f59e0b">Marketing</span></td>
-          <td class="solution-cell">Marketing Strategy</td>
-          <td class="date-cell">2024-04-01</td>
-        </tr>
-        <tr>
-          <td class="deal-name">App m&#xF3;vil - App Env&#xED;a Ya</td>
-          <td><span class="badge" style="background:#8b5cf620;color:#8b5cf6;border:1px solid #8b5cf640">7. On Hold</span></td>
-          <td class="value-cell">MX$35,280</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Digital Platform</td>
-          <td class="date-cell">2025-04-01</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Plataforma de Financiamiento de Motocicletas</td>
-          <td><span class="badge" style="background:#8b5cf620;color:#8b5cf6;border:1px solid #8b5cf640">7. On Hold</span></td>
-          <td class="value-cell">MX$14,850</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Digital Platform</td>
-          <td class="date-cell">2026-03-23</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Estrategia Digital - Gimbel Mexicana</td>
-          <td><span class="badge" style="background:#8b5cf620;color:#8b5cf6;border:1px solid #8b5cf640">7. On Hold</span></td>
-          <td class="value-cell">MX$186,000</td>
-          <td><span class="bu-badge" style="background:#f59e0b15;color:#f59e0b">Marketing</span></td>
-          <td class="solution-cell">Marketing Strategy</td>
-          <td class="date-cell">2024-06-01</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Estrategia Digital de Posicionamiento de Marca</td>
-          <td><span class="badge" style="background:#8b5cf620;color:#8b5cf6;border:1px solid #8b5cf640">7. On Hold</span></td>
-          <td class="value-cell"><span style="color:#4b5563">&#x2014;</span></td>
-          <td><span class="bu-badge" style="background:#f59e0b15;color:#f59e0b">Marketing</span></td>
-          <td class="solution-cell">Marketing Strategy</td>
-          <td class="date-cell">2026-02-03</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Desarrollo de Plataforma para Venta de Autos</td>
-          <td><span class="badge" style="background:#8b5cf620;color:#8b5cf6;border:1px solid #8b5cf640">7. On Hold</span></td>
-          <td class="value-cell">MX$20,000</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Development Consultancy</td>
-          <td class="date-cell">2026-04-14</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Desarrollo de Landing Page</td>
-          <td><span class="badge" style="background:#8b5cf620;color:#8b5cf6;border:1px solid #8b5cf640">7. On Hold</span></td>
-          <td class="value-cell">MX$32,500</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">&#x2014;</td>
-          <td class="date-cell">2026-02-03</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Estrategia Digital - Park Plaza</td>
-          <td><span class="badge" style="background:#8b5cf620;color:#8b5cf6;border:1px solid #8b5cf640">7. On Hold</span></td>
-          <td class="value-cell">MX$162,000</td>
-          <td><span class="bu-badge" style="background:#f59e0b15;color:#f59e0b">Marketing</span></td>
-          <td class="solution-cell">Marketing Strategy</td>
-          <td class="date-cell">2024-07-01</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Shopify - Daniel Ovad&#xED;a</td>
-          <td><span class="badge" style="background:#8b5cf620;color:#8b5cf6;border:1px solid #8b5cf640">7. On Hold</span></td>
-          <td class="value-cell">MX$65,000</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Online Store</td>
-          <td class="date-cell">2025-04-01</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Estrategia Digital</td>
-          <td><span class="badge" style="background:#8b5cf620;color:#8b5cf6;border:1px solid #8b5cf640">7. On Hold</span></td>
-          <td class="value-cell">MX$179,000</td>
-          <td><span class="bu-badge" style="background:#f59e0b15;color:#f59e0b">Marketing</span></td>
-          <td class="solution-cell">Marketing Strategy</td>
-          <td class="date-cell">2026-03-26</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Shopify - B Hermanos</td>
-          <td><span class="badge" style="background:#8b5cf620;color:#8b5cf6;border:1px solid #8b5cf640">7. On Hold</span></td>
-          <td class="value-cell"><span style="color:#4b5563">&#x2014;</span></td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Online Store</td>
-          <td class="date-cell"><span style="color:#4b5563">&#x2014;</span></td>
-        </tr>
-        <tr>
-          <td class="deal-name">Shopify - BMW Motorrad</td>
-          <td><span class="badge" style="background:#8b5cf620;color:#8b5cf6;border:1px solid #8b5cf640">7. On Hold</span></td>
-          <td class="value-cell">MX$122,000</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Online Store</td>
-          <td class="date-cell">2025-12-01</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Licitaci&#xF3;n de Marcas</td>
-          <td><span class="badge" style="background:#ef444420;color:#ef4444;border:1px solid #ef444440">6. Lost</span></td>
-          <td class="value-cell"><span style="color:#4b5563">&#x2014;</span></td>
-          <td><span class="bu-badge" style="background:#f59e0b15;color:#f59e0b">Marketing</span></td>
-          <td class="solution-cell">Marketing Strategy</td>
-          <td class="date-cell">2026-03-24</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Estrategia de Captaci&#xF3;n de Leads</td>
-          <td><span class="badge" style="background:#ef444420;color:#ef4444;border:1px solid #ef444440">6. Lost</span></td>
-          <td class="value-cell">MX$144,000</td>
-          <td><span class="bu-badge" style="background:#f59e0b15;color:#f59e0b">Marketing</span></td>
-          <td class="solution-cell">Marketing Strategy</td>
-          <td class="date-cell">2026-05-04</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Licitaci&#xF3;n para Estrategia Digital 2026</td>
-          <td><span class="badge" style="background:#ef444420;color:#ef4444;border:1px solid #ef444440">6. Lost</span></td>
-          <td class="value-cell">MX$600,000</td>
-          <td><span class="bu-badge" style="background:#f59e0b15;color:#f59e0b">Marketing</span></td>
-          <td class="solution-cell">Marketing Strategy</td>
-          <td class="date-cell">2026-03-24</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Estrategia Digital | Mundial 2026</td>
-          <td><span class="badge" style="background:#ef444420;color:#ef4444;border:1px solid #ef444440">6. Lost</span></td>
-          <td class="value-cell">MX$68,250</td>
-          <td><span class="bu-badge" style="background:#f59e0b15;color:#f59e0b">Marketing</span></td>
-          <td class="solution-cell">Marketing Strategy</td>
-          <td class="date-cell">2026-05-04</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Desarrollo de Tienda en L&#xED;nea</td>
-          <td><span class="badge" style="background:#ef444420;color:#ef4444;border:1px solid #ef444440">6. Lost</span></td>
-          <td class="value-cell">MX$127,500</td>
-          <td><span class="bu-badge" style="background:#0ea5e915;color:#0ea5e9">Web &amp; App Development</span></td>
-          <td class="solution-cell">Online Store</td>
-          <td class="date-cell">2026-04-14</td>
-        </tr>
-        <tr>
-          <td class="deal-name">Estrategia de Contenidos Rumbo al Mundial 2026</td>
-          <td><span class="badge" style="background:#ef444420;color:#ef4444;border:1px solid #ef444440">6. Lost</span></td>
-          <td class="value-cell">MX$96,000</td>
-          <td><span class="bu-badge" style="background:#f59e0b15;color:#f59e0b">Marketing</span></td>
-          <td class="solution-cell">Graphic Digital Materials</td>
-          <td class="date-cell">2026-04-10</td>
-        </tr>
-        </tbody>
-      </table>
+            <th style="text-align:right">Valor</th>
+          </tr></thead>
+          <tbody><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Desarrollo de Plataforma para Gestión de Proyectos</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#6b7280;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">On Hold</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$522,375</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Estrategia Digital para eCommerce</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Marketing</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">In Progress</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$464,032</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Estrategia Digital Integral</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Marketing</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">In Progress</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$424,100</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Desarrollo Flexible - Grupo Atención</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#6b7280;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">On Hold</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$405,000</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Desarrollo de Tienda en Línea para México y Costa Rica</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$297,185</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Sitio Web - Bradescard</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">In Progress</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$288,400</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Desarrollo de Sitio Web</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">In Progress</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$231,250</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Plataforma - My Oppo</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#6b7280;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">On Hold</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$225,000</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Nuevo Sitio Web</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#6b7280;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">On Hold</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$224,000</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Estrategia Digital - Gimbel Mexicana</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Marketing</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#6b7280;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">On Hold</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$186,000</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Estrategia Digital</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Marketing</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">In Progress</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$182,400</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Estrategia Digital</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Marketing</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#6b7280;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">On Hold</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$179,000</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Desarrollo de Tienda en Línea</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">In Progress</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$177,500</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Desarrollo de Nuevo Sitio Web y Tienda en Línea</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">In Progress</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$172,500</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Estrategia Digital - Park Plaza</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Marketing</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#6b7280;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">On Hold</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$162,000</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Diseño y Desarrollo de Sitio Web</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">In Progress</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$147,000</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Estrategia Digital para Descargas y Transacciones</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Marketing</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$138,250</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Estrategia de Paid Media para eCommerce</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Marketing</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">In Progress</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$137,000</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Estrategia Digital para eCommerce</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Marketing</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$136,000</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Rediseño de Tienda en Línea</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$130,125</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Estrategia Digital para captación de Leads</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Marketing</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#8b5cf6;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Due Diligence</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$129,000</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Estrategia Digital en Google Ads</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Marketing</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$122,100</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Desarrollo de Tienda en Línea</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">In Progress</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$121,500</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Distribuidoras | B Hermanos</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Marketing</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#8b5cf6;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Due Diligence</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$117,200</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Reconstrucción de Tienda en Línea</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$112,995</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Desarrollo de Tienda en Línea</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$99,500</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Sitio Web - JUMAN Construction</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#6b7280;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">On Hold</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$81,900</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Diseño y Desarrollo de Sitio Web</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$78,500</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Rediseño de Sitio Web</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$74,500</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Rediseño y Desarrollo de Nuevo Sitio Web</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$69,500</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Rediseño de Sitio Web</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">In Progress</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$68,500</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Shopify - Daniel Ovadía</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#6b7280;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">On Hold</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$65,000</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Desarrollo de Sitio Web + Contenido</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">In Progress</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$52,500</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">DANNA | Creación de Tienda en Línea</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$52,500</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Desarrollo de Nuevo Sitio Web</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$50,000</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Sitio Web - Peltre</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#6b7280;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">On Hold</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$49,500</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Sitio Web - Rozen</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#6b7280;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">On Hold</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$49,500</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Desarrollo de Sitio Web</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">In Progress</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$49,275</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Desarrollo de Tienda en Línea</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$45,000</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Estrategia Digital - Centro Mexicano de Fertilidad</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Marketing</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#6b7280;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">On Hold</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$45,000</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">DANNA | Sitio Web para Lanzamiento de EP</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$43,250</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Desarrollo de Nuevo Sitio Web</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$42,750</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Desarrollo de Nuevo Sitio Web</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$36,500</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">App móvil - App Envía Ya</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#6b7280;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">On Hold</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$35,280</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Desarrollo de Landing Page</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#6b7280;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">On Hold</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$32,500</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Rebranding y Logotipo de Aniversario</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Design</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#6b7280;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">On Hold</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$28,500</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Desarrollo de Plataforma Operativa</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#6b7280;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">On Hold</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$24,850</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Naming y Branding de Nueva Empresa</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Design</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$21,500</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Consultoría para Desarrollo de Plataforma Financiera</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$20,300</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Desarrollo de Plataforma para Venta de Autos</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#6b7280;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">On Hold</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$20,000</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Capacitación de Google Workspace</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Marketing</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">In Progress</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$19,700</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Diseño de Sitio Web | A.I.</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#6366f1;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Proposal</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$15,000</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Plataforma de Financiamiento de Motocicletas</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#6b7280;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">On Hold</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$14,850</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Hoyer | Sitio Web + Tienda en Línea</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$5,400</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Estrategia de Paid Media para Bailey International</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Marketing</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$5,100</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Branding y Papelería Corporativa</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Design</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#6366f1;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Proposal</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">—</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Bolsa de Horas y Póliza de Mantenimiento | Shopify</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#6366f1;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Proposal</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">—</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Desarrollo de Plataforma de Asset Management</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#6366f1;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Proposal</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">—</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Desarrollo de Sitio Web</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#6366f1;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Proposal</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">—</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Estrategia Digital de TikTok</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Marketing</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#6366f1;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Proposal</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">—</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Desarrollo de Tienda en Línea B2B</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#6b7280;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">On Hold</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">—</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Urbano Town - Atempo (Landing Page)</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#6366f1;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Proposal</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">—</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Migración a Google Workspace</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">In Progress</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">—</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Estrategia Digital | Fase Zero</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Marketing</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#6366f1;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Proposal</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">—</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Estrategia Digital de Posicionamiento de Marca</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Marketing</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#6b7280;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">On Hold</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">—</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Urbano Town - Encore (Landing Page)</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#6366f1;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Proposal</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">—</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Generación de Videos Educativos</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Design</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#6366f1;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Proposal</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">—</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Estrategia Digital de Captación de Leads</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Marketing</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#6b7280;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">On Hold</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">—</td>
+        </tr></tbody>
+        </table>
+      </div>
     </div>
 
+    <!-- Funnel + Changes -->
+    <div style="display:flex;flex-direction:column;gap:24px">
+      
+      <!-- Funnel -->
+      <div style="background:#1a1a2e;border:1px solid #2a2a3a;border-radius:12px;padding:20px">
+        <h2 style="font-size:15px;font-weight:600;color:#f8fafc;margin-bottom:16px">Funnel por Etapa</h2>
+        
+    <div style="margin-bottom:16px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+        <span style="color:#e2e8f0;font-size:13px;font-weight:500">Proposal</span>
+        <span style="color:#94a3b8;font-size:12px">10 deals · MX$15,000</span>
+      </div>
+      <div style="background:#2a2a3a;border-radius:4px;height:8px">
+        <div style="background:#6366f1;width:47%;height:8px;border-radius:4px"></div>
+      </div>
+    </div>
+    <div style="margin-bottom:16px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+        <span style="color:#e2e8f0;font-size:13px;font-weight:500">In Progress</span>
+        <span style="color:#94a3b8;font-size:12px">15 deals · MX$2,535,657</span>
+      </div>
+      <div style="background:#2a2a3a;border-radius:4px;height:8px">
+        <div style="background:#f59e0b;width:71%;height:8px;border-radius:4px"></div>
+      </div>
+    </div>
+    <div style="margin-bottom:16px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+        <span style="color:#e2e8f0;font-size:13px;font-weight:500">Due Diligence</span>
+        <span style="color:#94a3b8;font-size:12px">2 deals · MX$246,200</span>
+      </div>
+      <div style="background:#2a2a3a;border-radius:4px;height:8px">
+        <div style="background:#8b5cf6;width:9%;height:8px;border-radius:4px"></div>
+      </div>
+    </div>
+    <div style="margin-bottom:16px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+        <span style="color:#e2e8f0;font-size:13px;font-weight:500">Won</span>
+        <span style="color:#94a3b8;font-size:12px">20 deals · MX$1,580,955</span>
+      </div>
+      <div style="background:#2a2a3a;border-radius:4px;height:8px">
+        <div style="background:#10b981;width:95%;height:8px;border-radius:4px"></div>
+      </div>
+    </div>
+    <div style="margin-bottom:16px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+        <span style="color:#e2e8f0;font-size:13px;font-weight:500">On Hold</span>
+        <span style="color:#94a3b8;font-size:12px">21 deals · MX$2,350,255</span>
+      </div>
+      <div style="background:#2a2a3a;border-radius:4px;height:8px">
+        <div style="background:#6b7280;width:100%;height:8px;border-radius:4px"></div>
+      </div>
+    </div>
+      </div>
+
+      <!-- Changes -->
+      <div style="background:#1a1a2e;border:1px solid #2a2a3a;border-radius:12px;padding:20px">
+        <h2 style="font-size:15px;font-weight:600;color:#f8fafc;margin-bottom:12px">Cambios desde ayer</h2>
+        
+        <p style="color:#10b981;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;font-weight:700;margin-bottom:6px">Nuevos (3)</p>
+        <ul style="list-style:none;margin-bottom:14px"><li style="margin:4px 0;color:#10b981">➕ <strong>Urbano Town - Atempo (Landing Page)</strong> <span style="color:#6b7280">→ 2. Proposal</span></li><li style="margin:4px 0;color:#10b981">➕ <strong>Estrategia Digital | Fase Zero</strong> <span style="color:#6b7280">→ 2. Proposal</span></li><li style="margin:4px 0;color:#10b981">➕ <strong>Urbano Town - Encore (Landing Page)</strong> <span style="color:#6b7280">→ 2. Proposal</span></li></ul>
+        
+        <p style="color:#ef4444;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;font-weight:700;margin-bottom:6px">Cerrados/Removidos (4)</p>
+        <ul style="list-style:none;margin-bottom:14px"><li style="margin:4px 0;color:#ef4444">➖ <strong>Consultoría - FILORGA - Colgate Palmolive</strong> <span style="color:#6b7280">(was 7. On Hold)</span></li><li style="margin:4px 0;color:#ef4444">➖ <strong>Tienda en Línea | Shopify</strong> <span style="color:#6b7280">(was 7. On Hold)</span></li><li style="margin:4px 0;color:#ef4444">➖ <strong>Shopify - B Hermanos</strong> <span style="color:#6b7280">(was 7. On Hold)</span></li><li style="margin:4px 0;color:#ef4444">➖ <strong>Shopify - BMW Motorrad</strong> <span style="color:#6b7280">(was 7. On Hold)</span></li></ul>
+        
+        <p style="color:#f59e0b;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;font-weight:700;margin-bottom:6px">Cambios de Etapa (5)</p>
+        <ul style="list-style:none"><li style="margin:4px 0;color:#f59e0b">🔄 <strong>Bolsa de Horas y Póliza de Mantenimiento | Shopify</strong>: <span style="color:#6b7280">3. In Progress → 2. Proposal</span></li><li style="margin:4px 0;color:#f59e0b">🔄 <strong>Desarrollo de Sitio Web + Contenido</strong>: <span style="color:#6b7280">2. Proposal → 3. In Progress</span></li><li style="margin:4px 0;color:#f59e0b">🔄 <strong>Migración a Shopify y Desarrollo de Tienda en Línea</strong>: <span style="color:#6b7280">3. In Progress → 6. Lost</span></li><li style="margin:4px 0;color:#f59e0b">🔄 <strong>Estrategia Digital de Captación de Leads</strong>: <span style="color:#6b7280">3. In Progress → 7. On Hold</span></li><li style="margin:4px 0;color:#f59e0b">🔄 <strong>Desarrollo de Tienda en Línea</strong>: <span style="color:#6b7280">2. Proposal → 3. In Progress</span></li></ul>
+      </div>
+
+    </div>
   </div>
-  <div class="footer">Dinkbit &middot; Pipeline Report &middot; Generado el 2026-06-14 &middot; Datos sincronizados desde Attio CRM</div>
+
+  <!-- In Progress section -->
+  <div style="background:#1a1a2e;border:1px solid #2a2a3a;border-radius:12px;overflow:hidden;margin-bottom:24px">
+    <div style="padding:16px 20px;border-bottom:1px solid #2a2a3a">
+      <h2 style="font-size:15px;font-weight:600;color:#f8fafc">En Progreso <span style="background:#f59e0b;color:#000;padding:2px 8px;border-radius:10px;font-size:11px;margin-left:8px">15 deals</span></h2>
+    </div>
+    <table>
+      <thead><tr>
+        <th>Deal</th>
+        <th>Área</th>
+        <th>Etapa</th>
+        <th style="text-align:right">Valor</th>
+      </tr></thead>
+      <tbody><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Estrategia Digital para eCommerce</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Marketing</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">In Progress</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$464,032</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Estrategia Digital Integral</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Marketing</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">In Progress</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$424,100</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Sitio Web - Bradescard</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">In Progress</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$288,400</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Desarrollo de Sitio Web</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">In Progress</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$231,250</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Estrategia Digital</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Marketing</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">In Progress</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$182,400</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Desarrollo de Tienda en Línea</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">In Progress</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$177,500</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Desarrollo de Nuevo Sitio Web y Tienda en Línea</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">In Progress</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$172,500</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Diseño y Desarrollo de Sitio Web</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">In Progress</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$147,000</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Estrategia de Paid Media para eCommerce</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Marketing</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">In Progress</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$137,000</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Desarrollo de Tienda en Línea</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">In Progress</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$121,500</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Rediseño de Sitio Web</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">In Progress</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$68,500</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Desarrollo de Sitio Web + Contenido</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">In Progress</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$52,500</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Desarrollo de Sitio Web</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">In Progress</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$49,275</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Capacitación de Google Workspace</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Marketing</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">In Progress</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$19,700</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Migración a Google Workspace</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">In Progress</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">—</td>
+        </tr></tbody>
+    </table>
+  </div>
+
+  <!-- Won section -->
+  <div style="background:#1a1a2e;border:1px solid #2a2a3a;border-radius:12px;overflow:hidden;margin-bottom:24px">
+    <div style="padding:16px 20px;border-bottom:1px solid #2a2a3a">
+      <h2 style="font-size:15px;font-weight:600;color:#f8fafc">Ganados ✓ <span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;margin-left:8px">20 deals</span></h2>
+    </div>
+    <table>
+      <thead><tr>
+        <th>Deal</th>
+        <th>Área</th>
+        <th>Etapa</th>
+        <th style="text-align:right">Valor</th>
+      </tr></thead>
+      <tbody><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Desarrollo de Tienda en Línea para México y Costa Rica</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$297,185</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Estrategia Digital para Descargas y Transacciones</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Marketing</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$138,250</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Estrategia Digital para eCommerce</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Marketing</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$136,000</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Rediseño de Tienda en Línea</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$130,125</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Estrategia Digital en Google Ads</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Marketing</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$122,100</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Reconstrucción de Tienda en Línea</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$112,995</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Desarrollo de Tienda en Línea</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$99,500</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Diseño y Desarrollo de Sitio Web</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$78,500</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Rediseño de Sitio Web</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$74,500</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Rediseño y Desarrollo de Nuevo Sitio Web</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$69,500</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">DANNA | Creación de Tienda en Línea</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$52,500</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Desarrollo de Nuevo Sitio Web</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$50,000</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Desarrollo de Tienda en Línea</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$45,000</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">DANNA | Sitio Web para Lanzamiento de EP</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$43,250</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Desarrollo de Nuevo Sitio Web</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$42,750</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Desarrollo de Nuevo Sitio Web</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$36,500</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Naming y Branding de Nueva Empresa</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Design</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$21,500</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Consultoría para Desarrollo de Plataforma Financiera</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$20,300</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Hoyer | Sitio Web + Tienda en Línea</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Web &amp; App Dev</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$5,400</td>
+        </tr><tr>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#e2e8f0;font-size:13px">Estrategia de Paid Media para Bailey International</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#94a3b8;font-size:12px">Marketing</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a"><span style="background:#10b981;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">Won ✓</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #2a2a3a;color:#10b981;font-size:13px;font-weight:600;text-align:right">MX$5,100</td>
+        </tr></tbody>
+    </table>
+  </div>
+
+  <!-- Footer -->
+  <div style="text-align:center;padding:20px;color:#475569;font-size:12px">
+    Generado automáticamente · Dinkbit Pipeline Report · June 15, 2026 · <a href="https://dinkbit.com">dinkbit.com</a>
+  </div>
+</div>
 </body>
 </html>
