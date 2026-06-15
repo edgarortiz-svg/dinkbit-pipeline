@@ -148,26 +148,27 @@
 <div class="page" id="root"></div>
 
 <script>
-const SNAPSHOT_DATE = "2026-06-05";
-const WEEK_START    = "2026-05-30"; // lunes de la semana
+const SNAPSHOT_DATE = "2026-06-14";
+const WEEK_START    = "2026-06-09"; // lunes de la semana
 
-const PREV_WEEK = null;
+const PREV_WEEK = { pipeVal: 2290557, wonCount: 20, lostCount: 6, pipeCount: 26, byStageCount: { '3. In Progress': 16, '4. Due Diligence': 2 } };
 
 const DEALS = [
   // 2. Proposal
   {name:"Branding y Papelería Corporativa",         company:"Rodriguez Davalos Abogados",      stage:"2. Proposal",      bu:"Design",                src:"Former Client",  sol:"Branding",                val:0,       created:"2026-06-05"},
   {name:"Diseño de Sitio Web | A.I.",               company:"MBS Textil",                      stage:"2. Proposal",      bu:"Web & App Development", src:"Network",        sol:"Website",                 val:15000,   created:"2026-05-05"},
-  {name:"Desarrollo de Sitio Web + Contenido",      company:"QM+3",                            stage:"2. Proposal",      bu:"Web & App Development", src:"Direct Contact", sol:"Website",                 val:0,       created:"2026-05-29"},
   {name:"Desarrollo de Plataforma de Asset Management", company:"Rainbow Lobster",             stage:"2. Proposal",      bu:"Web & App Development", src:"Network",        sol:"Digital Platform",        val:0,       created:"2026-05-28"},
   {name:"Desarrollo de Sitio Web",                  company:"Rodriguez Davalos Abogados",      stage:"2. Proposal",      bu:"Web & App Development", src:"Former Client",  sol:"Website",                 val:0,       created:"2026-06-05"},
   {name:"Estrategia Digital de TikTok",             company:"Church's Texas Chicken",          stage:"2. Proposal",      bu:"Marketing",             src:"Former Client",  sol:"Marketing Strategy",      val:0,       created:"2026-05-20"},
   {name:"Generación de Videos Educativos",          company:"RF Travel Group",                 stage:"2. Proposal",      bu:"Design",                src:"Network",        sol:"Graphic Digital Materials",val:0,       created:"2026-06-05"},
-  {name:"Desarrollo de Tienda en Línea",            company:"Frenos Ismael",                   stage:"2. Proposal",      bu:"Web & App Development", src:"Direct Contact", sol:"Online Store",             val:0,       created:"2026-06-05"},
+  {name:"Bolsa de Horas y Póliza de Mantenimiento | Shopify", company:"Grupo Pochteca",        stage:"2. Proposal",      bu:"Web & App Development", src:"PR and Events",  sol:"Online Store",            val:0,       created:"2026-05-05"},
+  {name:"Urbano Town - Atempo (Landing Page)",      company:"Urbano Town",                     stage:"2. Proposal",      bu:"Web & App Development", src:"Network",        sol:"Website",                 val:0,       created:"2026-06-12"},
+  {name:"Urbano Town - Encore (Landing Page)",      company:"Urbano Town",                     stage:"2. Proposal",      bu:"Web & App Development", src:"Network",        sol:"Website",                 val:0,       created:"2026-06-12"},
+  {name:"Estrategia Digital | Fase Zero",           company:null,                              stage:"2. Proposal",      bu:"Marketing",             src:"Network",        sol:"Marketing Strategy",      val:0,       created:"2026-06-12"},
   // 3. In Progress
   {name:"Capacitación de Google Workspace",         company:"DiferenciArte",                   stage:"3. In Progress",   bu:"Marketing",             src:"Network",        sol:"Google Workspace",        val:19700,   created:"2026-05-13"},
-  {name:"Bolsa de Horas y Póliza de Mantenimiento | Shopify", company:"Grupo Pochteca",        stage:"3. In Progress",   bu:"Web & App Development", src:"PR and Events",  sol:"Online Store",            val:0,       created:"2026-05-05"},
-  {name:"Migración a Shopify y Desarrollo de Tienda en Línea", company:"Proviamiga México",    stage:"3. In Progress",   bu:"Web & App Development", src:"Shopify",        sol:"Online Store",            val:147800,  created:"2026-03-27"},
-  {name:"Estrategia Digital Integral",              company:"PM Steele",                       stage:"3. In Progress",   bu:"Marketing",             src:"Direct Contact", sol:"Marketing Strategy",      val:0,       created:"2026-05-20"},
+  {name:"Desarrollo de Sitio Web + Contenido",      company:"QM+3",                            stage:"3. In Progress",   bu:"Web & App Development", src:"Direct Contact", sol:"Website",                 val:52500,   created:"2026-05-29"},
+  {name:"Estrategia Digital Integral",              company:"PM Steele",                       stage:"3. In Progress",   bu:"Marketing",             src:"Direct Contact", sol:"Marketing Strategy",      val:424100,  created:"2026-05-20"},
   {name:"Desarrollo de Nuevo Sitio Web y Tienda en Línea", company:"Pioneer Electronics De Mexico", stage:"3. In Progress", bu:"Web & App Development", src:"Active Client", sol:"Online Store",         val:172500,  created:"2026-03-27"},
   {name:"Estrategia Digital",                       company:"DiferenciArte",                   stage:"3. In Progress",   bu:"Marketing",             src:"Network",        sol:"Marketing Strategy",      val:182400,  created:"2026-05-12"},
   {name:"Diseño y Desarrollo de Sitio Web",         company:"BASHAM",                          stage:"3. In Progress",   bu:"Web & App Development", src:"Direct Contact", sol:"Website",                 val:147000,  created:"2026-03-27"},
@@ -179,7 +180,7 @@ const DEALS = [
   {name:"Estrategia Digital para eCommerce",        company:"Healthical",                      stage:"3. In Progress",   bu:"Marketing",             src:"Active Client",  sol:"Marketing Strategy",      val:464032,  created:"2026-05-20"},
   {name:"Desarrollo de Tienda en Línea",            company:"REAC Automatizaciones",           stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Online Store",             val:121500,  created:"2026-04-15"},
   {name:"Rediseño de Sitio Web",                    company:"Novygi",                          stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Website",                 val:68500,   created:"2026-04-17"},
-  {name:"Estrategia Digital de Captación de Leads", company:"Filup RH",                        stage:"3. In Progress",   bu:"Marketing",             src:"Direct Contact", sol:"Marketing Strategy",      val:0,       created:"2026-05-13"},
+  {name:"Desarrollo de Tienda en Línea",            company:"Frenos Ismael",                   stage:"3. In Progress",   bu:"Web & App Development", src:"Direct Contact", sol:"Online Store",             val:177500,  created:"2026-06-05"},
   // 4. Due Diligence
   {name:"Estrategia Digital para captación de Leads", company:"Centro Mexicano de Fertilidad", stage:"4. Due Diligence", bu:"Marketing",             src:"Former Client",  sol:"Marketing Strategy",      val:129000,  created:"2026-03-27"},
   {name:"Distribuidoras | B Hermanos",              company:"Grupo Batta",                     stage:"4. Due Diligence", bu:"Marketing",             src:"Active Client",  sol:"Marketing Strategy",      val:117200,  created:"2026-03-26"},
@@ -211,6 +212,7 @@ const DEALS = [
   {name:"Estragia Digital | Mundial 2026",          company:"Estado Natural",                  stage:"6. Lost",          bu:"Marketing",             src:"Former Client",  sol:"Marketing Strategy",      val:68250,   created:"2026-05-05"},
   {name:"Desarrollo de Tienda en Línea",            company:"Corporativo DL",                  stage:"6. Lost",          bu:"Web & App Development", src:"PR and Events",  sol:"Online Store",             val:127500,  created:"2026-04-14"},
   {name:"Estrategia de Contenidos Rumbo al Mundial 2026", company:null,                        stage:"6. Lost",          bu:"Marketing",             src:"Network",        sol:"Graphic Digital Materials",val:96000,   created:"2026-04-10"},
+  {name:"Migración a Shopify y Desarrollo de Tienda en Línea", company:"Proviamiga México",    stage:"6. Lost",          bu:"Web & App Development", src:"Shopify",        sol:"Online Store",            val:147800,  created:"2026-03-27"},
 ];
 
 const BU_COLOR = {
