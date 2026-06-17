@@ -1,114 +1,399 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Dinkbit Pipeline Report</title>
-<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8fafc;color:#1e293b}.container{max-width:1200px;margin:0 auto;padding:32px 24px}table{width:100%;border-collapse:collapse}th{text-align:left;padding:10px 14px;font-size:12px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.5px;background:#f8fafc;border-bottom:2px solid #e2e8f0}</style>
-</head>
-<body>
-<div class="container">
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;flex-wrap:wrap;gap:16px">
-    <div>
-      <div style="font-size:13px;font-weight:700;color:#6366f1;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">dinkbit</div>
-      <h1 style="font-size:28px;font-weight:800;color:#0f172a">Pipeline Report</h1>
-      <p style="font-size:14px;color:#64748b;margin-top:4px">Actualizado: June 16, 2026</p>
-    </div>
-    <div style="text-align:right">
-      <div style="font-size:32px;font-weight:800;color:#0f172a">MX$7,911,617</div>
-      <div style="font-size:13px;color:#64748b">Valor total (todos los deals activos)</div>
-    </div>
-  </div>
-  <div style="background:#fff;border-radius:12px;padding:20px 24px;box-shadow:0 1px 4px rgba(0,0,0,.07);margin-bottom:24px;border-left:4px solid #f59e0b">
-    <div style="font-size:14px;font-weight:700;color:#92400e;margin-bottom:12px">&#9889; Cambios detectados desde ayer</div>
-    <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #f1f5f9"><span style="background:#fef9c3;color:#854d0e;padding:2px 8px;border-radius:10px;font-size:12px;font-weight:700">NEW</span><span style="font-size:13px;color:#1e293b">[Desarrollo Web &amp; App MX] John Doe</span><span style="font-size:12px;color:#94a3b8;margin-left:auto">2026-06-15</span></div>
-    <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #f1f5f9"><span style="background:#fef9c3;color:#854d0e;padding:2px 8px;border-radius:10px;font-size:12px;font-weight:700">NEW</span><span style="font-size:13px;color:#1e293b">[Estrategia Digital MX] Juan Prueba</span><span style="font-size:12px;color:#94a3b8;margin-left:auto">2026-06-16</span></div>
-    <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #f1f5f9"><span style="background:#fee2e2;color:#991b1b;padding:2px 8px;border-radius:10px;font-size:12px;font-weight:700">STAGE CHANGE</span><span style="font-size:13px;color:#1e293b">Estrategia de Paid Media para eCommerce</span><span style="font-size:12px;color:#64748b">3. In Progress &#8594; 6. Lost</span><span style="font-size:12px;color:#0f172a;font-weight:600;margin-left:auto">MX$137,000</span></div>
-  </div>
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px">
-    <div style="background:#fff;border-radius:12px;padding:20px;box-shadow:0 1px 4px rgba(0,0,0,.07)"><div style="font-size:32px;font-weight:800;color:#0f172a">77</div><div style="font-size:13px;color:#64748b;margin-top:2px">Total Deals Activos</div></div>
-    <div style="background:#fff;border-radius:12px;padding:20px;box-shadow:0 1px 4px rgba(0,0,0,.07)"><div style="font-size:24px;font-weight:800;color:#0ea5e9">MX$4,240,812</div><div style="font-size:13px;color:#64748b;margin-top:2px">Pipeline en Negociación</div></div>
-    <div style="background:#fff;border-radius:12px;padding:20px;box-shadow:0 1px 4px rgba(0,0,0,.07)"><div style="font-size:24px;font-weight:800;color:#10b981">MX$1,580,955</div><div style="font-size:13px;color:#64748b;margin-top:2px">Valor Ganado (Won)</div></div>
-    <div style="background:#fff;border-radius:12px;padding:20px;box-shadow:0 1px 4px rgba(0,0,0,.07)"><div style="font-size:32px;font-weight:800;color:#6366f1">16</div><div style="font-size:13px;color:#64748b;margin-top:2px">En Progreso / Due Diligence</div></div>
-  </div>
-  <div style="margin-bottom:24px">
-    <h2 style="font-size:16px;font-weight:700;color:#0f172a;margin-bottom:14px">Deals por Etapa</h2>
-    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:12px">
-      <div style="background:#fff;border-radius:12px;padding:18px 20px;box-shadow:0 1px 4px rgba(0,0,0,0.07);border-left:4px solid #6366f1"><div style="font-size:24px;font-weight:800;color:#6366f1">2</div><div style="font-size:13px;color:#64748b;margin-top:2px">Lead</div><div style="font-size:12px;color:#94a3b8;margin-top:6px">&#8212;</div></div>
-      <div style="background:#fff;border-radius:12px;padding:18px 20px;box-shadow:0 1px 4px rgba(0,0,0,0.07);border-left:4px solid #8b5cf6"><div style="font-size:24px;font-weight:800;color:#8b5cf6">10</div><div style="font-size:13px;color:#64748b;margin-top:2px">Proposal</div><div style="font-size:12px;color:#94a3b8;margin-top:6px">MX$15,000</div></div>
-      <div style="background:#fff;border-radius:12px;padding:18px 20px;box-shadow:0 1px 4px rgba(0,0,0,0.07);border-left:4px solid #0ea5e9"><div style="font-size:24px;font-weight:800;color:#0ea5e9">14</div><div style="font-size:13px;color:#64748b;margin-top:2px">In Progress</div><div style="font-size:12px;color:#94a3b8;margin-top:6px">MX$2,398,657</div></div>
-      <div style="background:#fff;border-radius:12px;padding:18px 20px;box-shadow:0 1px 4px rgba(0,0,0,0.07);border-left:4px solid #f59e0b"><div style="font-size:24px;font-weight:800;color:#f59e0b">2</div><div style="font-size:13px;color:#64748b;margin-top:2px">Due Diligence</div><div style="font-size:12px;color:#94a3b8;margin-top:6px">MX$246,200</div></div>
-      <div style="background:#fff;border-radius:12px;padding:18px 20px;box-shadow:0 1px 4px rgba(0,0,0,0.07);border-left:4px solid #10b981"><div style="font-size:24px;font-weight:800;color:#10b981">20</div><div style="font-size:13px;color:#64748b;margin-top:2px">Won</div><div style="font-size:12px;color:#94a3b8;margin-top:6px">MX$1,580,955</div></div>
-      <div style="background:#fff;border-radius:12px;padding:18px 20px;box-shadow:0 1px 4px rgba(0,0,0,0.07);border-left:4px solid #ef4444"><div style="font-size:24px;font-weight:800;color:#ef4444">8</div><div style="font-size:13px;color:#64748b;margin-top:2px">Lost</div><div style="font-size:12px;color:#94a3b8;margin-top:6px">MX$1,320,550</div></div>
-      <div style="background:#fff;border-radius:12px;padding:18px 20px;box-shadow:0 1px 4px rgba(0,0,0,0.07);border-left:4px solid #94a3b8"><div style="font-size:24px;font-weight:800;color:#94a3b8">21</div><div style="font-size:13px;color:#64748b;margin-top:2px">On Hold</div><div style="font-size:12px;color:#94a3b8;margin-top:6px">MX$2,350,255</div></div>
-    </div>
-  </div>
-  <div style="background:#fff;border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,.07);margin-bottom:24px;overflow:hidden">
-    <div style="padding:18px 20px;border-bottom:1px solid #f1f5f9"><h2 style="font-size:16px;font-weight:700;color:#0f172a">Deals Activos (69)</h2><p style="font-size:13px;color:#64748b;margin-top:2px">pipeline_status = Active (excluye Lost)</p></div>
-    <div style="overflow-x:auto"><table><thead><tr><th>Deal</th><th>&#193;rea</th><th>Soluci&#243;n</th><th>Etapa</th><th style="text-align:right">Valor</th></tr></thead><tbody>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fffbeb"><td style="padding:10px 14px;font-size:13px;color:#1e293b">[Desarrollo Web &amp; App MX] John Doe <span style="background:#fef9c3;color:#854d0e;font-size:11px;font-weight:700;padding:1px 7px;border-radius:10px">NEW</span></td><td style="padding:10px 14px;font-size:13px;color:#475569">Web &amp; App Development</td><td style="padding:10px 14px;font-size:13px;color:#475569">Website</td><td style="padding:10px 14px"><span style="background:#e0e7ff;color:#6366f1;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Lead</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">&#8212;</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fffbeb"><td style="padding:10px 14px;font-size:13px;color:#1e293b">[Estrategia Digital MX] Juan Prueba <span style="background:#fef9c3;color:#854d0e;font-size:11px;font-weight:700;padding:1px 7px;border-radius:10px">NEW</span></td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing</td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing Strategy</td><td style="padding:10px 14px"><span style="background:#e0e7ff;color:#6366f1;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Lead</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">&#8212;</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Bolsa de Horas y P&#243;liza de Mantenimiento | Shopify</td><td style="padding:10px 14px;font-size:13px;color:#475569">Web &amp; App Development</td><td style="padding:10px 14px;font-size:13px;color:#475569">Online Store</td><td style="padding:10px 14px"><span style="background:#ede9fe;color:#8b5cf6;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Proposal</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">&#8212;</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Branding y Papeler&#237;a Corporativa</td><td style="padding:10px 14px;font-size:13px;color:#475569">Design</td><td style="padding:10px 14px;font-size:13px;color:#475569">Branding</td><td style="padding:10px 14px"><span style="background:#ede9fe;color:#8b5cf6;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Proposal</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">&#8212;</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Desarrollo de Plataforma de Asset Management</td><td style="padding:10px 14px;font-size:13px;color:#475569">Web &amp; App Development</td><td style="padding:10px 14px;font-size:13px;color:#475569">Digital Platform</td><td style="padding:10px 14px"><span style="background:#ede9fe;color:#8b5cf6;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Proposal</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">&#8212;</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Desarrollo de Sitio Web</td><td style="padding:10px 14px;font-size:13px;color:#475569">Web &amp; App Development</td><td style="padding:10px 14px;font-size:13px;color:#475569">Website</td><td style="padding:10px 14px"><span style="background:#ede9fe;color:#8b5cf6;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Proposal</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">&#8212;</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Dise&#241;o de Sitio Web | A.I.</td><td style="padding:10px 14px;font-size:13px;color:#475569">Web &amp; App Development</td><td style="padding:10px 14px;font-size:13px;color:#475569">Website</td><td style="padding:10px 14px"><span style="background:#ede9fe;color:#8b5cf6;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Proposal</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$15,000</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Estrategia Digital de TikTok</td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing</td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing Strategy</td><td style="padding:10px 14px"><span style="background:#ede9fe;color:#8b5cf6;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Proposal</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">&#8212;</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Estrategia Digital | Fase Zero</td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing</td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing Strategy</td><td style="padding:10px 14px"><span style="background:#ede9fe;color:#8b5cf6;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Proposal</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">&#8212;</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Generaci&#243;n de Videos Educativos</td><td style="padding:10px 14px;font-size:13px;color:#475569">Design</td><td style="padding:10px 14px;font-size:13px;color:#475569">Graphic Digital Materials</td><td style="padding:10px 14px"><span style="background:#ede9fe;color:#8b5cf6;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Proposal</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">&#8212;</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Urbano Town - Atempo (Landing Page)</td><td style="padding:10px 14px;font-size:13px;color:#475569">Web &amp; App Development</td><td style="padding:10px 14px;font-size:13px;color:#475569">Website</td><td style="padding:10px 14px"><span style="background:#ede9fe;color:#8b5cf6;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Proposal</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">&#8212;</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Urbano Town - Encore (Landing Page)</td><td style="padding:10px 14px;font-size:13px;color:#475569">Web &amp; App Development</td><td style="padding:10px 14px;font-size:13px;color:#475569">Website</td><td style="padding:10px 14px"><span style="background:#ede9fe;color:#8b5cf6;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Proposal</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">&#8212;</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Capacitaci&#243;n de Google Workspace</td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing</td><td style="padding:10px 14px;font-size:13px;color:#475569">Google Workspace</td><td style="padding:10px 14px"><span style="background:#e0f2fe;color:#0ea5e9;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">In Progress</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$19,700</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Desarrollo de Nuevo Sitio Web y Tienda en L&#237;nea</td><td style="padding:10px 14px;font-size:13px;color:#475569">Web &amp; App Development</td><td style="padding:10px 14px;font-size:13px;color:#475569">Online Store</td><td style="padding:10px 14px"><span style="background:#e0f2fe;color:#0ea5e9;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">In Progress</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$172,500</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Desarrollo de Sitio Web</td><td style="padding:10px 14px;font-size:13px;color:#475569">Web &amp; App Development</td><td style="padding:10px 14px;font-size:13px;color:#475569">Website</td><td style="padding:10px 14px"><span style="background:#e0f2fe;color:#0ea5e9;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">In Progress</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$49,275</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Desarrollo de Sitio Web</td><td style="padding:10px 14px;font-size:13px;color:#475569">Web &amp; App Development</td><td style="padding:10px 14px;font-size:13px;color:#475569">Website</td><td style="padding:10px 14px"><span style="background:#e0f2fe;color:#0ea5e9;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">In Progress</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$231,250</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Desarrollo de Sitio Web + Contenido</td><td style="padding:10px 14px;font-size:13px;color:#475569">Web &amp; App Development</td><td style="padding:10px 14px;font-size:13px;color:#475569">Website</td><td style="padding:10px 14px"><span style="background:#e0f2fe;color:#0ea5e9;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">In Progress</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$52,500</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Desarrollo de Tienda en L&#237;nea</td><td style="padding:10px 14px;font-size:13px;color:#475569">Web &amp; App Development</td><td style="padding:10px 14px;font-size:13px;color:#475569">Online Store</td><td style="padding:10px 14px"><span style="background:#e0f2fe;color:#0ea5e9;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">In Progress</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$121,500</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Desarrollo de Tienda en L&#237;nea</td><td style="padding:10px 14px;font-size:13px;color:#475569">Web &amp; App Development</td><td style="padding:10px 14px;font-size:13px;color:#475569">Online Store</td><td style="padding:10px 14px"><span style="background:#e0f2fe;color:#0ea5e9;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">In Progress</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$177,500</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Dise&#241;o y Desarrollo de Sitio Web</td><td style="padding:10px 14px;font-size:13px;color:#475569">Web &amp; App Development</td><td style="padding:10px 14px;font-size:13px;color:#475569">Website</td><td style="padding:10px 14px"><span style="background:#e0f2fe;color:#0ea5e9;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">In Progress</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$147,000</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Estrategia Digital</td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing</td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing Strategy</td><td style="padding:10px 14px"><span style="background:#e0f2fe;color:#0ea5e9;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">In Progress</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$182,400</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Estrategia Digital Integral</td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing</td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing Strategy</td><td style="padding:10px 14px"><span style="background:#e0f2fe;color:#0ea5e9;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">In Progress</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$424,100</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Estrategia Digital para eCommerce</td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing</td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing Strategy</td><td style="padding:10px 14px"><span style="background:#e0f2fe;color:#0ea5e9;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">In Progress</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$464,032</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Migraci&#243;n a Google Workspace</td><td style="padding:10px 14px;font-size:13px;color:#475569">Web &amp; App Development</td><td style="padding:10px 14px;font-size:13px;color:#475569">Google Workspace</td><td style="padding:10px 14px"><span style="background:#e0f2fe;color:#0ea5e9;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">In Progress</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">&#8212;</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Redise&#241;o de Sitio Web</td><td style="padding:10px 14px;font-size:13px;color:#475569">Web &amp; App Development</td><td style="padding:10px 14px;font-size:13px;color:#475569">Website</td><td style="padding:10px 14px"><span style="background:#e0f2fe;color:#0ea5e9;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">In Progress</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$68,500</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Sitio Web - Bradescard</td><td style="padding:10px 14px;font-size:13px;color:#475569">Web &amp; App Development</td><td style="padding:10px 14px;font-size:13px;color:#475569">Website</td><td style="padding:10px 14px"><span style="background:#e0f2fe;color:#0ea5e9;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">In Progress</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$288,400</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Distribuidoras | B Hermanos</td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing</td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing Strategy</td><td style="padding:10px 14px"><span style="background:#fef3c7;color:#f59e0b;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Due Diligence</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$117,200</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Estrategia Digital para captaci&#243;n de Leads</td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing</td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing Strategy</td><td style="padding:10px 14px"><span style="background:#fef3c7;color:#f59e0b;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Due Diligence</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$129,000</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Consultor&#237;a para Desarrollo de Plataforma Financiera</td><td style="padding:10px 14px;font-size:13px;color:#475569">Web &amp; App Development</td><td style="padding:10px 14px;font-size:13px;color:#475569">Development Consultancy</td><td style="padding:10px 14px"><span style="background:#d1fae5;color:#10b981;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Won</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$20,300</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">DANNA | Creaci&#243;n de Tienda en L&#237;nea</td><td style="padding:10px 14px;font-size:13px;color:#475569">Web &amp; App Development</td><td style="padding:10px 14px;font-size:13px;color:#475569">Online Store</td><td style="padding:10px 14px"><span style="background:#d1fae5;color:#10b981;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Won</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$52,500</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">DANNA | Sitio Web para Lanzamiento de EP</td><td style="padding:10px 14px;font-size:13px;color:#475569">Web &amp; App Development</td><td style="padding:10px 14px;font-size:13px;color:#475569">Website</td><td style="padding:10px 14px"><span style="background:#d1fae5;color:#10b981;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Won</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$43,250</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Desarrollo de Nuevo Sitio Web (x3 deals)</td><td style="padding:10px 14px;font-size:13px;color:#475569">Web &amp; App Development</td><td style="padding:10px 14px;font-size:13px;color:#475569">Website</td><td style="padding:10px 14px"><span style="background:#d1fae5;color:#10b981;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Won</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$129,250</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Desarrollo de Tienda en L&#237;nea</td><td style="padding:10px 14px;font-size:13px;color:#475569">Web &amp; App Development</td><td style="padding:10px 14px;font-size:13px;color:#475569">Online Store</td><td style="padding:10px 14px"><span style="background:#d1fae5;color:#10b981;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Won</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$45,000</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Desarrollo de Tienda en L&#237;nea</td><td style="padding:10px 14px;font-size:13px;color:#475569">Web &amp; App Development</td><td style="padding:10px 14px;font-size:13px;color:#475569">Online Store</td><td style="padding:10px 14px"><span style="background:#d1fae5;color:#10b981;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Won</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$99,500</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Desarrollo de Tienda en L&#237;nea para M&#233;xico y Costa Rica</td><td style="padding:10px 14px;font-size:13px;color:#475569">Web &amp; App Development</td><td style="padding:10px 14px;font-size:13px;color:#475569">Online Store</td><td style="padding:10px 14px"><span style="background:#d1fae5;color:#10b981;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Won</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$297,185</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Dise&#241;o y Desarrollo de Sitio Web</td><td style="padding:10px 14px;font-size:13px;color:#475569">Web &amp; App Development</td><td style="padding:10px 14px;font-size:13px;color:#475569">Website</td><td style="padding:10px 14px"><span style="background:#d1fae5;color:#10b981;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Won</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$78,500</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Estrategia Digital en Google Ads</td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing</td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing Strategy</td><td style="padding:10px 14px"><span style="background:#d1fae5;color:#10b981;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Won</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$122,100</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Estrategia Digital para Descargas y Transacciones</td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing</td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing Strategy</td><td style="padding:10px 14px"><span style="background:#d1fae5;color:#10b981;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Won</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$138,250</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Estrategia Digital para eCommerce</td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing</td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing Strategy</td><td style="padding:10px 14px"><span style="background:#d1fae5;color:#10b981;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Won</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$136,000</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Estrategia de Paid Media para Bailey International</td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing</td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing Strategy</td><td style="padding:10px 14px"><span style="background:#d1fae5;color:#10b981;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Won</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$5,100</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Hoyer | Sitio Web + Tienda en L&#237;nea</td><td style="padding:10px 14px;font-size:13px;color:#475569">Web &amp; App Development</td><td style="padding:10px 14px;font-size:13px;color:#475569">Website</td><td style="padding:10px 14px"><span style="background:#d1fae5;color:#10b981;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Won</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$5,400</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Naming y Branding de Nueva Empresa</td><td style="padding:10px 14px;font-size:13px;color:#475569">Design</td><td style="padding:10px 14px;font-size:13px;color:#475569">Branding</td><td style="padding:10px 14px"><span style="background:#d1fae5;color:#10b981;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Won</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$21,500</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Reconstrucci&#243;n de Tienda en L&#237;nea</td><td style="padding:10px 14px;font-size:13px;color:#475569">Web &amp; App Development</td><td style="padding:10px 14px;font-size:13px;color:#475569">Online Store</td><td style="padding:10px 14px"><span style="background:#d1fae5;color:#10b981;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Won</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$112,995</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Redise&#241;o de Tienda en L&#237;nea</td><td style="padding:10px 14px;font-size:13px;color:#475569">Web &amp; App Development</td><td style="padding:10px 14px;font-size:13px;color:#475569">Online Store</td><td style="padding:10px 14px"><span style="background:#d1fae5;color:#10b981;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Won</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$130,125</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Redise&#241;o y Desarrollo de Nuevo Sitio Web</td><td style="padding:10px 14px;font-size:13px;color:#475569">Web &amp; App Development</td><td style="padding:10px 14px;font-size:13px;color:#475569">Website</td><td style="padding:10px 14px"><span style="background:#d1fae5;color:#10b981;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Won</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$69,500</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Redise&#241;o de Sitio Web</td><td style="padding:10px 14px;font-size:13px;color:#475569">Web &amp; App Development</td><td style="padding:10px 14px;font-size:13px;color:#475569">Website</td><td style="padding:10px 14px"><span style="background:#d1fae5;color:#10b981;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Won</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$74,500</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">On Hold Deals (21 deals) - Various</td><td style="padding:10px 14px;font-size:13px;color:#475569">Various</td><td style="padding:10px 14px;font-size:13px;color:#475569">Various</td><td style="padding:10px 14px"><span style="background:#f1f5f9;color:#94a3b8;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">On Hold</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$2,350,255</td></tr>
-    </tbody></table></div>
-  </div>
-  <div style="background:#fff;border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,.07);overflow:hidden">
-    <div style="padding:18px 20px;border-bottom:1px solid #f1f5f9"><h2 style="font-size:16px;font-weight:700;color:#0f172a">Deals con Stage Lost (8)</h2><p style="font-size:13px;color:#64748b;margin-top:2px">pipeline_status = Active pero stage = Lost</p></div>
-    <div style="overflow-x:auto"><table><thead><tr><th>Deal</th><th>&#193;rea</th><th>Soluci&#243;n</th><th>Etapa</th><th style="text-align:right">Valor</th></tr></thead><tbody>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Estrategia de Paid Media para eCommerce <span style="background:#fee2e2;color:#991b1b;font-size:11px;font-weight:700;padding:1px 7px;border-radius:10px">CHANGED</span></td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing</td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing Strategy</td><td style="padding:10px 14px"><span style="background:#fee2e2;color:#ef4444;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Lost</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$137,000</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Desarrollo de Tienda en L&#237;nea</td><td style="padding:10px 14px;font-size:13px;color:#475569">Web &amp; App Development</td><td style="padding:10px 14px;font-size:13px;color:#475569">Online Store</td><td style="padding:10px 14px"><span style="background:#fee2e2;color:#ef4444;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Lost</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$127,500</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Estrategia Digital | Mundial 2026</td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing</td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing Strategy</td><td style="padding:10px 14px"><span style="background:#fee2e2;color:#ef4444;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Lost</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$68,250</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Estrategia de Captaci&#243;n de Leads</td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing</td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing Strategy</td><td style="padding:10px 14px"><span style="background:#fee2e2;color:#ef4444;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Lost</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$144,000</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Estrategia de Contenidos Rumbo al Mundial 2026</td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing</td><td style="padding:10px 14px;font-size:13px;color:#475569">Graphic Digital Materials</td><td style="padding:10px 14px"><span style="background:#fee2e2;color:#ef4444;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Lost</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$96,000</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Licitaci&#243;n de Marcas</td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing</td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing Strategy</td><td style="padding:10px 14px"><span style="background:#fee2e2;color:#ef4444;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Lost</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">&#8212;</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Licitaci&#243;n para Estrategia Digital 2026</td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing</td><td style="padding:10px 14px;font-size:13px;color:#475569">Marketing Strategy</td><td style="padding:10px 14px"><span style="background:#fee2e2;color:#ef4444;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Lost</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$600,000</td></tr>
-    <tr style="border-bottom:1px solid #f1f5f9;background:#fff"><td style="padding:10px 14px;font-size:13px;color:#1e293b">Migraci&#243;n a Shopify y Desarrollo de Tienda en L&#237;nea</td><td style="padding:10px 14px;font-size:13px;color:#475569">Web &amp; App Development</td><td style="padding:10px 14px;font-size:13px;color:#475569">Online Store</td><td style="padding:10px 14px"><span style="background:#fee2e2;color:#ef4444;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600">Lost</span></td><td style="padding:10px 14px;font-size:13px;font-weight:600;color:#0f172a;text-align:right">MX$147,800</td></tr>
-    </tbody></table></div>
-  </div>
-  <div style="text-align:center;padding:24px 0 8px;font-size:12px;color:#94a3b8">Dinkbit Pipeline Report &bull; Generado autom&#225;ticamente &bull; June 16, 2026</div>
-</div>
-</body>
-</html>
+PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVzIj4KPGhlYWQ+CiAgPG1ldGEgY2hhcnNldD0i
+VVRGLTgiPgogIDxtZXRhIG5hbWU9InZpZXdwb3J0IiBjb250ZW50PSJ3aWR0aD1kZXZpY2Utd2lk
+dGgsIGluaXRpYWwtc2NhbGU9MS4wIj4KICA8dGl0bGU+RGlua2JpdCBQaXBlbGluZSBSZXBvcnQ8
+L3RpdGxlPgogIDxzdHlsZT4KICAgIDpyb290IHsKICAgICAgLS1iZzogIzBkMGYxNDsgLS1zdXJm
+YWNlOiAjMTYxYjIyOyAtLXN1cmZhY2UyOiAjMWMyMjMwOwogICAgICAtLWJvcmRlcjogIzJhMzM0
+NDsgLS10ZXh0OiAjZTZlZGYzOyAtLXRleHQtbXV0ZWQ6ICM3ZDg1OTA7CiAgICAgIC0tYWNjZW50
+OiAjNThhNmZmOyAtLWdyZWVuOiAjM2ZiOTUwOyAtLXllbGxvdzogI2QyOTkyMjsKICAgICAgLS1v
+cmFuZ2U6ICNmMDg4M2U7IC0tcmVkOiAjZjg1MTQ5OyAtLXB1cnBsZTogI2JjOGNmZjsgLS10ZWFs
+OiAjMzlkM2QzOwogICAgfQogICAgKiB7IGJveC1zaXppbmc6IGJvcmRlci1ib3g7IG1hcmdpbjog
+MDsgcGFkZGluZzogMDsgfQogICAgYm9keSB7IGZvbnQtZmFtaWx5OiAtYXBwbGUtc3lzdGVtLCBC
+bGlua01hY1N5c3RlbUZvbnQsICdTZWdvZSBVSScsIHN5c3RlbS11aSwgc2Fucy1zZXJpZjsgYmFj
+a2dyb3VuZDogdmFyKC0tYmcpOyBjb2xvcjogdmFyKC0tdGV4dCk7IG1pbi1oZWlnaHQ6IDEwMHZo
+OyB9CiAgICBoZWFkZXIgeyBiYWNrZ3JvdW5kOiB2YXIoLS1zdXJmYWNlKTsgYm9yZGVyLWJvdHRv
+bTogMXB4IHNvbGlkIHZhcigtLWJvcmRlcik7IHBhZGRpbmc6IDIwcHggMzJweDsgZGlzcGxheTog
+ZmxleDsgYWxpZ24taXRlbXM6IGNlbnRlcjsganVzdGlmeS1jb250ZW50OiBzcGFjZS1iZXR3ZWVu
+OyB9CiAgICAubG9nbyB7IGZvbnQtc2l6ZTogMjBweDsgZm9udC13ZWlnaHQ6IDcwMDsgY29sb3I6
+IHZhcigtLWFjY2VudCk7IGxldHRlci1zcGFjaW5nOiAtMC41cHg7IH0KICAgIC5sb2dvIHNwYW4g
+eyBjb2xvcjogdmFyKC0tdGV4dC1tdXRlZCk7IGZvbnQtd2VpZ2h0OiA0MDA7IGZvbnQtc2l6ZTog
+MTRweDsgbWFyZ2luLWxlZnQ6IDEycHg7IH0KICAgIC50aW1lc3RhbXAgeyBmb250LXNpemU6IDEy
+cHg7IGNvbG9yOiB2YXIoLS10ZXh0LW11dGVkKTsgfQogICAgLm1haW4geyBtYXgtd2lkdGg6IDE0
+MDBweDsgbWFyZ2luOiAwIGF1dG87IHBhZGRpbmc6IDMycHg7IH0KICAgIGgyIHsgZm9udC1zaXpl
+OiAxOHB4OyBmb250LXdlaWdodDogNjAwOyBtYXJnaW4tYm90dG9tOiAxNnB4OyBjb2xvcjogdmFy
+KC0tdGV4dCk7IH0KICAgIGgzIHsgZm9udC1zaXplOiAxNHB4OyBmb250LXdlaWdodDogNjAwOyB0
+ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlOyBsZXR0ZXItc3BhY2luZzogMC41cHg7IGNvbG9yOiB2
+YXIoLS10ZXh0LW11dGVkKTsgbWFyZ2luLWJvdHRvbTogMTJweDsgfQogICAgLmNoYW5nZXMtYmFu
+bmVyIHsgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDEzNWRlZywgIzFhMjUzNSwgIzFjMjIz
+MCk7IGJvcmRlcjogMXB4IHNvbGlkICMyZDQwNjA7IGJvcmRlci1yYWRpdXM6IDEwcHg7IHBhZGRp
+bmc6IDIwcHggMjRweDsgbWFyZ2luLWJvdHRvbTogMjhweDsgfQogICAgLmNoYW5nZXMtYmFubmVy
+IGgyIHsgY29sb3I6IHZhcigtLWFjY2VudCk7IG1hcmdpbi1ib3R0b206IDEycHg7IGZvbnQtc2l6
+ZTogMTVweDsgfQogICAgLmNoYW5nZS1pdGVtIHsgZGlzcGxheTogZmxleDsgYWxpZ24taXRlbXM6
+IGNlbnRlcjsgZ2FwOiAxMHB4OyBwYWRkaW5nOiA4cHggMDsgYm9yZGVyLWJvdHRvbTogMXB4IHNv
+bGlkIHZhcigtLWJvcmRlcik7IGZvbnQtc2l6ZTogMTRweDsgfQogICAgLmNoYW5nZS1pdGVtOmxh
+c3QtY2hpbGQgeyBib3JkZXItYm90dG9tOiBub25lOyB9CiAgICAudGFnIHsgZGlzcGxheTogaW5s
+aW5lLWJsb2NrOyBwYWRkaW5nOiAycHggOHB4OyBib3JkZXItcmFkaXVzOiA0cHg7IGZvbnQtc2l6
+ZTogMTFweDsgZm9udC13ZWlnaHQ6IDYwMDsgd2hpdGUtc3BhY2U6IG5vd3JhcDsgfQogICAgLnRh
+Zy1zdGFnZSB7IGJhY2tncm91bmQ6ICMxZjNhNWY7IGNvbG9yOiAjNThhNmZmOyB9CiAgICAudGFn
+LXJlbW92ZWQgeyBiYWNrZ3JvdW5kOiAjM2QxZjFmOyBjb2xvcjogI2Y4NTE0OTsgfQogICAgLmtw
+aS1ncmlkIHsgZGlzcGxheTogZ3JpZDsgZ3JpZC10ZW1wbGF0ZS1jb2x1bW5zOiByZXBlYXQoYXV0
+by1maXQsIG1pbm1heCgxODBweCwgMWZyKSk7IGdhcDogMTZweDsgbWFyZ2luLWJvdHRvbTogMzJw
+eDsgfQogICAgLmtwaS1jYXJkIHsgYmFja2dyb3VuZDogdmFyKC0tc3VyZmFjZSk7IGJvcmRlcjog
+MXB4IHNvbGlkIHZhcigtLWJvcmRlcik7IGJvcmRlci1yYWRpdXM6IDEwcHg7IHBhZGRpbmc6IDIw
+cHg7IH0KICAgIC5rcGktY2FyZCAubGFiZWwgeyBmb250LXNpemU6IDEycHg7IGNvbG9yOiB2YXIo
+LS10ZXh0LW11dGVkKTsgdGV4dC10cmFuc2Zvcm06IHVwcGVyY2FzZTsgbGV0dGVyLXNwYWNpbmc6
+IDAuNXB4OyBtYXJnaW4tYm90dG9tOiA4cHg7IH0KICAgIC5rcGktY2FyZCAudmFsdWUgeyBmb250
+LXNpemU6IDI4cHg7IGZvbnQtd2VpZ2h0OiA3MDA7IGxpbmUtaGVpZ2h0OiAxOyB9CiAgICAua3Bp
+LWNhcmQgLnN1YiB7IGZvbnQtc2l6ZTogMTJweDsgY29sb3I6IHZhcigtLXRleHQtbXV0ZWQpOyBt
+YXJnaW4tdG9wOiA0cHg7IH0KICAgIC5jLWdyZWVuIHsgY29sb3I6IHZhcigtLWdyZWVuKTsgfSAu
+Yy1ibHVlIHsgY29sb3I6IHZhcigtLWFjY2VudCk7IH0gLmMteWVsbG93IHsgY29sb3I6IHZhcigt
+LXllbGxvdyk7IH0KICAgIC5jLW9yYW5nZSB7IGNvbG9yOiB2YXIoLS1vcmFuZ2UpOyB9IC5jLXJl
+ZCB7IGNvbG9yOiB2YXIoLS1yZWQpOyB9IC5jLXB1cnBsZSB7IGNvbG9yOiB2YXIoLS1wdXJwbGUp
+OyB9IC5jLXRlYWwgeyBjb2xvcjogdmFyKC0tdGVhbCk7IH0KICAgIC5zdGFnZS1ncmlkIHsgZGlz
+cGxheTogZ3JpZDsgZ3JpZC10ZW1wbGF0ZS1jb2x1bW5zOiByZXBlYXQoYXV0by1maXQsIG1pbm1h
+eCgxNjBweCwgMWZyKSk7IGdhcDogMTJweDsgbWFyZ2luLWJvdHRvbTogMzJweDsgfQogICAgLnN0
+YWdlLWNhcmQgeyBiYWNrZ3JvdW5kOiB2YXIoLS1zdXJmYWNlKTsgYm9yZGVyOiAxcHggc29saWQg
+dmFyKC0tYm9yZGVyKTsgYm9yZGVyLXJhZGl1czogOHB4OyBwYWRkaW5nOiAxNnB4OyB0ZXh0LWFs
+aWduOiBjZW50ZXI7IH0KICAgIC5zdGFnZS1jYXJkIC5zdGFnZS1uYW1lIHsgZm9udC1zaXplOiAx
+MnB4OyBjb2xvcjogdmFyKC0tdGV4dC1tdXRlZCk7IG1hcmdpbi1ib3R0b206IDhweDsgfQogICAg
+LnN0YWdlLWNhcmQgLnN0YWdlLWNvdW50IHsgZm9udC1zaXplOiAzMnB4OyBmb250LXdlaWdodDog
+NzAwOyB9CiAgICAuc3RhZ2UtY2FyZCAuc3RhZ2UtdmFsIHsgZm9udC1zaXplOiAxMnB4OyBjb2xv
+cjogdmFyKC0tdGV4dC1tdXRlZCk7IG1hcmdpbi10b3A6IDRweDsgfQogICAgLnN0YWdlLWJhciB7
+IGhlaWdodDogM3B4OyBib3JkZXItcmFkaXVzOiAycHg7IG1hcmdpbi10b3A6IDEycHg7IH0KICAg
+IC5zZWN0aW9uIHsgbWFyZ2luLWJvdHRvbTogMzZweDsgfQogICAgLnRhYmxlLXdyYXBwZXIgeyBv
+dmVyZmxvdy14OiBhdXRvOyBib3JkZXItcmFkaXVzOiAxMHB4OyBib3JkZXI6IDFweCBzb2xpZCB2
+YXIoLS1ib3JkZXIpOyB9CiAgICB0YWJsZSB7IHdpZHRoOiAxMDAlOyBib3JkZXItY29sbGFwc2U6
+IGNvbGxhcHNlOyBmb250LXNpemU6IDE0cHg7IH0KICAgIHRoZWFkIHsgYmFja2dyb3VuZDogdmFy
+KC0tc3VyZmFjZTIpOyB9CiAgICB0aGVhZCB0aCB7IHBhZGRpbmc6IDEycHggMTZweDsgdGV4dC1h
+bGlnbjogbGVmdDsgZm9udC1zaXplOiAxMXB4OyB0ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlOyBs
+ZXR0ZXItc3BhY2luZzogMC41cHg7IGNvbG9yOiB2YXIoLS10ZXh0LW11dGVkKTsgZm9udC13ZWln
+aHQ6IDYwMDsgd2hpdGUtc3BhY2U6IG5vd3JhcDsgfQogICAgdGJvZHkgdHIgeyBiYWNrZ3JvdW5k
+OiB2YXIoLS1zdXJmYWNlKTsgYm9yZGVyLWJvdHRvbTogMXB4IHNvbGlkIHZhcigtLWJvcmRlcik7
+IH0KICAgIHRib2R5IHRyOmxhc3QtY2hpbGQgeyBib3JkZXItYm90dG9tOiBub25lOyB9CiAgICB0
+Ym9keSB0cjpob3ZlciB7IGJhY2tncm91bmQ6IHZhcigtLXN1cmZhY2UyKTsgfQogICAgdGJvZHkg
+dGQgeyBwYWRkaW5nOiAxMnB4IDE2cHg7IHZlcnRpY2FsLWFsaWduOiBtaWRkbGU7IH0KICAgIC5k
+ZWFsLW5hbWUgeyBmb250LXdlaWdodDogNTAwOyBjb2xvcjogdmFyKC0tdGV4dCk7IH0KICAgIC5k
+ZWFsLWJ1IHsgZm9udC1zaXplOiAxMnB4OyBjb2xvcjogdmFyKC0tdGV4dC1tdXRlZCk7IG1hcmdp
+bi10b3A6IDJweDsgfQogICAgLnN0YWdlLWJhZGdlIHsgZGlzcGxheTogaW5saW5lLWJsb2NrOyBw
+YWRkaW5nOiAzcHggMTBweDsgYm9yZGVyLXJhZGl1czogMjBweDsgZm9udC1zaXplOiAxMnB4OyBm
+b250LXdlaWdodDogNTAwOyB3aGl0ZS1zcGFjZTogbm93cmFwOyB9CiAgICAucy1wcm9wb3NhbCB7
+IGJhY2tncm91bmQ6ICMxZjJkNGE7IGNvbG9yOiAjNThhNmZmOyB9CiAgICAucy1pbnByb2dyZXNz
+IHsgYmFja2dyb3VuZDogIzFhMzAyNjsgY29sb3I6ICMzZmI5NTA7IH0KICAgIC5zLWR1ZSB7IGJh
+Y2tncm91bmQ6ICMzZDJkMGY7IGNvbG9yOiAjZDI5OTIyOyB9CiAgICAucy13b24geyBiYWNrZ3Jv
+dW5kOiAjMWYzZDJhOyBjb2xvcjogIzNmYjk1MDsgfQogICAgLnMtbG9zdCB7IGJhY2tncm91bmQ6
+ICMzZDFmMWY7IGNvbG9yOiAjZjg1MTQ5OyB9CiAgICAucy1vbmhvbGQgeyBiYWNrZ3JvdW5kOiAj
+MmEyMjQwOyBjb2xvcjogI2JjOGNmZjsgfQogICAgLnZhbHVlLWNlbGwgeyBmb250LXdlaWdodDog
+NjAwOyBjb2xvcjogdmFyKC0tdGV4dCk7IHdoaXRlLXNwYWNlOiBub3dyYXA7IH0KICAgIC52YWx1
+ZS1ub25lIHsgY29sb3I6IHZhcigtLXRleHQtbXV0ZWQpOyB9CiAgICAuY2hhbmdlZC1yb3cgeyBi
+YWNrZ3JvdW5kOiByZ2JhKDg4LCAxNjYsIDI1NSwgMC4wNykgIWltcG9ydGFudDsgfQogICAgLmNo
+YW5nZWQtbWFyayB7IGNvbG9yOiB2YXIoLS1hY2NlbnQpOyBmb250LXNpemU6IDExcHg7IG1hcmdp
+bi1sZWZ0OiA2cHg7IGJhY2tncm91bmQ6IHJnYmEoODgsMTY2LDI1NSwwLjE1KTsgcGFkZGluZzog
+MXB4IDVweDsgYm9yZGVyLXJhZGl1czogM3B4OyB9CiAgICBmb290ZXIgeyB0ZXh0LWFsaWduOiBj
+ZW50ZXI7IHBhZGRpbmc6IDI0cHg7IGNvbG9yOiB2YXIoLS10ZXh0LW11dGVkKTsgZm9udC1zaXpl
+OiAxMnB4OyBib3JkZXItdG9wOiAxcHggc29saWQgdmFyKC0tYm9yZGVyKTsgbWFyZ2luLXRvcDog
+MTZweDsgfQogIDwvc3R5bGU+CjwvaGVhZD4KPGJvZHk+CjxoZWFkZXI+CiAgPGRpdiBjbGFzcz0i
+bG9nbyI+ZGlua2JpdCA8c3Bhbj5QaXBlbGluZSBSZXBvcnQ8L3NwYW4+PC9kaXY+CiAgPGRpdiBj
+bGFzcz0idGltZXN0YW1wIj5BY3R1YWxpemFkbzogMTcgZGUganVuaW8gMjAyNiAmbmJzcDt8Jm5i
+c3A7IDxzdHJvbmcgc3R5bGU9ImNvbG9yOnZhcigtLWFjY2VudCkiPjc1IGRlYWxzIGFjdGl2b3M8
+L3N0cm9uZz48L2Rpdj4KPC9oZWFkZXI+CjxkaXYgY2xhc3M9Im1haW4iPgoKICA8ZGl2IGNsYXNz
+PSJjaGFuZ2VzLWJhbm5lciI+CiAgICA8aDI+Q2FtYmlvcyBkZXRlY3RhZG9zIGRlc2RlIGF5ZXIg
+KDE2IEp1biAyMDI2KTwvaDI+CiAgICA8ZGl2IGNsYXNzPSJjaGFuZ2UtaXRlbSI+PHNwYW4gY2xh
+c3M9InRhZyB0YWctc3RhZ2UiPkNhbWJpbyBkZSBldGFwYTwvc3Bhbj48c3Ryb25nPlVyYmFubyBU
+b3duIC0gQXRlbXBvIChMYW5kaW5nIFBhZ2UpPC9zdHJvbmc+IOKAlCBhdmFuesOzIGRlIDIuIFBy
+b3Bvc2FsIGEgMy4gSW4gUHJvZ3Jlc3M8L2Rpdj4KICAgIDxkaXYgY2xhc3M9ImNoYW5nZS1pdGVt
+Ij48c3BhbiBjbGFzcz0idGFnIHRhZy1zdGFnZSI+Q2FtYmlvIGRlIGV0YXBhPC9zcGFuPjxzdHJv
+bmc+VXJiYW5vIFRvd24gLSBFbmNvcmUgKExhbmRpbmcgUGFnZSk8L3N0cm9uZz4g4oCUIGF2YW56
+w7MgZGUgMi4gUHJvcG9zYWwgYSAzLiBJbiBQcm9ncmVzczwvZGl2PgogICAgPGRpdiBjbGFzcz0i
+Y2hhbmdlLWl0ZW0iPjxzcGFuIGNsYXNzPSJ0YWcgdGFnLXJlbW92ZWQiPkVsaW1pbmFkbzwvc3Bh
+bj48c3Ryb25nPltFc3RyYXRlZ2lhIERpZ2l0YWwgTVhdIEp1YW4gUHJ1ZWJhPC9zdHJvbmc+IOAK
+lCBkZWFsIGRlIHBydWViYSBlbGltaW5hZG8gZGVsIHBpcGVsaW5lPC9kaXY+CiAgICA8ZGl2IGNs
+YXNzPSJjaGFuZ2UtaXRlbSI+PHNwYW4gY2xhc3M9InRhZyB0YWctcmVtb3ZlZCI+RWxpbWluYWRv
+PC9zcGFuPjxzdHJvbmc+W0Rlc2Fycm9sbG8gV2ViICZhbXA7IEFwcCBNWF0gSm9obiBEb2U8L3N0
+cm9uZz4g4oCUIGRlYWwgZGUgcHJ1ZWJhIGVsaW1pbmFkbyBkZWwgcGlwZWxpbmU8L2Rpdj4KICA8
+L2Rpdj4KCiAgPGRpdiBjbGFzcz0ia3BpLWdyaWQiPgogICAgPGRpdiBjbGFzcz0ia3BpLWNhcmQi
+PjxkaXYgY2xhc3M9ImxhYmVsIj5Ub3RhbCBEZWFscyBBY3Rpdm9zPC9kaXY+PGRpdiBjbGFzcz0i
+dmFsdWUgYy1ibHVlIj43NTwvZGl2PjxkaXYgY2xhc3M9InN1YiI+RW4gZWwgcGlwZWxpbmU8L2Rp
+dj48L2Rpdj4KICAgIDxkaXYgY2xhc3M9ImtwaS1jYXJkIj48ZGl2IGNsYXNzPSJsYWJlbCI+VmFs
+b3IgVG90YWwgUGlwZWxpbmU8L2Rpdj48ZGl2IGNsYXNzPSJ2YWx1ZSBjLWdyZWVuIiBzdHlsZT0i
+Zm9udC1zaXplOjIycHg7Ij4kNy45MU08L2Rpdj48ZGl2IGNsYXNzPSJzdWIiPk1YTiDigJQgdG9k
+b3MgbG9zIGRlYWxzPC9kaXY+PC9kaXY+CiAgICA8ZGl2IGNsYXNzPSJrcGktY2FyZCI+PGRpdiBj
+bGFzcz0ibGFiZWwiPkluIFByb2dyZXNzPC9kaXY+PGRpdiBjbGFzcz0idmFsdWUgYy10ZWFsIj4x
+NjwvZGl2PjxkaXYgY2xhc3M9InN1YiI+JDIuNDBNIE1YTjwvZGl2PjwvZGl2PgogICAgPGRpdiBj
+bGFzcz0ia3BpLWNhcmQiPjxkaXYgY2xhc3M9ImxhYmVsIj5Xb24gKEdhbmFkb3MpPC9kaXY+PGRp
+diBjbGFzcz0idmFsdWUgYy1ncmVlbiI+MjA8L2Rpdj48ZGl2IGNsYXNzPSJzdWIiPiQxLjU4TSBN
+WE48L2Rpdj48L2Rpdj4KICAgIDxkaXYgY2xhc3M9ImtwaS1jYXJkIj48ZGl2IGNsYXNzPSJsYWJl
+bCI+T24gSG9sZDwvZGl2PjxkaXYgY2xhc3M9InZhbHVlIGMtcHVycGxlIj4yMTwvZGl2PjxkaXYg
+Y2xhc3M9InN1YiI+JDIuMzVNIE1YTjwvZGl2PjwvZGl2PgogICAgPGRpdiBjbGFzcz0ia3BpLWNh
+cmQiPjxkaXYgY2xhc3M9ImxhYmVsIj5EdWUgRGlsaWdlbmNlPC9kaXY+PGRpdiBjbGFzcz0idmFs
+dWUgYy15ZWxsb3ciPjI8L2Rpdj48ZGl2IGNsYXNzPSJzdWIiPiQyNDYsMjAwIE1YTjwvZGl2Pjwv
+ZGl2PgogIDwvZGl2PgoKICA8aDM+RGlzdHJpYnVjaW9uIHBvciBFdGFwYTwvaDM+CiAgPGRpdiBj
+bGFzcz0ic3RhZ2UtZ3JpZCI+CiAgICA8ZGl2IGNsYXNzPSJzdGFnZS1jYXJkIj48ZGl2IGNsYXNz
+PSJzdGFnZS1uYW1lIj4yLiBQcm9wb3NhbDwvZGl2PjxkaXYgY2xhc3M9InN0YWdlLWNvdW50IGMt
+Ymx1ZSI+ODwvZGl2PjxkaXYgY2xhc3M9InN0YWdlLXZhbCI+JDE1LDAwMCBNWE48L2Rpdj48ZGl2
+IGNsYXNzPSJzdGFnZS1iYXIiIHN0eWxlPSJiYWNrZ3JvdW5kOnZhcigtLWFjY2VudCk7Ij48L2Rp
+dj48L2Rpdj4KICAgIDxkaXYgY2xhc3M9InN0YWdlLWNhcmQiPjxkaXYgY2xhc3M9InN0YWdlLW5h
+bWUiPjMuIEluIFByb2dyZXNzPC9kaXY+PGRpdiBjbGFzcz0ic3RhZ2UtY291bnQgYy10ZWFsIj4x
+NjwvZGl2PjxkaXYgY2xhc3M9InN0YWdlLXZhbCI+JDIsMzk4LDY1NyBNWE48L2Rpdj48ZGl2IGNs
+YXNzPSJzdGFnZS1iYXIiIHN0eWxlPSJiYWNrZ3JvdW5kOnZhcigtLXRlYWwpOyI+PC9kaXY+PC9k
+aXY+CiAgICA8ZGl2IGNsYXNzPSJzdGFnZS1jYXJkIj48ZGl2IGNsYXNzPSJzdGFnZS1uYW1lIj40
+LiBEdWUgRGlsaWdlbmNlPC9kaXY+PGRpdiBjbGFzcz0ic3RhZ2UtY291bnQgYy15ZWxsb3ciPjI8
+L2Rpdj48ZGl2IGNsYXNzPSJzdGFnZS12YWwiPiQyNDYsMjAwIE1YTjwvZGl2PjxkaXYgY2xhc3M9
+InN0YWdlLWJhciIgc3R5bGU9ImJhY2tncm91bmQ6dmFyKC0teWVsbG93KTsiPjwvZGl2PjwvZGl2
+PgogICAgPGRpdiBjbGFzcz0ic3RhZ2UtY2FyZCI+PGRpdiBjbGFzcz0ic3RhZ2UtbmFtZSI+NS4g
+V29uPC9kaXY+PGRpdiBjbGFzcz0ic3RhZ2UtY291bnQgYy1ncmVlbiI+MjA8L2Rpdj48ZGl2IGNs
+YXNzPSJzdGFnZS12YWwiPiQxLDU4MCw5NTUgTVhOPC9kaXY+PGRpdiBjbGFzcz0ic3RhZ2UtYmFy
+IiBzdHlsZT0iYmFja2dyb3VuZDp2YXIoLS1ncmVlbik7Ij48L2Rpdj48L2Rpdj4KICAgIDxkaXYg
+Y2xhc3M9InN0YWdlLWNhcmQiPjxkaXYgY2xhc3M9InN0YWdlLW5hbWUiPjYuIExvc3Q8L2Rpdj48
+ZGl2IGNsYXNzPSJzdGFnZS1jb3VudCBjLXJlZCI+ODwvZGl2PjxkaXYgY2xhc3M9InN0YWdlLXZh
+bCI+JDEsMzIwLDU1MCBNWE48L2Rpdj48ZGl2IGNsYXNzPSJzdGFnZS1iYXIiIHN0eWxlPSJiYWNr
+Z3JvdW5kOnZhcigtLXJlZCk7Ij48L2Rpdj48L2Rpdj4KICAgIDxkaXYgY2xhc3M9InN0YWdlLWNh
+cmQiPjxkaXYgY2xhc3M9InN0YWdlLW5hbWUiPjcuIE9uIEhvbGQ8L2Rpdj48ZGl2IGNsYXNzPSJz
+dGFnZS1jb3VudCBjLXB1cnBsZSI+MjE8L2Rpdj48ZGl2IGNsYXNzPSJzdGFnZS12YWwiPiQyLDM1
+MCwyNTUgTVhOPC9kaXY+PGRpdiBjbGFzcz0ic3RhZ2UtYmFyIiBzdHlsZT0iYmFja2dyb3VuZDp2
+YXIoLS1wdXJwbGUpOyI+PC9kaXY+PC9kaXY+CiAgPC9kaXY+CgogIDxkaXYgY2xhc3M9InNlY3Rp
+b24iPgogICAgPGgyPkluIFByb2dyZXNzICgxNik8L2gyPgogICAgPGRpdiBjbGFzcz0idGFibGUt
+d3JhcHBlciI+PHRhYmxlPgogICAgICA8dGhlYWQ+PHRyPjx0aD5EZWFsPC90aD48dGg+QXJlYTwv
+dGg+PHRoPlZhbG9yPC90aD48dGg+RnVlbnRlPC90aD48L3RyPjwvdGhlYWQ+CiAgICAgIDx0Ym9k
+eT4KICAgICAgICA8dHI+PHRkPjxkaXYgY2xhc3M9ImRlYWwtbmFtZSI+RXN0cmF0ZWdpYSBEaWdp
+dGFsIHBhcmEgZUNvbW1lcmNlPC9kaXY+PC90ZD48dGQ+TWFya2V0aW5nPC90ZD48dGQgY2xhc3M9
+InZhbHVlLWNlbGwiPiQ0NjQsMDMyPC90ZD48dGQ+QWN0aXZlIENsaWVudDwvdGQ+PC90cj4KICAg
+ICAgICA8dHI+PHRkPjxkaXYgY2xhc3M9ImRlYWwtbmFtZSI+RXN0cmF0ZWdpYSBEaWdpdGFsIElu
+dGVncmFsPC9kaXY+PC90ZD48dGQ+TWFya2V0aW5nPC90ZD48dGQgY2xhc3M9InZhbHVlLWNlbGwi
+PiQ0MjQsMTAwPC90ZD48dGQ+RGlyZWN0IENvbnRhY3Q8L3RkPjwvdHI+CiAgICAgICAgPHRyPjx0
+ZD48ZGl2IGNsYXNzPSJkZWFsLW5hbWUiPlNpdGlvIFdlYiAtIEJyYWRlc2NhcmQ8L2Rpdj48L3Rk
+Pjx0ZD5XZWIgJmFtcDsgQXBwIERldjwvdGQ+PHRkIGNsYXNzPSJ2YWx1ZS1jZWxsIj4kMjg4LDQw
+MDwvdGQ+PHRkPk5ldHdvcms8L3RkPjwvdHI+CiAgICAgICAgPHRyPjx0ZD48ZGl2IGNsYXNzPSJk
+ZWFsLW5hbWUiPkRlc2Fycm9sbG8gZGUgU2l0aW8gV2ViPC9kaXY+PC90ZD48dGQ+V2ViICZhbXA7
+IEFwcCBEZXY8L3RkPjx0ZCBjbGFzcz0idmFsdWUtY2VsbCI+JDIzMSwyNTA8L3RkPjx0ZD5OZXR3
+b3JrPC90ZD48L3RyPgogICAgICAgIDx0cj48dGQ+PGRpdiBjbGFzcz0iZGVhbC1uYW1lIj5Fc3Ry
+YXRlZ2lhIERpZ2l0YWw8L2Rpdj48L3RkPjx0ZD5NYXJrZXRpbmc8L3RkPjx0ZCBjbGFzcz0idmFs
+dWUtY2VsbCI+JDE4Miw0MDA8L3RkPjx0ZD5OZXR3b3JrPC90ZD48L3RyPgogICAgICAgIDx0cj48
+dGQ+PGRpdiBjbGFzcz0iZGVhbC1uYW1lIj5EZXNhcnJvbGxvIGRlIFRpZW5kYSBlbiBMaW5lYTwv
+ZGl2PjwvdGQ+PHRkPldlYiAmYW1wOyBBcHAgRGV2PC90ZD48dGQgY2xhc3M9InZhbHVlLWNlbGwi
+PiQxNzcsNTAwPC90ZD48dGQ+RGlyZWN0IENvbnRhY3Q8L3RkPjwvdHI+CiAgICAgICAgPHRyPjx0
+ZD48ZGl2IGNsYXNzPSJkZWFsLW5hbWUiPkRlc2Fycm9sbG8gZGUgTnVldm8gU2l0aW8gV2ViIHkg
+VGllbmRhIGVuIExpbmVhPC9kaXY+PC90ZD48dGQ+V2ViICZhbXA7IEFwcCBEZXY8L3RkPjx0ZCBj
+bGFzcz0idmFsdWUtY2VsbCI+JDE3Miw1MDA8L3RkPjx0ZD5BY3RpdmUgQ2xpZW50PC90ZD48L3Ry
+PgogICAgICAgIDx0cj48dGQ+PGRpdiBjbGFzcz0iZGVhbC1uYW1lIj5EaXNlbm8geSBEZXNhcnJv
+bGxvIGRlIFNpdGlvIFdlYjwvZGl2PjwvdGQ+PHRkPldlYiAmYW1wOyBBcHAgRGV2PC90ZD48dGQg
+Y2xhc3M9InZhbHVlLWNlbGwiPiQxNDcsMDAwPC90ZD48dGQ+RGlyZWN0IENvbnRhY3Q8L3RkPjwv
+dHI+CiAgICAgICAgPHRyPjx0ZD48ZGl2IGNsYXNzPSJkZWFsLW5hbWUiPkRlc2Fycm9sbG8gZGUg
+VGllbmRhIGVuIExpbmVhPC9kaXY+PC90ZD48dGQ+V2ViICZhbXA7IEFwcCBEZXY8L3RkPjx0ZCBj
+bGFzcz0idmFsdWUtY2VsbCI+JDEyMSw1MDA8L3RkPjx0ZD5OZXR3b3JrPC90ZD48L3RyPgogICAg
+ICAgIDx0cj48dGQ+PGRpdiBjbGFzcz0iZGVhbC1uYW1lIj5SZWRpc2VubyBkZSBTaXRpbyBXZWI8
+L2Rpdj48L3RkPjx0ZD5XZWIgJmFtcDsgQXBwIERldjwvdGQ+PHRkIGNsYXNzPSJ2YWx1ZS1jZWxs
+Ij4kNjgsNTAwPC90ZD48dGQ+TmV0d29yazwvdGQ+PC90cj4KICAgICAgICA8dHI+PHRkPjxkaXYg
+Y2xhc3M9ImRlYWwtbmFtZSI+RGVzYXJyb2xsbyBkZSBTaXRpbyBXZWIgKyBDb250ZW5pZG88L2Rp
+dj48L3RkPjx0ZD5XZWIgJmFtcDsgQXBwIERldjwvdGQ+PHRkIGNsYXNzPSJ2YWx1ZS1jZWxsIj4k
+NTIsNTAwPC90ZD48dGQ+RGlyZWN0IENvbnRhY3Q8L3RkPjwvdHI+CiAgICAgICAgPHRyPjx0ZD48
+ZGl2IGNsYXNzPSJkZWFsLW5hbWUiPkRlc2Fycm9sbG8gZGUgU2l0aW8gV2ViPC9kaXY+PC90ZD48
+dGQ+V2ViICZhbXA7IEFwcCBEZXY8L3RkPjx0ZCBjbGFzcz0idmFsdWUtY2VsbCI+JDQ5LDI3NTwv
+dGQ+PHRkPk5ldHdvcms8L3RkPjwvdHI+CiAgICAgICAgPHRyPjx0ZD48ZGl2IGNsYXNzPSJkZWFs
+LW5hbWUiPkNhcGFjaXRhY2lvbiBkZSBHb29nbGUgV29ya3NwYWNlPC9kaXY+PC90ZD48dGQ+TWFy
+a2V0aW5nPC90ZD48dGQgY2xhc3M9InZhbHVlLWNlbGwiPiQxOSw3MDA8L3RkPjx0ZD5OZXR3b3Jr
+PC90ZD48L3RyPgogICAgICAgIDx0ciBjbGFzcz0iY2hhbmdlZC1yb3ciPjx0ZD48ZGl2IGNsYXNz
+PSJkZWFsLW5hbWUiPlVyYmFubyBUb3duIC0gQXRlbXBvIChMYW5kaW5nIFBhZ2UpIDxzcGFuIGNs
+YXNzPSJjaGFuZ2VkLW1hcmsiPuKGkSBldGFwYTwvc3Bhbj48L2Rpdj48L3RkPjx0ZD5XZWIgJmFt
+cDsgQXBwIERldjwvdGQ+PHRkIGNsYXNzPSJ2YWx1ZS1ub25lIj7igJQ8L3RkPjx0ZD5OZXR3b3Jr
+PC90ZD48L3RyPgogICAgICAgIDx0ciBjbGFzcz0iY2hhbmdlZC1yb3ciPjx0ZD48ZGl2IGNsYXNz
+PSJkZWFsLW5hbWUiPlVyYmFubyBUb3duIC0gRW5jb3JlIChMYW5kaW5nIFBhZ2UpIDxzcGFuIGNs
+YXNzPSJjaGFuZ2VkLW1hcmsiPuKGkSBldGFwYTwvc3Bhbj48L2Rpdj48L3RkPjx0ZD5XZWIgJmFt
+cDsgQXBwIERldjwvdGQ+PHRkIGNsYXNzPSJ2YWx1ZS1ub25lIj7igJQ8L3RkPjx0ZD5OZXR3b3Jr
+PC90ZD48L3RyPgogICAgICAgIDx0cj48dGQ+PGRpdiBjbGFzcz0iZGVhbC1uYW1lIj5NaWdyYWNp
+b24gYSBHb29nbGUgV29ya3NwYWNlPC9kaXY+PC90ZD48dGQ+V2ViICZhbXA7IEFwcCBEZXY8L3Rk
+Pjx0ZCBjbGFzcz0idmFsdWUtbm9uZSI+4oCUPC90ZD48dGQ+TmV0d29yazwvdGQ+PC90cj4KICAg
+ICAgPC90Ym9keT4KICAgIDwvdGFibGU+PC9kaXY+CiAgPC9kaXY+CgogIDxkaXYgY2xhc3M9InNl
+Y3Rpb24iPgogICAgPGgyPkR1ZSBEaWxpZ2VuY2UgKDIpPC9oMj4KICAgIDxkaXYgY2xhc3M9InRh
+YmxlLXdyYXBwZXIiPjx0YWJsZT4KICAgICAgPHRoZWFkPjx0cj48dGg+RGVhbDwvdGg+PHRoPkFy
+ZWE8L3RoPjx0aD5WYWxvcjwvdGg+PHRoPkZ1ZW50ZTwvdGg+PC90cj48L3RoZWFkPgogICAgICA8
+dGJvZHk+CiAgICAgICAgPHRyPjx0ZD48ZGl2IGNsYXNzPSJkZWFsLW5hbWUiPkRpc3RyaWJ1aWRv
+cmFzIHwgQiBIZXJtYW5vczwvZGl2PjwvdGQ+PHRkPk1hcmtldGluZzwvdGQ+PHRkIGNsYXNzPSJ2
+YWx1ZS1jZWxsIj4kMTE3LDIwMDwvdGQ+PHRkPkFjdGl2ZSBDbGllbnQ8L3RkPjwvdHI+CiAgICAg
+ICAgPHRyPjx0ZD48ZGl2IGNsYXNzPSJkZWFsLW5hbWUiPkVzdHJhdGVnaWEgRGlnaXRhbCBwYXJh
+IGNhcHRhY2lvbiBkZSBMZWFkczwvZGl2PjwvdGQ+PHRkPk1hcmtldGluZzwvdGQ+PHRkIGNsYXNz
+PSJ2YWx1ZS1jZWxsIj4kMTI5LDAwMDwvdGQ+PHRkPkZvcm1lciBDbGllbnQ8L3RkPjwvdHI+CiAg
+ICAgIDwvdGJvZHk+CiAgICA8L3RhYmxlPjwvZGl2PgogIDwvZGl2PgoKICA8ZGl2IGNsYXNzPSJz
+ZWN0aW9uIj4KICAgIDxoMj5Xb24gKDIwKTwvaDI+CiAgICA8ZGl2IGNsYXNzPSJ0YWJsZS13cmFw
+cGVyIj48dGFibGU+CiAgICAgIDx0aGVhZD48dHI+PHRoPkRlYWw8L3RoPjx0aD5BcmVhPC90aD48
+dGg+VmFsb3I8L3RoPjx0aD5GdWVudGU8L3RoPjwvdHI+PC90aGVhZD4KICAgICAgPHRib2R5Pgog
+ICAgICAgIDx0cj48dGQ+PGRpdiBjbGFzcz0iZGVhbC1uYW1lIj5EZXNhcnJvbGxvIGRlIFRpZW5k
+YSBlbiBMaW5lYSBwYXJhIE1leGljbyB5IENvc3RhIFJpY2E8L2Rpdj48L3RkPjx0ZD5XZWIgJmFt
+cDsgQXBwIERldjwvdGQ+PHRkIGNsYXNzPSJ2YWx1ZS1jZWxsIj4kMjk3LDE4NTwvdGQ+PHRkPk5l
+dHdvcms8L3RkPjwvdHI+CiAgICAgICAgPHRyPjx0ZD48ZGl2IGNsYXNzPSJkZWFsLW5hbWUiPkVz
+dHJhdGVnaWEgRGlnaXRhbCBwYXJhIERlc2NhcmdhcyB5IFRyYW5zYWNjaW9uZXM8L2Rpdj48L3Rk
+Pjx0ZD5NYXJrZXRpbmc8L3RkPjx0ZCBjbGFzcz0idmFsdWUtY2VsbCI+JDEzOCwyNTA8L3RkPjx0
+ZD5BY3RpdmUgQ2xpZW50PC90ZD48L3RyPgogICAgICAgIDx0cj48dGQ+PGRpdiBjbGFzcz0iZGVh
+bC1uYW1lIj5Fc3RyYXRlZ2lhIERpZ2l0YWwgcGFyYSBlQ29tbWVyY2U8L2Rpdj48L3RkPjx0ZD5N
+YXJrZXRpbmc8L3RkPjx0ZCBjbGFzcz0idmFsdWUtY2VsbCI+JDEzNiwwMDA8L3RkPjx0ZD5OZXR3
+b3JrPC90ZD48L3RyPgogICAgICAgIDx0cj48dGQ+PGRpdiBjbGFzcz0iZGVhbC1uYW1lIj5SZWRp
+c2VubyBkZSBUaWVuZGEgZW4gTGluZWE8L2Rpdj48L3RkPjx0ZD5XZWIgJmFtcDsgQXBwIERldjwv
+dGQ+PHRkIGNsYXNzPSJ2YWx1ZS1jZWxsIj4kMTMwLDEyNTwvdGQ+PHRkPk5ldHdvcms8L3RkPjwv
+dHI+CiAgICAgICAgPHRyPjx0ZD48ZGl2IGNsYXNzPSJkZWFsLW5hbWUiPkVzdHJhdGVnaWEgRGln
+aXRhbCBlbiBHb29nbGUgQWRzPC9kaXY+PC90ZD48dGQ+TWFya2V0aW5nPC90ZD48dGQgY2xhc3M9
+InZhbHVlLWNlbGwiPiQxMjIsMTAwPC90ZD48dGQ+RGlyZWN0IENvbnRhY3Q8L3RkPjwvdHI+CiAg
+ICAgICAgPHRyPjx0ZD48ZGl2IGNsYXNzPSJkZWFsLW5hbWUiPlJlY29uc3RydWNjaW9uIGRlIFRp
+ZW5kYSBlbiBMaW5lYTwvZGl2PjwvdGQ+PHRkPldlYiAmYW1wOyBBcHAgRGV2PC90ZD48dGQgY2xh
+c3M9InZhbHVlLWNlbGwiPiQxMTIsOTk1PC90ZD48dGQ+QWN0aXZlIENsaWVudDwvdGQ+PC90cj4K
+ICAgICAgICA8dHI+PHRkPjxkaXYgY2xhc3M9ImRlYWwtbmFtZSI+RGVzYXJyb2xsbyBkZSBUaWVu
+ZGEgZW4gTGluZWE8L2Rpdj48L3RkPjx0ZD5XZWIgJmFtcDsgQXBwIERldjwvdGQ+PHRkIGNsYXNz
+PSJ2YWx1ZS1jZWxsIj4kOTksNTAwPC90ZD48dGQ+Rm9ybWVyIENsaWVudDwvdGQ+PC90cj4KICAg
+ICAgICA8dHI+PHRkPjxkaXYgY2xhc3M9ImRlYWwtbmFtZSI+RGlzZW5vIHkgRGVzYXJyb2xsbyBk
+ZSBTaXRpbyBXZWI8L2Rpdj48L3RkPjx0ZD5XZWIgJmFtcDsgQXBwIERldjwvdGQ+PHRkIGNsYXNz
+PSJ2YWx1ZS1jZWxsIj4kNzgsNTAwPC90ZD48dGQ+Rm9ybWVyIENsaWVudDwvdGQ+PC90cj4KICAg
+ICAgICA8dHI+PHRkPjxkaXYgY2xhc3M9ImRlYWwtbmFtZSI+UmVkaXNlbm8gZGUgU2l0aW8gV2Vi
+PC9kaXY+PC90ZD48dGQ+V2ViICZhbXA7IEFwcCBEZXY8L3RkPjx0ZCBjbGFzcz0idmFsdWUtY2Vs
+bCI+JDc0LDUwMDwvdGQ+PHRkPkFjdGl2ZSBDbGllbnQ8L3RkPjwvdHI+CiAgICAgICAgPHRyPjx0
+ZD48ZGl2IGNsYXNzPSJkZWFsLW5hbWUiPlJlZGlzZW5vIHkgRGVzYXJyb2xsbyBkZSBOdWV2byBT
+aXRpbyBXZWI8L2Rpdj48L3RkPjx0ZD5XZWIgJmFtcDsgQXBwIERldjwvdGQ+PHRkIGNsYXNzPSJ2
+YWx1ZS1jZWxsIj4kNjksNTAwPC90ZD48dGQ+Rm9ybWVyIENsaWVudDwvdGQ+PC90cj4KICAgICAg
+ICA8dHI+PHRkPjxkaXYgY2xhc3M9ImRlYWwtbmFtZSI+REFOTkEgfCBDcmVhY2lvbiBkZSBUaWVu
+ZGEgZW4gTGluZWE8L2Rpdj48L3RkPjx0ZD5XZWIgJmFtcDsgQXBwIERldjwvdGQ+PHRkIGNsYXNz
+PSJ2YWx1ZS1jZWxsIj4kNTIsNTAwPC90ZD48dGQ+QWN0aXZlIENsaWVudDwvdGQ+PC90cj4KICAg
+ICAgICA8dHI+PHRkPjxkaXYgY2xhc3M9ImRlYWwtbmFtZSI+RGVzYXJyb2xsbyBkZSBOdWV2byBT
+aXRpbyBXZWI8L2Rpdj48L3RkPjx0ZD5XZWIgJmFtcDsgQXBwIERldjwvdGQ+PHRkIGNsYXNzPSJ2
+YWx1ZS1jZWxsIj4kNTAsMDAwPC90ZD48dGQ+RGlyZWN0IENvbnRhY3Q8L3RkPjwvdHI+CiAgICAg
+ICAgPHRyPjx0ZD48ZGl2IGNsYXNzPSJkZWFsLW5hbWUiPkRlc2Fycm9sbG8gZGUgVGllbmRhIGVu
+IExpbmVhPC9kaXY+PC90ZD48dGQ+V2ViICZhbXA7IEFwcCBEZXY8L3RkPjx0ZCBjbGFzcz0idmFs
+dWUtY2VsbCI+JDQ1LDAwMDwvdGQ+PHRkPk5ldHdvcms8L3RkPjwvdHI+CiAgICAgICAgPHRyPjx0
+ZD48ZGl2IGNsYXNzPSJkZWFsLW5hbWUiPkRBTk5BIHwgU2l0aW8gV2ViIHBhcmEgTGFuemFtaWVu
+dG8gZGUgRVA8L2Rpdj48L3RkPjx0ZD5XZWIgJmFtcDsgQXBwIERldjwvdGQ+PHRkIGNsYXNzPSJ2
+YWx1ZS1jZWxsIj4kNDMsMjUwPC90ZD48dGQ+TmV0d29yazwvdGQ+PC90cj4KICAgICAgICA8dHI+
+PHRkPjxkaXYgY2xhc3M9ImRlYWwtbmFtZSI+RGVzYXJyb2xsbyBkZSBOdWV2byBTaXRpbyBXZWI8
+L2Rpdj48L3RkPjx0ZD5XZWIgJmFtcDsgQXBwIERldjwvdGQ+PHRkIGNsYXNzPSJ2YWx1ZS1jZWxs
+Ij4kNDIsNzUwPC90ZD48dGQ+QWN0aXZlIENsaWVudDwvdGQ+PC90cj4KICAgICAgICA8dHI+PHRk
+PjxkaXYgY2xhc3M9ImRlYWwtbmFtZSI+RGVzYXJyb2xsbyBkZSBOdWV2byBTaXRpbyBXZWI8L2Rp
+dj48L3RkPjx0ZD5XZWIgJmFtcDsgQXBwIERldjwvdGQ+PHRkIGNsYXNzPSJ2YWx1ZS1jZWxsIj4k
+MzYsNTAwPC90ZD48dGQ+TmV0d29yazwvdGQ+PC90cj4KICAgICAgICA8dHI+PHRkPjxkaXYgY2xh
+c3M9ImRlYWwtbmFtZSI+TmFtaW5nIHkgQnJhbmRpbmcgZGUgTnVldmEgRW1wcmVzYTwvZGl2Pjwv
+dGQ+PHRkPkRlc2lnbjwvdGQ+PHRkIGNsYXNzPSJ2YWx1ZS1jZWxsIj4kMjEsNTAwPC90ZD48dGQ+
+Rm9ybWVyIENsaWVudDwvdGQ+PC90cj4KICAgICAgICA8dHI+PHRkPjxkaXYgY2xhc3M9ImRlYWwt
+bmFtZSI+Q29uc3VsdG9yaWEgcGFyYSBEZXNhcnJvbGxvIGRlIFBsYXRhZm9ybWEgRmluYW5jaWVy
+YTwvZGl2PjwvdGQ+PHRkPldlYiAmYW1wOyBBcHAgRGV2PC90ZD48dGQgY2xhc3M9InZhbHVlLWNl
+bGwiPiQyMCwzMDA8L3RkPjx0ZD5OZXR3b3JrPC90ZD48L3RyPgogICAgICAgIDx0cj48dGQ+PGRp
+diBjbGFzcz0iZGVhbC1uYW1lIj5Ib3llciB8IFNpdGlvIFdlYiArIFRpZW5kYSBlbiBMaW5lYTwv
+ZGl2PjwvdGQ+PHRkPldlYiAmYW1wOyBBcHAgRGV2PC90ZD48dGQgY2xhc3M9InZhbHVlLWNlbGwi
+PiQ1LDQwMDwvdGQ+PHRkPkFjdGl2ZSBDbGllbnQ8L3RkPjwvdHI+CiAgICAgICAgPHRyPjx0ZD48
+ZGl2IGNsYXNzPSJkZWFsLW5hbWUiPkVzdHJhdGVnaWEgZGUgUGFpZCBNZWRpYSBwYXJhIEJhaWxl
+eSBJbnRlcm5hdGlvbmFsPC9kaXY+PC90ZD48dGQ+TWFya2V0aW5nPC90ZD48dGQgY2xhc3M9InZh
+bHVlLWNlbGwiPiQ1LDEwMDwvdGQ+PHRkPk5ldHdvcms8L3RkPjwvdHI+CiAgICAgIDwvdGJvZHk+
+CiAgICA8L3RhYmxlPjwvZGl2PgogIDwvZGl2PgoKICA8ZGl2IGNsYXNzPSJzZWN0aW9uIj4KICAg
+IDxoMj5Qcm9wdWVzdGFzICg4KTwvaDI+CiAgICA8ZGl2IGNsYXNzPSJ0YWJsZS13cmFwcGVyIj48
+dGFibGU+CiAgICAgIDx0aGVhZD48dHI+PHRoPkRlYWw8L3RoPjx0aD5BcmVhPC90aD48dGg+VmFs
+b3I8L3RoPjx0aD5GdWVudGU8L3RoPjwvdHI+PC90aGVhZD4KICAgICAgPHRib2R5PgogICAgICAg
+IDx0cj48dGQ+PGRpdiBjbGFzcz0iZGVhbC1uYW1lIj5Fc3RyYXRlZ2lhIERpZ2l0YWwgfCBGYXNl
+IFplcm88L2Rpdj48L3RkPjx0ZD5NYXJrZXRpbmc8L3RkPjx0ZCBjbGFzcz0idmFsdWUtbm9uZSI+
+4oCUPC90ZD48dGQ+TmV0d29yazwvdGQ+PC90cj4KICAgICAgICA8dHI+PHRkPjxkaXYgY2xhc3M9
+ImRlYWwtbmFtZSI+RGVzYXJyb2xsbyBkZSBQbGF0YWZvcm1hIGRlIEFzc2V0IE1hbmFnZW1lbnQ8
+L2Rpdj48L3RkPjx0ZD5XZWIgJmFtcDsgQXBwIERldjwvdGQ+PHRkIGNsYXNzPSJ2YWx1ZS1ub25l
+Ij7igJQ8L3RkPjx0ZD5OZXR3b3JrPC90ZD48L3RyPgogICAgICAgIDx0cj48dGQ+PGRpdiBjbGFz
+cz0iZGVhbC1uYW1lIj5EZXNhcnJvbGxvIGRlIFNpdGlvIFdlYjwvZGl2PjwvdGQ+PHRkPldlYiAm
+YW1wOyBBcHAgRGV2PC90ZD48dGQgY2xhc3M9InZhbHVlLW5vbmUiPuKAlDwvdGQ+PHRkPkZvcm1l
+ciBDbGllbnQ8L3RkPjwvdHI+CiAgICAgICAgPHRyPjx0ZD48ZGl2IGNsYXNzPSJkZWFsLW5hbWUi
+PkdlbmVyYWNpb24gZGUgVmlkZW9zIEVkdWNhdGl2b3M8L2Rpdj48L3RkPjx0ZD5EZXNpZ248L3Rk
+Pjx0ZCBjbGFzcz0idmFsdWUtbm9uZSI+4oCUPC90ZD48dGQ+TmV0d29yazwvdGQ+PC90cj4KICAg
+ICAgICA8dHI+PHRkPjxkaXYgY2xhc3M9ImRlYWwtbmFtZSI+RXN0cmF0ZWdpYSBEaWdpdGFsIGRl
+IFRpa1RvazwvZGl2PjwvdGQ+PHRkPk1hcmtldGluZzwvdGQ+PHRkIGNsYXNzPSJ2YWx1ZS1ub25l
+Ij7igJQ8L3RkPjx0ZD5Gb3JtZXIgQ2xpZW50PC90ZD48L3RyPgogICAgICAgIDx0cj48dGQ+PGRp
+diBjbGFzcz0iZGVhbC1uYW1lIj5Cb2xzYSBkZSBIb3JhcyB5IFBvbGl6YSBkZSBNYW50ZW5pbWll
+bnRvIHwgU2hvcGlmeTwvZGl2PjwvdGQ+PHRkPldlYiAmYW1wOyBBcHAgRGV2PC90ZD48dGQgY2xh
+c3M9InZhbHVlLW5vbmUiPuKAlDwvdGQ+PHRkPlBSIGFuZCBFdmVudHM8L3RkPjwvdHI+CiAgICAg
+ICAgPHRyPjx0ZD48ZGl2IGNsYXNzPSJkZWFsLW5hbWUiPkJyYW5kaW5nIHkgUGFwZWxlcmlhIENv
+cnBvcmF0aXZhPC9kaXY+PC90ZD48dGQ+RGVzaWduPC90ZD48dGQgY2xhc3M9InZhbHVlLW5vbmUi
+PuKAlDwvdGQ+PHRkPkZvcm1lciBDbGllbnQ8L3RkPjwvdHI+CiAgICAgICAgPHRyPjx0ZD48ZGl2
+IGNsYXNzPSJkZWFsLW5hbWUiPkRpc2VubyBkZSBTaXRpbyBXZWIgfCBBLkkuPC9kaXY+PC90ZD48
+dGQ+V2ViICZhbXA7IEFwcCBEZXY8L3RkPjx0ZCBjbGFzcz0idmFsdWUtY2VsbCI+JDE1LDAwMDwv
+dGQ+PHRkPk5ldHdvcms8L3RkPjwvdHI+CiAgICAgIDwvdGJvZHk+CiAgICA8L3RhYmxlPjwvZGl2
+PgogIDwvZGl2PgoKICA8ZGl2IGNsYXNzPSJzZWN0aW9uIj4KICAgIDxoMj5PbiBIb2xkICgyMSk8
+L2gyPgogICAgPGRpdiBjbGFzcz0idGFibGUtd3JhcHBlciI+PHRhYmxlPgogICAgICA8dGhlYWQ+
+PHRyPjx0aD5EZWFsPC90aD48dGg+QXJlYTwvdGg+PHRoPlZhbG9yPC90aD48dGg+RnVlbnRlPC90
+aD48L3RyPjwvdGhlYWQ+CiAgICAgIDx0Ym9keT4KICAgICAgICA8dHI+PHRkPjxkaXYgY2xhc3M9
+ImRlYWwtbmFtZSI+RGVzYXJyb2xsbyBkZSBQbGF0YWZvcm1hIHBhcmEgR2VzdGlvbiBkZSBQcm95
+ZWN0b3M8L2Rpdj48L3RkPjx0ZD5XZWIgJmFtcDsgQXBwIERldjwvdGQ+PHRkIGNsYXNzPSJ2YWx1
+ZS1jZWxsIj4kNTIyLDM3NTwvdGQ+PHRkPk5ldHdvcms8L3RkPjwvdHI+CiAgICAgICAgPHRyPjx0
+ZD48ZGl2IGNsYXNzPSJkZWFsLW5hbWUiPkRlc2Fycm9sbG8gRmxleGlibGUgLSBHcnVwbyBBdGVu
+Y2lvbjwvZGl2PjwvdGQ+PHRkPldlYiAmYW1wOyBBcHAgRGV2PC90ZD48dGQgY2xhc3M9InZhbHVl
+LWNlbGwiPiQ0MDUsMDAwPC90ZD48dGQ+TmV0d29yazwvdGQ+PC90cj4KICAgICAgICA8dHI+PHRk
+PjxkaXYgY2xhc3M9ImRlYWwtbmFtZSI+UGxhdGFmb3JtYSAtIE15IE9wcG88L2Rpdj48L3RkPjx0
+ZD5XZWIgJmFtcDsgQXBwIERldjwvdGQ+PHRkIGNsYXNzPSJ2YWx1ZS1jZWxsIj4kMjI1LDAwMDwv
+dGQ+PHRkPkFjdGl2ZSBDbGllbnQ8L3RkPjwvdHI+CiAgICAgICAgPHRyPjx0ZD48ZGl2IGNsYXNz
+PSJkZWFsLW5hbWUiPk51ZXZvIFNpdGlvIFdlYjwvZGl2PjwvdGQ+PHRkPldlYiAmYW1wOyBBcHAg
+RGV2PC90ZD48dGQgY2xhc3M9InZhbHVlLWNlbGwiPiQyMjQsMDAwPC90ZD48dGQ+TmV0d29yazwv
+dGQ+PC90cj4KICAgICAgICA8dHI+PHRkPjxkaXYgY2xhc3M9ImRlYWwtbmFtZSI+RXN0cmF0ZWdp
+YSBEaWdpdGFsIC0gR2ltYmVsIE1leGljYW5hPC9kaXY+PC90ZD48dGQ+TWFya2V0aW5nPC90ZD48
+dGQgY2xhc3M9InZhbHVlLWNlbGwiPiQxODYsMDAwPC90ZD48dGQ+TmV0d29yazwvdGQ+PC90cj4K
+ICAgICAgICA8dHI+PHRkPjxkaXYgY2xhc3M9ImRlYWwtbmFtZSI+RXN0cmF0ZWdpYSBEaWdpdGFs
+PC9kaXY+PC90ZD48dGQ+TWFya2V0aW5nPC90ZD48dGQgY2xhc3M9InZhbHVlLWNlbGwiPiQxNzks
+MDAwPC90ZD48dGQ+TmV0d29yazwvdGQ+PC90cj4KICAgICAgICA8dHI+PHRkPjxkaXYgY2xhc3M9
+ImRlYWwtbmFtZSI+RXN0cmF0ZWdpYSBEaWdpdGFsIC0gUGFyayBQbGF6YTwvZGl2PjwvdGQ+PHRk
+Pk1hcmtldGluZzwvdGQ+PHRkIGNsYXNzPSJ2YWx1ZS1jZWxsIj4kMTYyLDAwMDwvdGQ+PHRkPk5l
+dHdvcms8L3RkPjwvdHI+CiAgICAgICAgPHRyPjx0ZD48ZGl2IGNsYXNzPSJkZWFsLW5hbWUiPlNp
+dGlvIFdlYiAtIEpVTUFOIENvbnN0cnVjdGlvbjwvZGl2PjwvdGQ+PHRkPldlYiAmYW1wOyBBcHAg
+RGV2PC90ZD48dGQgY2xhc3M9InZhbHVlLWNlbGwiPiQ4MSw5MDA8L3RkPjx0ZD5OZXR3b3JrPC90
+ZD48L3RyPgogICAgICAgIDx0cj48dGQ+PGRpdiBjbGFzcz0iZGVhbC1uYW1lIj5TaG9waWZ5IC0g
+RGFuaWVsIE92YWRpYTwvZGl2PjwvdGQ+PHRkPldlYiAmYW1wOyBBcHAgRGV2PC90ZD48dGQgY2xh
+c3M9InZhbHVlLWNlbGwiPiQ2NSwwMDA8L3RkPjx0ZD5OZXR3b3JrPC90ZD48L3RyPgogICAgICAg
+IDx0cj48dGQ+PGRpdiBjbGFzcz0iZGVhbC1uYW1lIj5Fc3RyYXRlZ2lhIERpZ2l0YWwgLSBDZW50
+cm8gTWV4aWNhbm8gZGUgRmVydGlsaWRhZDwvZGl2PjwvdGQ+PHRkPk1hcmtldGluZzwvdGQ+PHRk
+IGNsYXNzPSJ2YWx1ZS1jZWxsIj4kNDUsMDAwPC90ZD48dGQ+TmV0d29yazwvdGQ+PC90cj4KICAg
+ICAgICA8dHI+PHRkPjxkaXYgY2xhc3M9ImRlYWwtbmFtZSI+U2l0aW8gV2ViIC0gUm96ZW48L2Rp
+dj48L3RkPjx0ZD5XZWIgJmFtcDsgQXBwIERldjwvdGQ+PHRkIGNsYXNzPSJ2YWx1ZS1jZWxsIj4k
+NDksNTAwPC90ZD48dGQ+QWN0aXZlIENsaWVudDwvdGQ+PC90cj4KICAgICAgICA8dHI+PHRkPjxk
+aXYgY2xhc3M9ImRlYWwtbmFtZSI+U2l0aW8gV2ViIC0gUGVsdHJlPC9kaXY+PC90ZD48dGQ+V2Vi
+ICZhbXA7IEFwcCBEZXY8L3RkPjx0ZCBjbGFzcz0idmFsdWUtY2VsbCI+JDQ5LDUwMDwvdGQ+PHRk
+PkFjdGl2ZSBDbGllbnQ8L3RkPjwvdHI+CiAgICAgICAgPHRyPjx0ZD48ZGl2IGNsYXNzPSJkZWFs
+LW5hbWUiPkFwcCBtb3ZpbCAtIEFwcCBFbnZpYSBZYTwvZGl2PjwvdGQ+PHRkPldlYiAmYW1wOyBB
+cHAgRGV2PC90ZD48dGQgY2xhc3M9InZhbHVlLWNlbGwiPiQzNSwyODA8L3RkPjx0ZD5OZXR3b3Jr
+PC90ZD48L3RyPgogICAgICAgIDx0cj48dGQ+PGRpdiBjbGFzcz0iZGVhbC1uYW1lIj5EZXNhcnJv
+bGxvIGRlIExhbmRpbmcgUGFnZTwvZGl2PjwvdGQ+PHRkPldlYiAmYW1wOyBBcHAgRGV2PC90ZD48
+dGQgY2xhc3M9InZhbHVlLWNlbGwiPiQzMiw1MDA8L3RkPjx0ZD5BY3RpdmUgQ2xpZW50PC90ZD48
+L3RyPgogICAgICAgIDx0cj48dGQ+PGRpdiBjbGFzcz0iZGVhbC1uYW1lIj5SZWJyYW5kaW5nIHkg
+TG9nb3RpcG8gZGUgQW5pdmVyc2FyaW88L2Rpdj48L3RkPjx0ZD5EZXNpZ248L3RkPjx0ZCBjbGFz
+cz0idmFsdWUtY2VsbCI+JDI4LDUwMDwvdGQ+PHRkPk5ldHdvcms8L3RkPjwvdHI+CiAgICAgICAg
+PHRyPjx0ZD48ZGl2IGNsYXNzPSJkZWFsLW5hbWUiPkRlc2Fycm9sbG8gZGUgUGxhdGFmb3JtYSBP
+cGVyYXRpdmE8L2Rpdj48L3RkPjx0ZD5XZWIgJmFtcDsgQXBwIERldjwvdGQ+PHRkIGNsYXNzPSJ2
+YWx1ZS1jZWxsIj4kMjQsODUwPC90ZD48dGQ+TmV0d29yazwvdGQ+PC90cj4KICAgICAgICA8dHI+
+PHRkPjxkaXYgY2xhc3M9ImRlYWwtbmFtZSI+RGVzYXJyb2xsbyBkZSBQbGF0YWZvcm1hIHBhcmEg
+VmVudGEgZGUgQXV0b3M8L2Rpdj48L3RkPjx0ZD5XZWIgJmFtcDsgQXBwIERldjwvdGQ+PHRkIGNs
+YXNzPSJ2YWx1ZS1jZWxsIj4kMjAsMDAwPC90ZD48dGQ+TmV0d29yazwvdGQ+PC90cj4KICAgICAg
+ICA8dHI+PHRkPjxkaXYgY2xhc3M9ImRlYWwtbmFtZSI+UGxhdGFmb3JtYSBkZSBGaW5hbmNpYW1p
+ZW50byBkZSBNb3RvY2ljbGV0YXM8L2Rpdj48L3RkPjx0ZD5XZWIgJmFtcDsgQXBwIERldjwvdGQ+
+PHRkIGNsYXNzPSJ2YWx1ZS1jZWxsIj4kMTQsODUwPC90ZD48dGQ+TmV0d29yazwvdGQ+PC90cj4K
+ICAgICAgICA8dHI+PHRkPjxkaXYgY2xhc3M9ImRlYWwtbmFtZSI+RXN0cmF0ZWdpYSBEaWdpdGFs
+IGRlIFBvc2ljaW9uYW1pZW50byBkZSBNYXJjYTwvZGl2PjwvdGQ+PHRkPk1hcmtldGluZzwvdGQ+
+PHRkIGNsYXNzPSJ2YWx1ZS1ub25lIj7igJQ8L3RkPjx0ZD5BY3RpdmUgQ2xpZW50PC90ZD48L3Ry
+PgogICAgICAgIDx0cj48dGQ+PGRpdiBjbGFzcz0iZGVhbC1uYW1lIj5Fc3RyYXRlZ2lhIERpZ2l0
+YWwgZGUgQ2FwdGFjaW9uIGRlIExlYWRzPC9kaXY+PC90ZD48dGQ+TWFya2V0aW5nPC90ZD48dGQg
+Y2xhc3M9InZhbHVlLW5vbmUiPuKAlDwvdGQ+PHRkPkRpcmVjdCBDb250YWN0PC90ZD48L3RyPgog
+ICAgICAgIDx0cj48dGQ+PGRpdiBjbGFzcz0iZGVhbC1uYW1lIj5EZXNhcnJvbGxvIGRlIFRpZW5k
+YSBlbiBMaW5lYSBCMkI8L2Rpdj48L3RkPjx0ZD5XZWIgJmFtcDsgQXBwIERldjwvdGQ+PHRkIGNs
+YXNzPSJ2YWx1ZS1ub25lIj7igJQ8L3RkPjx0ZD5TaG9waWZ5PC90ZD48L3RyPgogICAgICA8L3Ri
+b2R5PgogICAgPC90YWJsZT48L2Rpdj4KICA8L2Rpdj4KCiAgPGRpdiBjbGFzcz0ic2VjdGlvbiI+
+CiAgICA8aDI+TG9zdCAoOCk8L2gyPgogICAgPGRpdiBjbGFzcz0idGFibGUtd3JhcHBlciI+PHRh
+YmxlPgogICAgICA8dGhlYWQ+PHRyPjx0aD5EZWFsPC90aD48dGg+QXJlYTwvdGg+PHRoPlZhbG9y
+PC90aD48dGg+RnVlbnRlPC90aD48L3RyPjwvdGhlYWQ+CiAgICAgIDx0Ym9keT4KICAgICAgICA8
+dHI+PHRkPjxkaXYgY2xhc3M9ImRlYWwtbmFtZSI+TGljaXRhY2lvbiBwYXJhIEVzdHJhdGVnaWEg
+RGlnaXRhbCAyMDI2PC9kaXY+PC90ZD48dGQ+TWFya2V0aW5nPC90ZD48dGQgY2xhc3M9InZhbHVl
+LWNlbGwiPiQ2MDAsMDAwPC90ZD48dGQ+TGlua2VkSW48L3RkPjwvdHI+CiAgICAgICAgPHRyPjx0
+ZD48ZGl2IGNsYXNzPSJkZWFsLW5hbWUiPk1pZ3JhY2lvbiBhIFNob3BpZnkgeSBEZXNhcnJvbGxv
+IGRlIFRpZW5kYSBlbiBMaW5lYTwvZGl2PjwvdGQ+PHRkPldlYiAmYW1wOyBBcHAgRGV2PC90ZD48
+dGQgY2xhc3M9InZhbHVlLWNlbGwiPiQxNDcsODAwPC90ZD48dGQ+U2hvcGlmeTwvdGQ+PC90cj4K
+ICAgICAgICA8dHI+PHRkPjxkaXYgY2xhc3M9ImRlYWwtbmFtZSI+RXN0cmF0ZWdpYSBkZSBDYXB0
+YWNpb24gZGUgTGVhZHM8L2Rpdj48L3RkPjx0ZD5NYXJrZXRpbmc8L3RkPjx0ZCBjbGFzcz0idmFs
+dWUtY2VsbCI+JDE0NCwwMDA8L3RkPjx0ZD5EaXJlY3QgQ29udGFjdDwvdGQ+PC90cj4KICAgICAg
+ICA8dHI+PHRkPjxkaXYgY2xhc3M9ImRlYWwtbmFtZSI+RXN0cmF0ZWdpYSBkZSBQYWlkIE1lZGlh
+IHBhcmEgZUNvbW1lcmNlPC9kaXY+PC90ZD48dGQ+TWFya2V0aW5nPC90ZD48dGQgY2xhc3M9InZh
+bHVlLWNlbGwiPiQxMzcsMDAwPC90ZD48dGQ+UFIgYW5kIEV2ZW50czwvdGQ+PC90cj4KICAgICAg
+ICA8dHI+PHRkPjxkaXYgY2xhc3M9ImRlYWwtbmFtZSI+RGVzYXJyb2xsbyBkZSBUaWVuZGEgZW4g
+TGluZWE8L2Rpdj48L3RkPjx0ZD5XZWIgJmFtcDsgQXBwIERldjwvdGQ+PHRkIGNsYXNzPSJ2YWx1
+ZS1jZWxsIj4kMTI3LDUwMDwvdGQ+PHRkPlBSIGFuZCBFdmVudHM8L3RkPjwvdHI+CiAgICAgICAg
+PHRyPjx0ZD48ZGl2IGNsYXNzPSJkZWFsLW5hbWUiPkVzdHJhdGVnaWEgZGUgQ29udGVuaWRvcyBS
+dW1ibyBhbCBNdW5kaWFsIDIwMjY8L2Rpdj48L3RkPjx0ZD5NYXJrZXRpbmc8L3RkPjx0ZCBjbGFz
+cz0idmFsdWUtY2VsbCI+JDk2LDAwMDwvdGQ+PHRkPk5ldHdvcms8L3RkPjwvdHI+CiAgICAgICAg
+PHRyPjx0ZD48ZGl2IGNsYXNzPSJkZWFsLW5hbWUiPkVzdHJhdGVnaWEgRGlnaXRhbCB8IE11bmRp
+YWwgMjAyNjwvZGl2PjwvdGQ+PHRkPk1hcmtldGluZzwvdGQ+PHRkIGNsYXNzPSJ2YWx1ZS1jZWxs
+Ij4kNjgsMjUwPC90ZD48dGQ+Rm9ybWVyIENsaWVudDwvdGQ+PC90cj4KICAgICAgICA8dHI+PHRk
+PjxkaXYgY2xhc3M9ImRlYWwtbmFtZSI+TGljaXRhY2lvbiBkZSBNYXJjYXM8L2Rpdj48L3RkPjx0
+ZD5NYXJrZXRpbmc8L3RkPjx0ZCBjbGFzcz0idmFsdWUtbm9uZSI+4oCUPC90ZD48dGQ+RGlyZWN0
+IENvbnRhY3Q8L3RkPjwvdHI+CiAgICAgIDwvdGJvZHk+CiAgICA8L3RhYmxlPjwvZGl2PgogIDwv
+ZGl2PgoKPC9kaXY+Cjxmb290ZXI+RGlua2JpdCBQaXBlbGluZSBSZXBvcnQgJmJ1bGw7IEdlbmVy
+YWRvIGVsIDE3IGRlIGp1bmlvIGRlIDIwMjYgJmJ1bGw7IERhdG9zOiBBdHRpbyBDUk08L2Zvb3Rl
+cj4KPC9ib2R5Pgo8L2h0bWw+Cg==
