@@ -80,16 +80,6 @@
     .conv-big { font-size: 22px; font-weight: 900; text-align: center; margin-top: 6px; }
     .conv-lbl { font-size: 9.5px; text-align: center; color: #999; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
 
-    .ag-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-    .ag-label { font-size: 11px; color: #777; width: 105px; flex-shrink: 0; }
-    .ag-wrap { flex: 1; background: #f0f0f0; height: 5px; border-radius: 2px; overflow: hidden; }
-    .ag-bar { height: 5px; border-radius: 2px; }
-    .ag-days { width: 32px; text-align: right; font-size: 11px; font-weight: 700; flex-shrink: 0; }
-    .ag-warn { color: #f97316; }
-    .cycle { display: flex; gap: 18px; margin-top: 9px; padding-top: 8px; border-top: 1px solid #e5e5e5; }
-    .cycle-v { font-size: 19px; font-weight: 800; }
-    .cycle-l { font-size: 10px; color: #999; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase; }
-
     .hz { padding: 5px 8px; border-left: 2.5px solid; margin-bottom: 5px; }
     .hz-icon { font-size: 10px; font-weight: 700; margin-bottom: 1px; }
     .hz-title { font-size: 10.5px; font-weight: 700; margin-bottom: 2px; }
@@ -135,21 +125,14 @@
     .coverage { margin-top: 6px; padding-top: 6px; border-top: 1px solid #e5e5e5; display: flex; align-items: baseline; gap: 6px; }
     .coverage-val { font-size: 16px; font-weight: 800; color: #067df7; }
     .coverage-lbl { font-size: 9.5px; color: #999; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
-
-    .risk-section { margin-top: 10px; padding-top: 8px; border-top: 1px solid #e5e5e5; }
-    .risk-lbl { font-size: 10px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase; color: #999; margin-bottom: 6px; }
-    .risk-item { display: flex; align-items: center; justify-content: space-between; margin-bottom: 5px; gap: 8px; }
-    .risk-name { font-size: 11px; color: #333; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .risk-stage { font-size: 9.5px; color: #999; flex-shrink: 0; }
-    .risk-days { font-size: 10.5px; font-weight: 800; color: #f97316; flex-shrink: 0; background: #fff7ed; border-radius: 3px; padding: 1px 5px; }
   </style>
 </head>
 <body>
 <div class="page" id="root"></div>
 
 <script>
-const SNAPSHOT_DATE = "2026-06-14";
-const WEEK_START    = "2026-06-09"; // lunes de la semana
+const SNAPSHOT_DATE = "2026-06-12";
+const WEEK_START    = "2026-06-06"; // lunes de la semana
 
 const PREV_WEEK = { pipeVal: 2290557, wonCount: 20, lostCount: 6, pipeCount: 26, byStageCount: { '3. In Progress': 16, '4. Due Diligence': 2 } };
 
@@ -162,9 +145,8 @@ const DEALS = [
   {name:"Estrategia Digital de TikTok",             company:"Church's Texas Chicken",          stage:"2. Proposal",      bu:"Marketing",             src:"Former Client",  sol:"Marketing Strategy",      val:0,       created:"2026-05-20"},
   {name:"Generación de Videos Educativos",          company:"RF Travel Group",                 stage:"2. Proposal",      bu:"Design",                src:"Network",        sol:"Graphic Digital Materials",val:0,       created:"2026-06-05"},
   {name:"Bolsa de Horas y Póliza de Mantenimiento | Shopify", company:"Grupo Pochteca",        stage:"2. Proposal",      bu:"Web & App Development", src:"PR and Events",  sol:"Online Store",            val:0,       created:"2026-05-05"},
-  {name:"Urbano Town - Atempo (Landing Page)",      company:"Urbano Town",                     stage:"2. Proposal",      bu:"Web & App Development", src:"Network",        sol:"Website",                 val:0,       created:"2026-06-12"},
-  {name:"Urbano Town - Encore (Landing Page)",      company:"Urbano Town",                     stage:"2. Proposal",      bu:"Web & App Development", src:"Network",        sol:"Website",                 val:0,       created:"2026-06-12"},
-  {name:"Estrategia Digital | Fase Zero",           company:null,                              stage:"2. Proposal",      bu:"Marketing",             src:"Network",        sol:"Marketing Strategy",      val:0,       created:"2026-06-12"},
+  {name:"Urbano Town - Atempo (Landing Page)",      company:"Urbano Park",                     stage:"2. Proposal",      bu:"Web & App Development", src:"Network",        sol:"Website",                 val:0,       created:"2026-06-12"},
+  {name:"Estrategia Digital | Fase Zero",           company:"FaseZero",                        stage:"2. Proposal",      bu:"Marketing",             src:"Network",        sol:"Marketing Strategy",      val:0,       created:"2026-06-12"},
   // 3. In Progress
   {name:"Capacitación de Google Workspace",         company:"DiferenciArte",                   stage:"3. In Progress",   bu:"Marketing",             src:"Network",        sol:"Google Workspace",        val:19700,   created:"2026-05-13"},
   {name:"Desarrollo de Sitio Web + Contenido",      company:"QM+3",                            stage:"3. In Progress",   bu:"Web & App Development", src:"Direct Contact", sol:"Website",                 val:52500,   created:"2026-05-29"},
@@ -174,12 +156,12 @@ const DEALS = [
   {name:"Diseño y Desarrollo de Sitio Web",         company:"BASHAM",                          stage:"3. In Progress",   bu:"Web & App Development", src:"Direct Contact", sol:"Website",                 val:147000,  created:"2026-03-27"},
   {name:"Migración a Google Workspace",             company:"Link International",              stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Google Workspace",        val:0,       created:"2026-05-21"},
   {name:"Desarrollo de Sitio Web",                  company:"DiferenciArte",                   stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Website",                 val:49275,   created:"2026-05-13"},
+  {name:"Urbano Town - Encore (Landing Page)",      company:"Urbano Park",                     stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Website",                 val:0,       created:"2026-06-12"},
   {name:"Sitio Web - Bradescard",                   company:"Bradescard",                      stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Website",                 val:288400,  created:"2026-04-17"},
-  {name:"Estrategia de Paid Media para eCommerce",  company:"Novelty Corp México",             stage:"3. In Progress",   bu:"Marketing",             src:"PR and Events",  sol:"Marketing Strategy",      val:137000,  created:"2026-03-27"},
-  {name:"Desarrollo de Sitio Web",                  company:"PM Steele",                       stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Website",                 val:231250,  created:"2026-03-27"},
   {name:"Estrategia Digital para eCommerce",        company:"Healthical",                      stage:"3. In Progress",   bu:"Marketing",             src:"Active Client",  sol:"Marketing Strategy",      val:464032,  created:"2026-05-20"},
-  {name:"Desarrollo de Tienda en Línea",            company:"REAC Automatizaciones",           stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Online Store",             val:121500,  created:"2026-04-15"},
+  {name:"Desarrollo de Sitio Web",                  company:"PM Steele",                       stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Website",                 val:231250,  created:"2026-03-27"},
   {name:"Rediseño de Sitio Web",                    company:"Novygi",                          stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Website",                 val:68500,   created:"2026-04-17"},
+  {name:"Desarrollo de Tienda en Línea",            company:"REAC Automatizaciones",           stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Online Store",             val:121500,  created:"2026-04-15"},
   {name:"Desarrollo de Tienda en Línea",            company:"Frenos Ismael",                   stage:"3. In Progress",   bu:"Web & App Development", src:"Direct Contact", sol:"Online Store",             val:177500,  created:"2026-06-05"},
   // 4. Due Diligence
   {name:"Estrategia Digital para captación de Leads", company:"Centro Mexicano de Fertilidad", stage:"4. Due Diligence", bu:"Marketing",             src:"Former Client",  sol:"Marketing Strategy",      val:129000,  created:"2026-03-27"},
@@ -212,7 +194,8 @@ const DEALS = [
   {name:"Estragia Digital | Mundial 2026",          company:"Estado Natural",                  stage:"6. Lost",          bu:"Marketing",             src:"Former Client",  sol:"Marketing Strategy",      val:68250,   created:"2026-05-05"},
   {name:"Desarrollo de Tienda en Línea",            company:"Corporativo DL",                  stage:"6. Lost",          bu:"Web & App Development", src:"PR and Events",  sol:"Online Store",             val:127500,  created:"2026-04-14"},
   {name:"Estrategia de Contenidos Rumbo al Mundial 2026", company:null,                        stage:"6. Lost",          bu:"Marketing",             src:"Network",        sol:"Graphic Digital Materials",val:96000,   created:"2026-04-10"},
-  {name:"Migración a Shopify y Desarrollo de Tienda en Línea", company:"Proviamiga México",    stage:"6. Lost",          bu:"Web & App Development", src:"Shopify",        sol:"Online Store",            val:147800,  created:"2026-03-27"},
+  {name:"Migración a Shopify y Desarrollo de Tienda en Línea", company:"Proviamiga México",    stage:"6. Lost",          bu:"Web & App Development", src:"Shopify",        sol:"Online Store",             val:147800,  created:"2026-03-27"},
+  {name:"Estrategia de Paid Media para eCommerce",  company:"Novelty Corp México",             stage:"6. Lost",          bu:"Marketing",             src:"PR and Events",  sol:"Marketing Strategy",      val:137000,  created:"2026-03-27"},
 ];
 
 const BU_COLOR = {
