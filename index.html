@@ -131,23 +131,21 @@
 <div class="page" id="root"></div>
 
 <script>
-const SNAPSHOT_DATE = "2026-06-12";
-const WEEK_START    = "2026-06-06"; // lunes de la semana
+const SNAPSHOT_DATE = "2026-06-19";
+const WEEK_START    = "2026-06-13"; // lunes de la semana
 
-const PREV_WEEK = { pipeVal: 2290557, wonCount: 20, lostCount: 6, pipeCount: 26, byStageCount: { '3. In Progress': 16, '4. Due Diligence': 2 } };
+const PREV_WEEK = { pipeVal: 2659857, wonCount: 20, lostCount: 8, pipeCount: 26, byStageCount: { '3. In Progress': 15, '4. Due Diligence': 2 } };
 
 const DEALS = [
   // 2. Proposal
-  {name:"Branding y Papelería Corporativa",         company:"Rodriguez Davalos Abogados",      stage:"2. Proposal",      bu:"Design",                src:"Former Client",  sol:"Branding",                val:0,       created:"2026-06-05"},
   {name:"Diseño de Sitio Web | A.I.",               company:"MBS Textil",                      stage:"2. Proposal",      bu:"Web & App Development", src:"Network",        sol:"Website",                 val:15000,   created:"2026-05-05"},
   {name:"Desarrollo de Plataforma de Asset Management", company:"Rainbow Lobster",             stage:"2. Proposal",      bu:"Web & App Development", src:"Network",        sol:"Digital Platform",        val:0,       created:"2026-05-28"},
-  {name:"Desarrollo de Sitio Web",                  company:"Rodriguez Davalos Abogados",      stage:"2. Proposal",      bu:"Web & App Development", src:"Former Client",  sol:"Website",                 val:0,       created:"2026-06-05"},
   {name:"Estrategia Digital de TikTok",             company:"Church's Texas Chicken",          stage:"2. Proposal",      bu:"Marketing",             src:"Former Client",  sol:"Marketing Strategy",      val:0,       created:"2026-05-20"},
   {name:"Generación de Videos Educativos",          company:"RF Travel Group",                 stage:"2. Proposal",      bu:"Design",                src:"Network",        sol:"Graphic Digital Materials",val:0,       created:"2026-06-05"},
   {name:"Bolsa de Horas y Póliza de Mantenimiento | Shopify", company:"Grupo Pochteca",        stage:"2. Proposal",      bu:"Web & App Development", src:"PR and Events",  sol:"Online Store",            val:0,       created:"2026-05-05"},
-  {name:"Urbano Town - Atempo (Landing Page)",      company:"Urbano Park",                     stage:"2. Proposal",      bu:"Web & App Development", src:"Network",        sol:"Website",                 val:0,       created:"2026-06-12"},
   {name:"Estrategia Digital | Fase Zero",           company:"FaseZero",                        stage:"2. Proposal",      bu:"Marketing",             src:"Network",        sol:"Marketing Strategy",      val:0,       created:"2026-06-12"},
   // 3. In Progress
+  {name:"Consultoría para desarrollo de Plataforma Operativa", company:"Rodriguez Davalos Abogados", stage:"3. In Progress", bu:"Web & App Development", src:"Former Client",  sol:"Development Consultancy", val:0,       created:"2026-06-05"},
   {name:"Capacitación de Google Workspace",         company:"DiferenciArte",                   stage:"3. In Progress",   bu:"Marketing",             src:"Network",        sol:"Google Workspace",        val:19700,   created:"2026-05-13"},
   {name:"Desarrollo de Sitio Web + Contenido",      company:"QM+3",                            stage:"3. In Progress",   bu:"Web & App Development", src:"Direct Contact", sol:"Website",                 val:52500,   created:"2026-05-29"},
   {name:"Estrategia Digital Integral",              company:"PM Steele",                       stage:"3. In Progress",   bu:"Marketing",             src:"Direct Contact", sol:"Marketing Strategy",      val:424100,  created:"2026-05-20"},
@@ -156,16 +154,19 @@ const DEALS = [
   {name:"Diseño y Desarrollo de Sitio Web",         company:"BASHAM",                          stage:"3. In Progress",   bu:"Web & App Development", src:"Direct Contact", sol:"Website",                 val:147000,  created:"2026-03-27"},
   {name:"Migración a Google Workspace",             company:"Link International",              stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Google Workspace",        val:0,       created:"2026-05-21"},
   {name:"Desarrollo de Sitio Web",                  company:"DiferenciArte",                   stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Website",                 val:49275,   created:"2026-05-13"},
+  {name:"Urbano Town - Atempo (Landing Page)",      company:"Urbano Park",                     stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Website",                 val:0,       created:"2026-06-12"},
   {name:"Urbano Town - Encore (Landing Page)",      company:"Urbano Park",                     stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Website",                 val:0,       created:"2026-06-12"},
   {name:"Sitio Web - Bradescard",                   company:"Bradescard",                      stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Website",                 val:288400,  created:"2026-04-17"},
   {name:"Estrategia Digital para eCommerce",        company:"Healthical",                      stage:"3. In Progress",   bu:"Marketing",             src:"Active Client",  sol:"Marketing Strategy",      val:464032,  created:"2026-05-20"},
   {name:"Desarrollo de Sitio Web",                  company:"PM Steele",                       stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Website",                 val:231250,  created:"2026-03-27"},
   {name:"Rediseño de Sitio Web",                    company:"Novygi",                          stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Website",                 val:68500,   created:"2026-04-17"},
   {name:"Desarrollo de Tienda en Línea",            company:"REAC Automatizaciones",           stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Online Store",             val:121500,  created:"2026-04-15"},
+  {name:"Estrategia digital para nuevo eCommerce de B Hermanos", company:"Grupo Batta",        stage:"3. In Progress",   bu:"Marketing",             src:"Active Client",  sol:"Marketing Strategy",      val:273500,  created:"2026-06-19"},
   {name:"Desarrollo de Tienda en Línea",            company:"Frenos Ismael",                   stage:"3. In Progress",   bu:"Web & App Development", src:"Direct Contact", sol:"Online Store",             val:177500,  created:"2026-06-05"},
   // 4. Due Diligence
   {name:"Estrategia Digital para captación de Leads", company:"Centro Mexicano de Fertilidad", stage:"4. Due Diligence", bu:"Marketing",             src:"Former Client",  sol:"Marketing Strategy",      val:129000,  created:"2026-03-27"},
   {name:"Distribuidoras | B Hermanos",              company:"Grupo Batta",                     stage:"4. Due Diligence", bu:"Marketing",             src:"Active Client",  sol:"Marketing Strategy",      val:117200,  created:"2026-03-26"},
+  {name:"Desarrollo de Plataforma sobre Shopify",   company:"MTA Trust",                       stage:"4. Due Diligence", bu:"Web & App Development", src:"Network",        sol:"Digital Platform",        val:173250,  created:"2026-06-19"},
   // 5. Won
   {name:"Desarrollo de Nuevo Sitio Web",            company:"Tulum Fishing",                   stage:"5. Won 🎉",        bu:"Web & App Development", src:"Active Client",  sol:"Website",                 val:42750,   created:"2026-04-08"},
   {name:"Estrategia Digital para eCommerce",        company:"Cybex",                           stage:"5. Won 🎉",        bu:"Marketing",             src:"Network",        sol:"Marketing Strategy",      val:136000,  created:"2026-04-01"},
