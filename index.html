@@ -1,337 +1,396 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pipeline de Ventas · dinkbit</title>
-  <style>
-    :root { color-scheme: light; }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
-      background: #fff; color: #111; font-size: 13px; line-height: 1.4;
-    }
-    .page { max-width: 1600px; margin: 0 auto; padding: 10px 20px; }
-    .hdr { display: flex; align-items: flex-start; justify-content: space-between; padding-bottom: 8px; border-bottom: 1.5px solid #111; margin-bottom: 8px; }
-    .logo { font-size: 18px; font-weight: 900; letter-spacing: -0.5px; }
-    .hdr-sub { font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: #777; margin-top: 2px; }
-    .hdr-right { text-align: right; }
-    .hdr-period { font-size: 12px; font-weight: 700; }
-    .hdr-date { font-size: 10px; color: #999; letter-spacing: 0.5px; text-transform: uppercase; margin-top: 1px; }
-    .alert { background: #f7f7f7; border-left: 2.5px solid #111; padding: 4px 10px; font-size: 10.5px; color: #555; margin-bottom: 8px; }
-    .alert strong { color: #111; }
-    .kpis { display: grid; grid-template-columns: repeat(5, 1fr); border: 1px solid #e5e5e5; border-radius: 4px; overflow: hidden; margin-bottom: 8px; }
-    .kpi { padding: 8px 12px; border-right: 1px solid #e5e5e5; }
-    .kpi:last-child { border-right: none; }
-    .kpi-label { font-size: 9.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #999; margin-bottom: 3px; }
-    .kpi-val { font-size: 20px; font-weight: 800; letter-spacing: -1px; line-height: 1; }
-    .kpi-note { font-size: 10px; color: #999; margin-top: 2px; }
-    .main { display: grid; grid-template-columns: 1fr 1.6fr 1fr; gap: 7px; margin-bottom: 7px; align-items: start; }
-    .main-left { display: flex; flex-direction: column; gap: 7px; }
-    .main-center { display: flex; flex-direction: column; gap: 7px; }
-    .main-right { display: flex; flex-direction: column; gap: 7px; }
-    .card { border: 1px solid #e5e5e5; border-radius: 4px; padding: 9px 12px; }
-    .card-hdr { display: flex; align-items: baseline; justify-content: space-between; padding-bottom: 6px; border-bottom: 1px solid #e5e5e5; margin-bottom: 8px; }
-    .card-title { font-size: 12px; font-weight: 400; }
-    .card-title em { font-style: italic; }
-    .card-meta { font-size: 9.5px; font-weight: 700; letter-spacing: 0.5px; color: #999; }
-    .f-row { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; }
-    .f-label { font-size: 10px; color: #777; width: 110px; flex-shrink: 0; }
-    .f-wrap { flex: 1; background: #f0f0f0; border-radius: 2px; height: 6px; overflow: hidden; }
-    .f-bar { height: 6px; border-radius: 2px; }
-    .f-cnt { width: 20px; text-align: right; font-size: 10px; font-weight: 700; flex-shrink: 0; }
-    .f-val { width: 55px; text-align: right; font-size: 10px; color: #999; flex-shrink: 0; }
-    .bu { margin-bottom: 6px; }
-    .bu-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 2px; }
-    .bu-name { font-size: 11px; font-weight: 700; }
-    .bu-val { font-size: 12px; font-weight: 800; letter-spacing: -0.3px; }
-    .bu-wrap { background: #f0f0f0; height: 4px; border-radius: 2px; overflow: hidden; }
-    .bu-fill { height: 4px; border-radius: 2px; }
-    .bu-sub { font-size: 9.5px; color: #999; font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase; margin-top: 1px; }
-    .bu-dist { margin-top: 6px; padding-top: 6px; border-top: 1px solid #e5e5e5; }
-    .bu-dist-lbl { font-size: 9.5px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase; color: #999; margin-bottom: 4px; }
-    .bu-note { font-size: 10px; color: #444; margin-bottom: 3px; padding-left: 6px; border-left: 2px solid #ddd; line-height: 1.4; }
-    table { width: 100%; border-collapse: collapse; table-layout: fixed; }
-    th { font-size: 9.5px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase; color: #999; text-align: left; padding: 3px 5px; border-bottom: 1px solid #e5e5e5; white-space: nowrap; overflow: hidden; }
-    td { padding: 4px 5px; border-bottom: 0.5px solid #f5f5f5; vertical-align: middle; }
-    tr:last-child td { border-bottom: none; }
-    .rn { color: #ccc; font-size: 10px; width: 18px; }
-    .deal-name { font-weight: 600; font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .deal-co { font-size: 9.5px; color: #aaa; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .pill { display: inline-block; border-radius: 3px; padding: 1px 4px; font-size: 9px; font-weight: 700; letter-spacing: 0.3px; text-transform: uppercase; white-space: nowrap; }
-    .val-r { text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; font-size: 11px; }
-    .ytd-won { border: 1px solid #bbf7d0; border-radius: 4px; padding: 6px 8px; margin-bottom: 5px; }
-    .ytd-lost { border: 1px solid #fecaca; border-radius: 4px; padding: 6px 8px; margin-bottom: 6px; }
-    .ytd-lbl { font-size: 9.5px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase; color: #888; }
-    .ytd-v { font-size: 17px; font-weight: 800; letter-spacing: -0.5px; margin: 1px 0; }
-    .ytd-s { font-size: 10px; color: #888; }
-    .conv-big { font-size: 22px; font-weight: 900; text-align: center; margin-top: 6px; }
-    .conv-lbl { font-size: 9.5px; text-align: center; color: #999; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
-    .hz { padding: 5px 8px; border-left: 2.5px solid; margin-bottom: 5px; }
-    .hz-icon { font-size: 10px; font-weight: 700; margin-bottom: 1px; }
-    .hz-title { font-size: 10.5px; font-weight: 700; margin-bottom: 2px; }
-    .hz-text { font-size: 9.5px; color: #555; line-height: 1.4; }
-    .wow { display: grid; grid-template-columns: repeat(5, 1fr); border: 1px solid #e5e5e5; border-radius: 4px; margin-bottom: 8px; background: #fafafa; }
-    .wow-item { padding: 7px 12px; border-right: 1px solid #e5e5e5; cursor: pointer; user-select: none; }
-    .wow-item:last-child { border-right: none; }
-    .wow-item:hover { background: #f5f5f5; }
-    .wow-label { font-size: 9.5px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: #999; margin-bottom: 3px; }
-    .wow-val { font-size: 16px; font-weight: 800; letter-spacing: -0.5px; line-height: 1; }
-    .wow-sub { font-size: 10px; color: #999; margin-top: 2px; }
-    .wow-delta { display: inline-flex; align-items: center; gap: 3px; font-size: 11px; font-weight: 700; border-radius: 3px; padding: 1px 5px; }
-    .wow-delta.pos { background: #dcfce7; color: #15803d; }
-    .wow-delta.neg { background: #fee2e2; color: #b91c1c; }
-    .wow-delta.neu { background: #f0f0f0; color: #666; }
-    .wow-delta.na  { background: #f0f0f0; color: #bbb; font-weight: 600; font-size: 10px; }
-    .wow-caret { font-size: 9px; color: #ccc; margin-left: 3px; vertical-align: middle; }
-    .wow-drop { display: none; position: absolute; top: calc(100% + 2px); left: -1px; z-index: 200; background: #fff; border: 1px solid #e5e5e5; border-radius: 4px; box-shadow: 0 4px 16px rgba(0,0,0,0.10); min-width: 260px; max-height: 280px; overflow-y: auto; }
-    .wow-drop.open { display: block; }
-    .wow-drop-item { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 6px 10px; border-bottom: 0.5px solid #f5f5f5; }
-    .wow-drop-item:last-child { border-bottom: none; }
-    .wow-drop-name { font-size: 11px; font-weight: 600; color: #111; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; }
-    .wow-drop-co { font-size: 9.5px; color: #999; }
-    .wow-drop-val { font-size: 11px; font-weight: 700; color: #555; flex-shrink: 0; }
-    .wow-drop-stage { display: inline-block; font-size: 9px; font-weight: 700; padding: 1px 4px; border-radius: 3px; margin-left: 4px; }
-    .wow-drop-empty { padding: 10px; font-size: 11px; color: #999; text-align: center; }
-    .footer { margin-top: 12px; padding-top: 8px; border-top: 1px solid #e5e5e5; display: flex; align-items: center; justify-content: space-between; font-size: 10px; color: #999; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase; }
-    .legend { display: flex; align-items: center; gap: 12px; }
-    .leg-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; margin-right: 4px; }
-    .won-bu { margin-top: 8px; padding-top: 6px; border-top: 1px solid #e5e5e5; }
-    .won-bu-lbl { font-size: 9.5px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase; color: #999; margin-bottom: 5px; }
-    .won-bu-row { display: flex; align-items: center; gap: 5px; margin-bottom: 4px; }
-    .won-bu-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-    .won-bu-name { font-size: 11px; font-weight: 600; flex: 1; }
-    .won-bu-val { font-size: 11px; font-weight: 800; }
-    .won-bu-cnt { font-size: 10px; color: #999; width: 48px; text-align: right; }
-    .coverage { margin-top: 6px; padding-top: 6px; border-top: 1px solid #e5e5e5; display: flex; align-items: baseline; gap: 6px; }
-    .coverage-val { font-size: 16px; font-weight: 800; color: #067df7; }
-    .coverage-lbl { font-size: 9.5px; color: #999; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>dinkbit · Pipeline · 10 Jul 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;background:oklch(96% 0.01 264);color:#161616;-webkit-font-smoothing:antialiased;}
+::selection{background:#254EF4;color:#fff;}
+a{color:#254EF4;text-decoration:none;}
+a:hover{color:#1a3bc0;text-decoration:underline;}
+</style>
 </head>
 <body>
-<div class="page" id="root"></div>
+<div id="root"></div>
 <script>
-const SNAPSHOT_DATE = "2026-07-03";
-const WEEK_START    = "2026-06-27";
+const LOGO_SRC="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA30AAAENCAYAAAC7NwxRAABLYklEQVR42u3deXxcZdUH8N957kyWNjNJl5TSNU0mFCjKVlQoatnaZpkgIiAgKCooigKCLy4I5VUUF5RFRRR9FRCxomAmaaAsLbJLERQrSyZLF0rpQpK502aZmXveP1qQnbaZSe7y+37UDyCdufec5z7POffeuVdAHrHEmrZwYblmRdyyReFcLte9Ylwvc0NEu+zgleGpFXtF3bI5Q7mBwU0rJqWZmPyZtrBvfHGROdUImhSytygmQxBy0zaqag8E6xS4T9S5NZkof5SZI9o9sbr2Yg3v8XFR+YhA9ldgigiK3bWVmgbwgqo87Gjuts6W8jYAGoT8CIeoiw+extShMHIGIIsATBHActs2qmIQ0CQgLY7mft3ZUt7OzBHRW85pDakmGDkFgiOgUinitjVIbSj+6YjckUtlfs2TWsPIdTx9HkQvFUiFl7ZbFS06OPiFjmUT1jKLRDuvusn+qFH5iQhmeGrDFY87TvbsjtaKJ9j00cgvlnVboggV/VJETvLYgZMF9DrNbvhqsq12kJkkIgCoaeqLCczvBHKYh6r/lx3gGx2JyPXM4C6Ys6ooVj3jJhE50au7oKov5dRp6mop/zsTSrQTc3zc/l8j8i3vHvMYAPSTyURkCZs+GsGGz66UEO6ByHs9vGA+OjDkNKy7q/xlZpQo2Krre+daltUGkYkendCub09EzkZAbv8Z9hoWT98ggs94fkdUNw8h977ViYouZpXoHRu+LxuRq32wKxl1dEGyJbLCr7kyHK5ustgghN97ueEDABH5QEmR+RPmLw8xp0QBLgYW2JMsK3SHZxu+7RPa52JxezGz+e5q4/bxvmj4tud9YhGsG5lVordXFU/tbSBX+mR3wmLklj0WbBjLpo8KXyA1nv8JETnGH+ulHBmLHPIlZpUouKRYfgTBVB/sybdqGnoPZkbfOUgq+K6/9kgOr42nGplaorcWgnzHbQ9nGqY9y4rHnsemjwqfDDFf99d6qd/08xkTInp7Mxp6qyE4xR9zGUSs0OXM6tuLNaY+IJC9/LZfCjmN2SV6s+qjXy4XkSb/1eLw7THPps8lZjbY+0Bkb3/tlUwYWzJ2IbNLFDxhE/qoG584PAzHxOrsSmb2bSslf871Aq5hRG91aJSGjgAQ9uGeza5a1FPFpo8KJmThg74cYIqjmV2iABYEwId9tj8GIRzBzL4NlRn+HMdSXn30y+VMMNEb6zsz07c1eTjky31j0+eegmKKT/dsOrNLFMhJbarfdkmF89k7mOjXHTNhM5HpJXo9R3SCf/cNvtw3Nn1uKSaACn8Wfjqe2SUKYs+Hcb7bJwcTmNl3SrlP1+ew8PVWRG9uIHzbQxjHn/vGpo8K3c1ysSQK4qHPY5+IyL+E7y5l00dERERERERs+oiIiIiIiIhNHxEREREREbHpIyIiIiIiIjZ9REREREREbPqIiIiIiIiITR8RERERERGx6SMiIiIiIiI2fURERERERMSmj4iIiIiIiNj0EREREREREZs+IiIiIiIiNn1ERERERETEpo+IiIiIiIjY9BERERERERGbPiIiIiIiImLTR0RERERERGz6iIiIiIiI2PQRERERERERmz4iIiIiIiJi00dERERERERs+oiIiIiIiIhNHxEREREREbHpIyIiIiIiIjZ9REREREREbPqIiIiIiIiITR8RERERERGx6SMiIiIiIiI2fURERERERMSmj4iIiIiIiHZOiCEgekcyq7HnvZaE5gmwt0JmC3QyIBGFlglkCFBbgV4IOgR4Th19yhnI/q3znvF9DB8REVFA64f6nhmWJbNVzJ6ARES1DDADgGMrsEUg7chuSCbbagcZLmLTRzTilljVjQsXWmI+AcECQCa8OoO/7n/l1X+6468+AABiBGZMUa42nn7CUee2ocHB36+9u3I940pERORfsbg9B9BGwBwpwDwIxv63agAgr/yVefWfaXjPXKwp/S+ocx/gLEsmlt0LnJhjNIlNH1GBVB/9crmUhs8R4EsissdwPksAC4L3GTHvKy4tvSIWT7cCue8mE+WPMtJERET+sMeCDWPLisd+WkTOEODA17R4O18vAAdCzIGAuSAWr98ASd2SUeenqxMVXYww5Qt/00c0Z1VRTdz+phkTXm1EvjPchu8tJnQjgriI9Uhtk313TYO9H4NORETkXVPi68fE4qlvRIvHdhuRa7Y3fHmoGQSTBeYrRQg9H2tK/25GQ281o01s+oiGqabBPiJWM+NpI/IdgZQX/hvlaGPkydp4+ofTDl1bygwQERF5S6wh1TQG0f+ImMshMrEw5QJCApxeZEKrYo32pbG69mJGntj0Ee2yJVZtk/1tseQegew1ol8t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";
+const SNAPSHOT_DATE="2026-07-10";
+const WEEK_START="2026-07-03";
 
-const PREV_WEEK = { pipeVal: 3106607, wonCount: 20, lostCount: 8, pipeCount: 27, byStageCount: { '3. In Progress': 18, '4. Due Diligence': 3 } };
-
-const DEALS = [
-  // 1. Lead
-  {name:"Migración de Tienda en Línea",             company:"Guantes Verri S.A. de C.V.",        stage:"1. Lead",          bu:"Web & App Development", src:"Kometia",        sol:"Online Store",             val:0,       created:"2026-07-01"},
-  {name:"Desarrollo de Sitio Web / eCommerce",      company:"Liga Comunitaria",                   stage:"1. Lead",          bu:"Web & App Development", src:"Kometia",        sol:"Online Store",             val:0,       created:"2026-07-01"},
-  {name:"Migración de Tienda en Línea",             company:"Pizarromex",                         stage:"1. Lead",          bu:"Web & App Development", src:"Kometia",        sol:"Online Store",             val:0,       created:"2026-07-01"},
-  // 2. Proposal
-  {name:"Diseño de Sitio Web | A.I.",               company:"MBS Textil",                         stage:"2. Proposal",      bu:"Web & App Development", src:"Network",        sol:"Website",                  val:15000,   created:"2026-05-05"},
-  {name:"Desarrollo de Plataforma de Asset Management", company:"Rainbow Lobster",                stage:"2. Proposal",      bu:"Web & App Development", src:"Network",        sol:"Digital Platform",         val:0,       created:"2026-05-28"},
-  {name:"Estrategia Digital de TikTok",             company:"Church's Texas Chicken",             stage:"2. Proposal",      bu:"Marketing",             src:"Former Client",  sol:"Marketing Strategy",       val:0,       created:"2026-05-20"},
-  {name:"Generación de Videos Educativos",          company:"RF Travel Group",                    stage:"2. Proposal",      bu:"Design",                src:"Network",        sol:"Graphic Digital Materials", val:0,       created:"2026-06-05"},
-  {name:"Bolsa de Horas y Póliza de Mantenimiento | Shopify", company:"Grupo Pochteca",           stage:"2. Proposal",      bu:"Web & App Development", src:"PR and Events",  sol:"Online Store",             val:0,       created:"2026-05-05"},
-  // 3. In Progress
-  {name:"Consultoría para desarrollo de Plataforma Operativa", company:"Rodriguez Davalos Abogados", stage:"3. In Progress", bu:"Web & App Development", src:"Former Client", sol:"Development Consultancy",  val:0,       created:"2026-06-05"},
-  {name:"Capacitación de Google Workspace",         company:"DiferenciArte",                      stage:"3. In Progress",   bu:"Marketing",             src:"Network",        sol:"Google Workspace",         val:19700,   created:"2026-05-13"},
-  {name:"Estrategia Digital Integral",              company:"PM Steele",                          stage:"3. In Progress",   bu:"Marketing",             src:"Direct Contact", sol:"Marketing Strategy",       val:424100,  created:"2026-05-20"},
-  {name:"Desarrollo de Nuevo Sitio Web y Tienda en Línea", company:"Pioneer Electronics De Mexico", stage:"3. In Progress", bu:"Web & App Development", src:"Active Client",  sol:"Online Store",            val:172500,  created:"2026-03-27"},
-  {name:"Estrategia Digital",                       company:"DiferenciArte",                      stage:"3. In Progress",   bu:"Marketing",             src:"Network",        sol:"Marketing Strategy",       val:182400,  created:"2026-05-12"},
-  {name:"Migración a Google Workspace",             company:"Link International",                 stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Google Workspace",         val:0,       created:"2026-05-21"},
-  {name:"Desarrollo de Sitio Web",                  company:"DiferenciArte",                      stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Website",                  val:49275,   created:"2026-05-13"},
-  {name:"Urbano Town - Atempo (Landing Page)",      company:"Urbano Park",                        stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Website",                  val:0,       created:"2026-06-12"},
-  {name:"Urbano Town - Encore (Landing Page)",      company:"Urbano Park",                        stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Website",                  val:0,       created:"2026-06-12"},
-  {name:"Sitio Web - Bradescard",                   company:"Bradescard",                         stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Website",                  val:288400,  created:"2026-04-17"},
-  {name:"Estrategia Digital para eCommerce",        company:"Healthical",                         stage:"3. In Progress",   bu:"Marketing",             src:"Active Client",  sol:"Marketing Strategy",       val:464032,  created:"2026-05-20"},
-  {name:"Desarrollo de Sitio Web",                  company:"PM Steele",                          stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Website",                  val:231250,  created:"2026-03-27"},
-  {name:"Rediseño de Sitio Web",                    company:"Novygi",                             stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Website",                  val:68500,   created:"2026-04-17"},
-  {name:"Desarrollo de Tienda en Línea",            company:"REAC Automatizaciones",              stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Online Store",             val:121500,  created:"2026-04-15"},
-  {name:"Estrategia digital para nuevo eCommerce de B Hermanos", company:"Grupo Batta",           stage:"3. In Progress",   bu:"Marketing",             src:"Active Client",  sol:"Marketing Strategy",       val:273500,  created:"2026-06-19"},
-  {name:"Desarrollo de Tienda en Línea",            company:"Frenos Ismael",                      stage:"3. In Progress",   bu:"Web & App Development", src:"Direct Contact", sol:"Online Store",             val:177500,  created:"2026-06-05"},
-  {name:"Estrategia Digital | Fase Zero",           company:"FaseZero",                           stage:"3. In Progress",   bu:"Marketing",             src:"Network",        sol:"Marketing Strategy",       val:0,       created:"2026-06-12"},
-  {name:"App de Matchmaking para Doctores",         company:null,                                 stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Development Consultancy",  val:0,       created:"2026-06-26"},
-  {name:"Tienda en Línea - Plan Shopify Basic",     company:"Danceology Studio",                  stage:"3. In Progress",   bu:"Web & App Development", src:"Network",        sol:"Online Store",             val:38900,   created:"2026-06-23"},
-  // 4. Due Diligence
-  {name:"Estrategia Digital para captación de Leads", company:"Centro Mexicano de Fertilidad",    stage:"4. Due Diligence", bu:"Marketing",             src:"Former Client",  sol:"Marketing Strategy",       val:129000,  created:"2026-03-27"},
-  {name:"Distribuidoras | B Hermanos",              company:"Grupo Batta",                        stage:"4. Due Diligence", bu:"Marketing",             src:"Active Client",  sol:"Marketing Strategy",       val:117200,  created:"2026-03-26"},
-  {name:"Desarrollo de Plataforma sobre Shopify",   company:"MTA Trust",                          stage:"4. Due Diligence", bu:"Web & App Development", src:"Network",        sol:"Digital Platform",         val:173250,  created:"2026-06-19"},
-  {name:"Diseño y Desarrollo de Sitio Web",         company:"BASHAM",                             stage:"4. Due Diligence", bu:"Web & App Development", src:"Direct Contact", sol:"Website",                  val:147000,  created:"2026-03-27"},
-  {name:"Desarrollo de Sitio Web + Contenido",      company:"QM+3",                               stage:"4. Due Diligence", bu:"Web & App Development", src:"Direct Contact", sol:"Website",                  val:52500,   created:"2026-05-29"},
-  // 5. Won
-  {name:"Desarrollo de Nuevo Sitio Web",            company:"Tulum Fishing",                      stage:"5. Won 🎉",        bu:"Web & App Development", src:"Active Client",  sol:"Website",                  val:42750,   created:"2026-04-08"},
-  {name:"Estrategia Digital para eCommerce",        company:"Cybex",                              stage:"5. Won 🎉",        bu:"Marketing",             src:"Network",        sol:"Marketing Strategy",       val:136000,  created:"2026-04-01"},
-  {name:"Desarrollo de Tienda en Línea",            company:"Quickshark&Bombastika",              stage:"5. Won 🎉",        bu:"Web & App Development", src:"Network",        sol:"Online Store",             val:45000,   created:"2026-05-12"},
-  {name:"Desarrollo de Nuevo Sitio Web",            company:"Viento Capital",                     stage:"5. Won 🎉",        bu:"Web & App Development", src:"Network",        sol:"Website",                  val:36500,   created:"2026-03-27"},
-  {name:"Diseño y Desarrollo de Sitio Web",         company:null,                                 stage:"5. Won 🎉",        bu:"Web & App Development", src:"Former Client",  sol:"Website",                  val:78500,   created:"2026-04-01"},
-  {name:"Desarrollo de Nuevo Sitio Web",            company:"Grupo Novo Casas",                   stage:"5. Won 🎉",        bu:"Web & App Development", src:"Direct Contact", sol:"Website",                  val:50000,   created:"2026-03-27"},
-  {name:"Estrategia Digital en Google Ads",         company:"Grupo Novo Casas",                   stage:"5. Won 🎉",        bu:"Marketing",             src:"Direct Contact", sol:"Marketing Strategy",       val:122100,  created:"2026-03-27"},
-  {name:"Rediseño de Tienda en Línea",              company:"Cybex",                              stage:"5. Won 🎉",        bu:"Web & App Development", src:"Network",        sol:"Online Store",             val:130125,  created:"2026-03-27"},
-  {name:"Rediseño de Sitio Web",                    company:"Petland",                            stage:"5. Won 🎉",        bu:"Web & App Development", src:"Active Client",  sol:"Website",                  val:74500,   created:"2026-03-27"},
-  {name:"Estrategia Digital para Descargas y Transacciones", company:"IsiBai",                    stage:"5. Won 🎉",        bu:"Marketing",             src:"Active Client",  sol:"Marketing Strategy",       val:138250,  created:"2026-04-10"},
-  {name:"Reconstrucción de Tienda en Línea",        company:"Dídiamant",                          stage:"5. Won 🎉",        bu:"Web & App Development", src:"Active Client",  sol:"Online Store",             val:112995,  created:"2026-03-27"},
-  {name:"Hoyer | Sitio Web + Tienda en Línea",      company:"Insurgent Artists",                  stage:"5. Won 🎉",        bu:"Web & App Development", src:"Active Client",  sol:"Website",                  val:5400,    created:"2026-05-12"},
-  {name:"Desarrollo de Tienda en Línea para México y Costa Rica", company:"Healthical",           stage:"5. Won 🎉",        bu:"Web & App Development", src:"Network",        sol:"Online Store",             val:297185,  created:"2026-04-08"},
-  {name:"Estrategia de Paid Media para Bailey International", company:"Studio Enova",             stage:"5. Won 🎉",        bu:"Marketing",             src:"Network",        sol:"Marketing Strategy",       val:5100,    created:"2026-03-27"},
-  {name:"Rediseño y Desarrollo de Nuevo Sitio Web", company:"Centro Mexicano de Fertilidad",      stage:"5. Won 🎉",        bu:"Web & App Development", src:"Former Client",  sol:"Website",                  val:69500,   created:"2026-03-27"},
-  {name:"Consultoría para Desarrollo de Plataforma Financiera", company:"Sahara Capital",         stage:"5. Won 🎉",        bu:"Web & App Development", src:"Network",        sol:"Development Consultancy",  val:20300,   created:"2026-04-08"},
-  {name:"DANNA | Creación de Tienda en Línea",      company:"Insurgent Artists",                  stage:"5. Won 🎉",        bu:"Web & App Development", src:"Active Client",  sol:"Online Store",             val:52500,   created:"2026-05-05"},
-  {name:"DANNA | Sitio Web para Lanzamiento de EP", company:"Insurgent Artists",                  stage:"5. Won 🎉",        bu:"Web & App Development", src:"Network",        sol:"Website",                  val:43250,   created:"2026-03-27"},
-  {name:"Desarrollo de Tienda en Línea",            company:"AXA Lock Center",                    stage:"5. Won 🎉",        bu:"Web & App Development", src:"Former Client",  sol:"Online Store",             val:99500,   created:"2026-04-08"},
-  {name:"Naming y Branding de Nueva Empresa",       company:null,                                 stage:"5. Won 🎉",        bu:"Design",                src:"Former Client",  sol:"Branding",                 val:21500,   created:"2026-03-27"},
-  // 6. Lost
-  {name:"Licitación de Marcas",                     company:"Stellantis",                         stage:"6. Lost",          bu:"Marketing",             src:"Direct Contact", sol:"Marketing Strategy",       val:0,       created:"2026-03-26"},
-  {name:"Estrategia de Captación de Leads",         company:"Shopology",                          stage:"6. Lost",          bu:"Marketing",             src:"Direct Contact", sol:"Marketing Strategy",       val:144000,  created:"2026-05-05"},
-  {name:"Licitación para Estrategia Digital 2026",  company:"Lapisa",                             stage:"6. Lost",          bu:"Marketing",             src:"Linked In",      sol:"Marketing Strategy",       val:600000,  created:"2026-03-27"},
-  {name:"Estragia Digital | Mundial 2026",          company:"Estado Natural",                     stage:"6. Lost",          bu:"Marketing",             src:"Former Client",  sol:"Marketing Strategy",       val:68250,   created:"2026-05-05"},
-  {name:"Desarrollo de Tienda en Línea",            company:"Corporativo DL",                     stage:"6. Lost",          bu:"Web & App Development", src:"PR and Events",  sol:"Online Store",             val:127500,  created:"2026-04-14"},
-  {name:"Estrategia de Contenidos Rumbo al Mundial 2026", company:null,                           stage:"6. Lost",          bu:"Marketing",             src:"Network",        sol:"Graphic Digital Materials", val:96000,   created:"2026-04-10"},
-  {name:"Migración a Shopify y Desarrollo de Tienda en Línea", company:"Proviamiga México",       stage:"6. Lost",          bu:"Web & App Development", src:"Shopify",        sol:"Online Store",             val:147800,  created:"2026-03-27"},
-  {name:"Estrategia de Paid Media para eCommerce",  company:"Novelty Corp México",                stage:"6. Lost",          bu:"Marketing",             src:"PR and Events",  sol:"Marketing Strategy",       val:137000,  created:"2026-03-27"},
+const DEALS=[
+  // Proposal (10)
+  {name:"Diseño de Sitio Web | A.I.",               company:"MBS Textil",                        stage:"2. Proposal",      bu:"Web & App Development",src:"Network",       sol:"Website",                 val:15000,  created:"2026-05-05"},
+  {name:"Desarrollo de Plataforma de Asset Management",company:"Rainbow Lobster",                 stage:"2. Proposal",      bu:"Web & App Development",src:"Network",       sol:"Digital Platform",        val:0,      created:"2026-05-28"},
+  {name:"Estrategia Digital de TikTok",             company:"Church's Texas Chicken",             stage:"2. Proposal",      bu:"Marketing",            src:"Former Client", sol:"Marketing Strategy",      val:0,      created:"2026-05-20"},
+  {name:"Generación de Videos Educativos",          company:"RF Travel Group",                   stage:"2. Proposal",      bu:"Design",               src:"Network",       sol:"Graphic Digital Materials",val:0,      created:"2026-06-05"},
+  {name:"Bolsa de Horas y Póliza de Mantenimiento | Shopify",company:"Grupo Pochteca",           stage:"2. Proposal",      bu:"Web & App Development",src:"PR and Events", sol:"Online Store",            val:0,      created:"2026-05-05"},
+  {name:"Migración de Tienda en Línea",             company:"Guantes Verri S.A. de C.V.",        stage:"2. Proposal",      bu:"Web & App Development",src:"Kometia",       sol:"Online Store",            val:0,      created:"2026-07-01"},
+  {name:"Desarrollo de Sitio Web / eCommerce",      company:"Liga Comunitaria",                  stage:"2. Proposal",      bu:"Web & App Development",src:"Kometia",       sol:"Online Store",            val:0,      created:"2026-07-01"},
+  {name:"Migración de Tienda en Línea",             company:"Pizarromex",                        stage:"2. Proposal",      bu:"Web & App Development",src:"Kometia",       sol:"Online Store",            val:0,      created:"2026-07-01"},
+  {name:"Desarrollo de App con Catálogo Infinito",  company:"Amesa",                             stage:"2. Proposal",      bu:"Web & App Development",src:"Network",       sol:"Mobile App",              val:0,      created:"2026-07-08"},
+  {name:"Migración de Tienda en Línea a Shopify",   company:"Bolsas Jennyfer",                   stage:"2. Proposal",      bu:"Web & App Development",src:"Kometia",       sol:"Online Store",            val:0,      created:"2026-07-08"},
+  // In Progress (15)
+  {name:"Consultoría para desarrollo de Plataforma Operativa",company:"Rodriguez Davalos Abogados",stage:"3. In Progress", bu:"Web & App Development",src:"Former Client", sol:"Development Consultancy", val:0,      created:"2026-06-05"},
+  {name:"Estrategia Digital Integral",              company:"PM Steele",                         stage:"3. In Progress",   bu:"Marketing",            src:"Direct Contact",sol:"Marketing Strategy",      val:424100, created:"2026-05-20"},
+  {name:"Desarrollo de Nuevo Sitio Web y Tienda en Línea",company:"Pioneer Electronics De Mexico",stage:"3. In Progress",  bu:"Web & App Development",src:"Active Client", sol:"Online Store",            val:172500, created:"2026-03-27"},
+  {name:"Estrategia Digital",                       company:"DiferenciArte",                     stage:"3. In Progress",   bu:"Marketing",            src:"Network",       sol:"Marketing Strategy",      val:182400, created:"2026-05-12"},
+  {name:"Migración a Google Workspace",             company:"Link International",                stage:"3. In Progress",   bu:"Web & App Development",src:"Network",       sol:"Google Workspace",        val:0,      created:"2026-05-21"},
+  {name:"Desarrollo de Sitio Web",                  company:"DiferenciArte",                     stage:"3. In Progress",   bu:"Web & App Development",src:"Network",       sol:"Website",                 val:49275,  created:"2026-05-13"},
+  {name:"Urbano Town - Atempo (Landing Page)",      company:"Urbano Park",                       stage:"3. In Progress",   bu:"Web & App Development",src:"Network",       sol:"Website",                 val:0,      created:"2026-06-12"},
+  {name:"Urbano Town - Encore (Landing Page)",      company:"Urbano Park",                       stage:"3. In Progress",   bu:"Web & App Development",src:"Network",       sol:"Website",                 val:0,      created:"2026-06-12"},
+  {name:"Sitio Web - Bradescard",                   company:"Bradescard",                        stage:"3. In Progress",   bu:"Web & App Development",src:"Network",       sol:"Website",                 val:288400, created:"2026-04-17"},
+  {name:"Desarrollo de Sitio Web",                  company:"PM Steele",                         stage:"3. In Progress",   bu:"Web & App Development",src:"Network",       sol:"Website",                 val:231250, created:"2026-03-27"},
+  {name:"Rediseño de Sitio Web",                    company:"Novygi",                            stage:"3. In Progress",   bu:"Web & App Development",src:"Network",       sol:"Website",                 val:68500,  created:"2026-04-17"},
+  {name:"Estrategia digital para nuevo eCommerce de B Hermanos",company:"Grupo Batta",           stage:"3. In Progress",   bu:"Marketing",            src:"Active Client", sol:"Marketing Strategy",      val:273500, created:"2026-06-19"},
+  {name:"Desarrollo de Tienda en Línea",            company:"Frenos Ismael",                     stage:"3. In Progress",   bu:"Web & App Development",src:"Direct Contact",sol:"Online Store",            val:177500, created:"2026-06-05"},
+  {name:"App de Matchmaking para Doctores",         company:null,                                stage:"3. In Progress",   bu:"Web & App Development",src:"Network",       sol:"Development Consultancy", val:0,      created:"2026-06-26"},
+  {name:"Tienda en Línea - Plan Shopify Basic",     company:"Danceology Studio",                 stage:"3. In Progress",   bu:"Web & App Development",src:"Network",       sol:"Online Store",            val:38900,  created:"2026-06-23"},
+  // Due Diligence (6)
+  {name:"Estrategia Digital para captación de Leads",company:"Centro Mexicano de Fertilidad",    stage:"4. Due Diligence", bu:"Marketing",            src:"Former Client", sol:"Marketing Strategy",      val:129000, created:"2026-03-27"},
+  {name:"Desarrollo de Plataforma sobre Shopify",   company:"MTA Trust",                         stage:"4. Due Diligence", bu:"Web & App Development",src:"Network",       sol:"Digital Platform",        val:173250, created:"2026-06-19"},
+  {name:"Diseño y Desarrollo de Sitio Web",         company:"BASHAM",                            stage:"4. Due Diligence", bu:"Web & App Development",src:"Direct Contact",sol:"Website",                 val:147000, created:"2026-03-27"},
+  {name:"Desarrollo de Sitio Web + Contenido",      company:"QM+3",                              stage:"4. Due Diligence", bu:"Web & App Development",src:"Direct Contact",sol:"Website",                 val:52500,  created:"2026-05-29"},
+  {name:"Capacitación de Google Workspace",         company:"DiferenciArte",                     stage:"4. Due Diligence", bu:"Marketing",            src:"Network",       sol:"Google Workspace",        val:19700,  created:"2026-05-13"},
+  {name:"Estrategia Digital para eCommerce",        company:"Healthical",                        stage:"4. Due Diligence", bu:"Marketing",            src:"Active Client", sol:"Marketing Strategy",       val:211410, created:"2026-05-20"},
+  // Won (21)
+  {name:"Desarrollo de Nuevo Sitio Web",            company:"Tulum Fishing",                     stage:"5. Won 🎉",        bu:"Web & App Development",src:"Active Client", sol:"Website",                 val:42750,  created:"2026-04-08"},
+  {name:"Estrategia Digital para eCommerce",        company:"Cybex",                             stage:"5. Won 🎉",        bu:"Marketing",            src:"Network",       sol:"Marketing Strategy",      val:136000, created:"2026-04-01"},
+  {name:"Desarrollo de Tienda en Línea",            company:"Quickshark&Bombastika",             stage:"5. Won 🎉",        bu:"Web & App Development",src:"Network",       sol:"Online Store",            val:45000,  created:"2026-05-12"},
+  {name:"Desarrollo de Nuevo Sitio Web",            company:"Viento Capital",                    stage:"5. Won 🎉",        bu:"Web & App Development",src:"Network",       sol:"Website",                 val:36500,  created:"2026-03-27"},
+  {name:"Diseño y Desarrollo de Sitio Web",         company:null,                                stage:"5. Won 🎉",        bu:"Web & App Development",src:"Former Client", sol:"Website",                 val:78500,  created:"2026-04-01"},
+  {name:"Desarrollo de Nuevo Sitio Web",            company:"Grupo Novo Casas",                  stage:"5. Won 🎉",        bu:"Web & App Development",src:"Direct Contact",sol:"Website",                 val:50000,  created:"2026-03-27"},
+  {name:"Estrategia Digital en Google Ads",         company:"Grupo Novo Casas",                  stage:"5. Won 🎉",        bu:"Marketing",            src:"Direct Contact",sol:"Marketing Strategy",      val:122100, created:"2026-03-27"},
+  {name:"Rediseño de Tienda en Línea",              company:"Cybex",                             stage:"5. Won 🎉",        bu:"Web & App Development",src:"Network",       sol:"Online Store",            val:130125, created:"2026-03-27"},
+  {name:"Rediseño de Sitio Web",                    company:"Petland",                           stage:"5. Won 🎉",        bu:"Web & App Development",src:"Active Client", sol:"Website",                 val:74500,  created:"2026-03-27"},
+  {name:"Estrategia Digital para Descargas y Transacciones",company:"IsiBai",                    stage:"5. Won 🎉",        bu:"Marketing",            src:"Active Client", sol:"Marketing Strategy",      val:138250, created:"2026-04-10"},
+  {name:"Reconstrucción de Tienda en Línea",        company:"Dídiamant",                         stage:"5. Won 🎉",        bu:"Web & App Development",src:"Active Client", sol:"Online Store",            val:112995, created:"2026-03-27"},
+  {name:"Hoyer | Sitio Web + Tienda en Línea",      company:"Insurgent Artists",                 stage:"5. Won 🎉",        bu:"Web & App Development",src:"Active Client", sol:"Website",                 val:5400,   created:"2026-05-12"},
+  {name:"Desarrollo de Tienda en Línea para México y Costa Rica",company:"Healthical",           stage:"5. Won 🎉",        bu:"Web & App Development",src:"Network",       sol:"Online Store",            val:297185, created:"2026-04-08"},
+  {name:"Estrategia de Paid Media para Bailey International",company:"Studio Enova",             stage:"5. Won 🎉",        bu:"Marketing",            src:"Network",       sol:"Marketing Strategy",      val:5100,   created:"2026-03-27"},
+  {name:"Rediseño y Desarrollo de Nuevo Sitio Web", company:"Centro Mexicano de Fertilidad",     stage:"5. Won 🎉",        bu:"Web & App Development",src:"Former Client", sol:"Website",                 val:69500,  created:"2026-03-27"},
+  {name:"Consultoría para Desarrollo de Plataforma Financiera",company:"Sahara Capital",         stage:"5. Won 🎉",        bu:"Web & App Development",src:"Network",       sol:"Development Consultancy", val:20300,  created:"2026-04-08"},
+  {name:"DANNA | Creación de Tienda en Línea",      company:"Insurgent Artists",                 stage:"5. Won 🎉",        bu:"Web & App Development",src:"Active Client", sol:"Online Store",            val:52500,  created:"2026-05-05"},
+  {name:"DANNA | Sitio Web para Lanzamiento de EP", company:"Insurgent Artists",                 stage:"5. Won 🎉",        bu:"Web & App Development",src:"Network",       sol:"Website",                 val:43250,  created:"2026-03-27"},
+  {name:"Desarrollo de Tienda en Línea",            company:"AXA Lock Center",                   stage:"5. Won 🎉",        bu:"Web & App Development",src:"Former Client", sol:"Online Store",            val:99500,  created:"2026-04-08"},
+  {name:"Naming y Branding de Nueva Empresa",       company:null,                                stage:"5. Won 🎉",        bu:"Design",               src:"Former Client", sol:"Branding",                val:21500,  created:"2026-03-27"},
+  {name:"Distribuidoras | B Hermanos",              company:"Grupo Batta",                       stage:"5. Won 🎉",        bu:"Marketing",            src:"Active Client", sol:"Marketing Strategy",      val:117200, created:"2026-03-26"},
+  // Lost (10)
+  {name:"Licitación de Marcas",                     company:"Stellantis",                        stage:"6. Lost",          bu:"Marketing",            src:"Direct Contact",sol:"Marketing Strategy",      val:0,      created:"2026-03-26"},
+  {name:"Estrategia de Captación de Leads",         company:"Shopology",                         stage:"6. Lost",          bu:"Marketing",            src:"Direct Contact",sol:"Marketing Strategy",      val:144000, created:"2026-05-05"},
+  {name:"Licitación para Estrategia Digital 2026",  company:"Lapisa",                            stage:"6. Lost",          bu:"Marketing",            src:"Linked In",     sol:"Marketing Strategy",      val:600000, created:"2026-03-27"},
+  {name:"Estragia Digital | Mundial 2026",          company:"Estado Natural",                    stage:"6. Lost",          bu:"Marketing",            src:"Former Client", sol:"Marketing Strategy",      val:68250,  created:"2026-05-05"},
+  {name:"Desarrollo de Tienda en Línea",            company:"Corporativo DL",                    stage:"6. Lost",          bu:"Web & App Development",src:"PR and Events", sol:"Online Store",            val:127500, created:"2026-04-14"},
+  {name:"Estrategia de Contenidos Rumbo al Mundial 2026",company:null,                           stage:"6. Lost",          bu:"Marketing",            src:"Network",       sol:"Graphic Digital Materials",val:96000,  created:"2026-04-10"},
+  {name:"Migración a Shopify y Desarrollo de Tienda en Línea",company:"Proviamiga México",       stage:"6. Lost",          bu:"Web & App Development",src:"Shopify",       sol:"Online Store",            val:147800, created:"2026-03-27"},
+  {name:"Estrategia de Paid Media para eCommerce",  company:"Novelty Corp México",               stage:"6. Lost",          bu:"Marketing",            src:"PR and Events", sol:"Marketing Strategy",      val:137000, created:"2026-03-27"},
+  {name:"Estrategia Digital | Fase Zero",           company:"FaseZero",                          stage:"6. Lost",          bu:"Marketing",            src:"Network",       sol:"Marketing Strategy",      val:0,      created:"2026-06-12"},
+  {name:"Desarrollo de Tienda en Línea",            company:"REAC Automatizaciones",             stage:"6. Lost",          bu:"Web & App Development",src:"Network",       sol:"Online Store",            val:121500, created:"2026-04-15"},
 ];
 
-const BU_COLOR = { 'Web & App Development': '#067df7', 'Marketing': '#d946ef', 'Design': '#f59e0b' };
-const STAGE_PILL = {
-  '1. Lead':          { bg:'#f3f4f6', text:'#6b7280' },
-  '2. Proposal':      { bg:'#dbeafe', text:'#1d4ed8' },
-  '3. In Progress':   { bg:'#e0f2fe', text:'#0369a1' },
-  '4. Due Diligence': { bg:'#fef3c7', text:'#b45309' },
-  '5. Won 🎉':        { bg:'#dcfce7', text:'#15803d' },
-  '6. Lost':          { bg:'#fee2e2', text:'#b91c1c' },
-};
-const STAGE_BAR = { '1. Lead':'#d1d5db','2. Proposal':'#93c5fd','3. In Progress':'#067df7','4. Due Diligence':'#1d4ed8','5. Won 🎉':'#22c55e','6. Lost':'#ef4444' };
-const FUNNEL_STAGES = ['1. Lead','2. Proposal','3. In Progress','4. Due Diligence','5. Won 🎉','6. Lost'];
-const PIPE_STAGES   = ['1. Lead','2. Proposal','3. In Progress','4. Due Diligence'];
+const BU_COLOR={"Web & App Development":"oklch(49% 0.22 264)","Marketing":"oklch(49% 0.22 335)","Design":"oklch(49% 0.20 195)"};
+const BU_BG={"Web & App Development":"oklch(93% 0.045 264)","Marketing":"oklch(93% 0.045 335)","Design":"oklch(93% 0.04 195)"};
+const STAGE_PILL={"1. Lead":{bg:"oklch(96% 0.01 264)",text:"oklch(46% 0.02 264)"},"2. Proposal":{bg:"oklch(93% 0.05 264)",text:"oklch(44% 0.13 264)"},"3. In Progress":{bg:"oklch(90% 0.07 264)",text:"oklch(40% 0.19 264)"},"4. Due Diligence":{bg:"oklch(93% 0.06 55)",text:"oklch(46% 0.14 55)"},"5. Won 🎉":{bg:"oklch(93% 0.06 145)",text:"oklch(42% 0.14 145)"},"6. Lost":{bg:"oklch(93% 0.05 25)",text:"oklch(46% 0.16 25)"}};
+const STAGE_BAR={"1. Lead":"oklch(78% 0.05 264)","2. Proposal":"oklch(68% 0.12 264)","3. In Progress":"oklch(58% 0.19 264)","4. Due Diligence":"oklch(64% 0.16 55)","5. Won 🎉":"oklch(56% 0.16 145)","6. Lost":"oklch(58% 0.16 25)"};
+const FUNNEL_STAGES=["1. Lead","2. Proposal","3. In Progress","4. Due Diligence","5. Won 🎉","6. Lost"];
+const PIPE_STAGES=["1. Lead","2. Proposal","3. In Progress","4. Due Diligence"];
+const STAGE_LBL={"1. Lead":"Lead","2. Proposal":"Prop","3. In Progress":"IP","4. Due Diligence":"DD","5. Won 🎉":"Won","6. Lost":"Lost"};
+const CHART_NAME={"1. Lead":"Lead","2. Proposal":"Proposal","3. In Progress":"In Progress","4. Due Diligence":"Due Diligence","5. Won 🎉":"Won","6. Lost":"Lost"};
+const BU_LBL={"Web & App Development":"Web","Marketing":"Mktg","Design":"Design"};
 
-function fmtBig(v) { if(v>=1000000)return(v/1000000).toFixed(2)+'M';if(v>=1000)return(v/1000).toFixed(0)+'K';return v.toFixed(0); }
-function fmtShort(v) { if(!v)return'—';if(v>=1000000)return'$'+(v/1000000).toFixed(1)+'M';if(v>=1000)return'$'+(v/1000).toFixed(0)+'K';return'$'+v.toFixed(0); }
-function fmtFull(v) { if(!v)return'—';return'$'+v.toLocaleString('es-MX',{maximumFractionDigits:0}); }
+function fmtBig(v){if(v>=1000000)return(v/1000000).toFixed(2)+"M";if(v>=1000)return(v/1000).toFixed(0)+"K";return v.toFixed(0);}
+function fmtShort(v){if(!v)return"—";if(v>=1000000)return"$"+(v/1000000).toFixed(1)+"M";if(v>=1000)return"$"+(v/1000).toFixed(0)+"K";return"$"+v.toFixed(0);}
+function fmtFull(v){if(!v)return"—";return"$"+v.toLocaleString("es-MX",{maximumFractionDigits:0});}
 
-function render() {
-  const pipeDeals = DEALS.filter(d => PIPE_STAGES.includes(d.stage));
-  const wonDeals  = DEALS.filter(d => d.stage === '5. Won 🎉');
-  const lostDeals = DEALS.filter(d => d.stage === '6. Lost');
-  const totalVal  = DEALS.reduce((s,d)=>s+d.val,0);
-  const pipeVal   = pipeDeals.reduce((s,d)=>s+d.val,0);
-  const wonVal    = wonDeals.reduce((s,d)=>s+d.val,0);
-  const lostVal   = lostDeals.reduce((s,d)=>s+d.val,0);
-  const convRate  = DEALS.length>0?wonDeals.length/DEALS.length*100:0;
-  const avgTicket = wonDeals.length>0?wonVal/wonDeals.length:0;
+function el(tag,attrs,children){
+  const e=document.createElement(tag);
+  if(attrs)Object.entries(attrs).forEach(([k,v])=>{if(k==="style")e.style.cssText=v;else if(k.startsWith("on"))e.addEventListener(k.slice(2),v);else e.setAttribute(k,v);});
+  (children||[]).forEach(c=>{if(c==null)return;e.appendChild(typeof c==="string"?document.createTextNode(c):c);});
+  return e;
+}
+function div(style,children){return el("div",{style},children);}
+function span(style,children){return el("span",{style},children);}
 
-  const byStage = {};
+let openStage=null;
+
+function compute(){
+  const pipeDeals=DEALS.filter(d=>PIPE_STAGES.includes(d.stage));
+  const wonDeals=DEALS.filter(d=>d.stage==="5. Won 🎉");
+  const lostDeals=DEALS.filter(d=>d.stage==="6. Lost");
+  const totalVal=DEALS.reduce((s,d)=>s+d.val,0);
+  const pipeVal=pipeDeals.reduce((s,d)=>s+d.val,0);
+  const wonVal=wonDeals.reduce((s,d)=>s+d.val,0);
+  const convRate=DEALS.length>0?wonDeals.length/DEALS.length*100:0;
+  const avgTicket=wonDeals.length>0?wonVal/wonDeals.length:0;
+  const byStage={};
   DEALS.forEach(d=>{if(!byStage[d.stage])byStage[d.stage]={count:0,value:0,deals:[]};byStage[d.stage].count++;byStage[d.stage].value+=d.val;byStage[d.stage].deals.push(d);});
-  const maxFunnelVal = Math.max(1,...FUNNEL_STAGES.map(s=>byStage[s]?.value||0));
-
-  const byBU = {};
-  DEALS.forEach(d=>{if(!byBU[d.bu])byBU[d.bu]={count:0,value:0,pipeDeals:[]};byBU[d.bu].count++;byBU[d.bu].value+=d.val;if(PIPE_STAGES.includes(d.stage))byBU[d.bu].pipeDeals.push(d);});
-  const buList   = Object.entries(byBU).sort((a,b)=>b[1].value-a[1].value);
-  const maxBUVal = Math.max(1,...buList.map(([,v])=>v.value));
-
-  const top10 = [...pipeDeals].filter(d=>d.val>0).sort((a,b)=>b.val-a.val).slice(0,10);
-
-  const buNotes = buList.map(([bu,d])=>{
-    const sf={};d.pipeDeals.forEach(x=>{sf[x.stage]=(sf[x.stage]||0)+1;});
-    const top=Object.entries(sf).sort((a,b)=>b[1]-a[1])[0];
-    return{bu,note:top?`mayor concentración en ${top[0].replace(/^\d\.\s*/,'')} (${top[1]})`:'sin deals en pipeline activo',color:BU_COLOR[bu]||'#aaa'};
-  });
-
-  const hz = [];
-  const leadCount = byStage['1. Lead']?.count||0;
-  if(leadCount>0) hz.push({icon:'✓',color:'#067df7',title:`${leadCount} lead${leadCount>1?'s':''} nuevos en el embudo`,text:`Entradas frescas desde Kometia. Calificar y mover a Proposal esta semana para mantener la velocidad del pipeline.`});
-  hz.push({icon:'✓',color:'#22c55e',title:`Conversion rate ${convRate>=35?'saludable':'por mejorar'}`,text:`${convRate.toFixed(1)}% de los deals trabajados se convierten en venta. ${convRate>=35?'Indica buena calidad en calificación y proceso comercial.':'Revisar el proceso de calificación y seguimiento.'}`});
-  const ddCount=byStage['4. Due Diligence']?.count||0,ddVal=byStage['4. Due Diligence']?.value||0;
-  if(ddCount>=3) hz.push({icon:'→',color:'#f59e0b',title:`${ddCount} deals en Due Diligence — presión de cierre`,text:`${fmtShort(ddVal)} a un paso del cierre. BASHAM y QM+3 avanzaron a DD esta semana. Priorizar seguimiento para convertir antes de fin de mes.`});
-  const noVal=pipeDeals.filter(d=>d.val===0).length;
-  if(noVal>0) hz.push({icon:'!',color:'#888',title:'Higiene de datos',text:`${noVal} deal${noVal>1?'s':''} activo${noVal>1?'s':''} sin valor asignado. Completar los montos para mejorar el accuracy del forecast.`});
-
+  const byBU={};
+  DEALS.forEach(d=>{if(!byBU[d.bu])byBU[d.bu]={count:0,value:0};byBU[d.bu].count++;byBU[d.bu].value+=d.val;});
+  const buListRaw=Object.entries(byBU).sort((a,b)=>b[1].value-a[1].value);
   const dDate=new Date(SNAPSHOT_DATE),dStart=new Date(WEEK_START);
-  const fmtDay=dt=>dt.toLocaleDateString('es-MX',{day:'numeric',month:'short'}).toUpperCase();
+  const fmtDay=dt=>dt.toLocaleDateString("es-MX",{day:"numeric",month:"short"}).toUpperCase();
   const weekRange=`${fmtDay(dStart)} – ${fmtDay(dDate)} ${dDate.getFullYear()}`;
-  const qtr='Q'+Math.ceil((dDate.getMonth()+1)/3)+' '+dDate.getFullYear();
-  const dateStr=dDate.toLocaleDateString('es-MX',{day:'2-digit',month:'short',year:'numeric'}).toUpperCase();
-
-  const newThisWeek=DEALS.filter(x=>new Date(x.created)>=dStart);
-  const wonThisWeek=wonDeals.filter(x=>new Date(x.created)>=dStart);
-  const lostThisWeek=lostDeals.filter(x=>new Date(x.created)>=dStart);
-
-  function dlt(cur,prev){if(PREV_WEEK===null||prev==null)return null;return cur-prev;}
-  function renderD(diff,fn){if(diff===null)return`<span class="wow-delta na">Primer reporte</span>`;if(diff===0)return`<span class="wow-delta neu">→ Sin cambio</span>`;const cls=diff>0?'pos':'neg',arrow=diff>0?'↑':'↓';return`<span class="wow-delta ${cls}">${arrow} ${fn(Math.abs(diff))}</span>`;}
-
-  function dealListHtml(deals,stagePill){
-    if(!deals||!deals.length)return`<div class="wow-drop-empty">Sin deals</div>`;
-    return deals.map(d=>{
-      const sc=stagePill?(STAGE_PILL[d.stage]||{bg:'#f0f0f0',text:'#555'}):null;
-      const lbl={'1. Lead':'Lead','2. Proposal':'Prop','3. In Progress':'IP','4. Due Diligence':'DD','5. Won 🎉':'Won','6. Lost':'Lost'};
-      return`<div class="wow-drop-item"><div style="min-width:0;flex:1"><div class="wow-drop-name">${d.name}${sc?`<span class="wow-drop-stage" style="background:${sc.bg};color:${sc.text}">${lbl[d.stage]||''}</span>`:''}</div>${d.company?`<div class="wow-drop-co">${d.company}</div>`:''}</div><div class="wow-drop-val">${d.val?fmtShort(d.val):'—'}</div></div>`;
-    }).join('');
+  const qtr="Q"+Math.ceil((dDate.getMonth()+1)/3)+" "+dDate.getFullYear();
+  const dateStr=dDate.toLocaleDateString("es-MX",{day:"2-digit",month:"short",year:"numeric"}).toUpperCase();
+  const chartCounts=FUNNEL_STAGES.map(s=>byStage[s]?.count||0);
+  const maxChartCount=Math.max(1,...chartCounts);
+  const chartPct=chartCounts.map(c=>Math.max(14,Math.round(c/maxChartCount*100)));
+  const funnelData=FUNNEL_STAGES.map((s,i)=>{
+    const leftH=i===0?chartPct[0]:chartPct[i-1];
+    const rightH=chartPct[i];
+    const topL=(100-leftH)/2,botL=100-topL,topR=(100-rightH)/2,botR=100-topR;
+    const clip=`polygon(0% ${topL}%, 100% ${topR}%, 100% ${botR}%, 0% ${botL}%)`;
+    const sd=byStage[s]||{count:0,value:0,deals:[]};
+    return{s,topLabel:sd.value>0?fmtShort(sd.value):"—",countLabel:sd.count+(sd.count===1?" deal":" deals"),bottomLabel:CHART_NAME[s],color:STAGE_BAR[s],clip,isNotLast:i!==FUNNEL_STAGES.length-1,deals:sd.deals};
+  });
+  const dropoffs=[];
+  for(let i=0;i<FUNNEL_STAGES.length-1;i++){
+    const cur=chartCounts[i],nxt=chartCounts[i+1];
+    const pct=cur>0?Math.round(nxt/cur*100):0;
+    dropoffs.push({show:cur>0,text:cur>0?`${pct}% →`:"",color:pct>=50?"oklch(46% 0.14 145)":"oklch(46% 0.14 55)"});
   }
-
-  const dPipe=dlt(pipeVal,PREV_WEEK?.pipeVal);
-  const dIP=dlt(byStage['3. In Progress']?.count||0,PREV_WEEK?.byStageCount?.['3. In Progress']);
-  const dDD=dlt(byStage['4. Due Diligence']?.count||0,PREV_WEEK?.byStageCount?.['4. Due Diligence']);
-  const pillLbl={'1. Lead':'Lead','2. Proposal':'Prop','3. In Progress':'IP','4. Due Diligence':'DD','5. Won 🎉':'Won','6. Lost':'Lost'};
-  const buLbl={'Web & App Development':'Web','Marketing':'Mktg','Design':'Design'};
-
-  document.getElementById('root').innerHTML = `
-    <div class="hdr"><div><div class="logo">dinkbit</div><div class="hdr-sub">Pipeline de Ventas · Snapshot Semanal</div></div><div class="hdr-right"><div class="hdr-period">${weekRange}</div><div class="hdr-date">${qtr} · Generado el ${dateStr}</div></div></div>
-    <div class="alert"><strong>Alcance del análisis:</strong> Se excluyen los deals con estatus <em>"On Hold"</em> para enfocar el reporte en el pipe activo y en cierres del periodo.</div>
-    <div class="kpis">
-      <div class="kpi"><div class="kpi-label">Pipe Total</div><div class="kpi-val">MXN${fmtBig(totalVal)}</div><div class="kpi-note">${DEALS.length} oportunidades</div></div>
-      <div class="kpi"><div class="kpi-label">Pipe Activo</div><div class="kpi-val">MXN${fmtBig(pipeVal)}</div><div class="kpi-note">${pipeDeals.length} deals en negociación</div></div>
-      <div class="kpi"><div class="kpi-label">Won YTD</div><div class="kpi-val">MXN${fmtBig(wonVal)}</div><div class="kpi-note">${wonDeals.length} deals cerrados</div></div>
-      <div class="kpi"><div class="kpi-label">Conversion Rate</div><div class="kpi-val">${convRate.toFixed(1)}%</div><div class="kpi-note">${wonDeals.length} won / ${DEALS.length} totales</div></div>
-      <div class="kpi"><div class="kpi-label">Ticket Promedio</div><div class="kpi-val">MXN${fmtBig(avgTicket)}</div><div class="kpi-note">deals cerrados (Won)</div></div>
-    </div>
-    <div class="wow" style="position:relative">
-      <div class="wow-item" style="position:relative"><div class="wow-label">Nuevos esta semana <span class="wow-caret">▾</span></div><div class="wow-val">${newThisWeek.length}</div><div class="wow-sub" style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${newThisWeek.length>0?newThisWeek.map(x=>x.company||x.name).join(', '):'Ninguno'}</div><div class="wow-drop">${dealListHtml(newThisWeek,true)}</div></div>
-      <div class="wow-item" style="position:relative"><div class="wow-label">Δ Pipe Activo <span class="wow-caret">▾</span></div><div class="wow-val">${PREV_WEEK?'MXN'+fmtBig(Math.abs(dPipe)):'—'}</div><div class="wow-sub">${renderD(dPipe,v=>'MXN'+fmtBig(v))}</div><div class="wow-drop">${dealListHtml(pipeDeals,true)}</div></div>
-      <div class="wow-item" style="position:relative"><div class="wow-label">Δ In Progress <span class="wow-caret">▾</span></div><div class="wow-val">${byStage['3. In Progress']?.count||0}</div><div class="wow-sub">${renderD(dIP,v=>v+' deals')}</div><div class="wow-drop">${dealListHtml(byStage['3. In Progress']?.deals||[])}</div></div>
-      <div class="wow-item" style="position:relative"><div class="wow-label">Δ Due Diligence <span class="wow-caret">▾</span></div><div class="wow-val">${byStage['4. Due Diligence']?.count||0}</div><div class="wow-sub">${renderD(dDD,v=>v+' deals')}</div><div class="wow-drop">${dealListHtml(byStage['4. Due Diligence']?.deals||[])}</div></div>
-      <div class="wow-item" style="position:relative"><div class="wow-label">Won / Lost esta semana <span class="wow-caret">▾</span></div><div class="wow-val"><span style="color:#15803d">${wonThisWeek.length}</span> <span style="color:#ddd;font-weight:400">/</span> <span style="color:#b91c1c">${lostThisWeek.length}</span></div><div class="wow-sub">${wonThisWeek.length+lostThisWeek.length>0?fmtShort(wonThisWeek.reduce((s,x)=>s+x.val,0))+' ganado':'Sin cierres'}</div><div class="wow-drop">${dealListHtml([...wonThisWeek,...lostThisWeek],true)}</div></div>
-    </div>
-    <div class="main">
-      <div class="main-left">
-        <div class="card">
-          <div class="card-hdr"><div class="card-title"><em>Embudo</em> de conversión</div><div class="card-meta">${DEALS.length} DEALS · ${fmtShort(totalVal)}</div></div>
-          ${FUNNEL_STAGES.map(s=>{const sd=byStage[s]||{count:0,value:0};const pct=sd.value>0?Math.max(2,(sd.value/maxFunnelVal)*100):(sd.count>0?3:1);return`<div class="f-row"><div class="f-label">${s}</div><div class="f-wrap"><div class="f-bar" style="width:${pct}%;background:${STAGE_BAR[s]||'#ccc'}"></div></div><div class="f-cnt">${sd.count}</div><div class="f-val">${sd.value>0?fmtShort(sd.value):'—'}</div></div>`;}).join('')}
-        </div>
-        <div class="card">
-          <div class="card-hdr"><div class="card-title"><em>Unidades</em> de negocio</div><div class="card-meta">Por valor de pipe</div></div>
-          ${buList.map(([bu,d])=>{const pct=totalVal>0?Math.round(d.value/totalVal*100):0;const col=BU_COLOR[bu]||'#aaa';return`<div class="bu"><div class="bu-header"><div class="bu-name">${bu}</div><div class="bu-val" style="color:${col}">${fmtShort(d.value)}</div></div><div class="bu-wrap"><div class="bu-fill" style="width:${Math.max(2,(d.value/maxBUVal)*100)}%;background:${col}"></div></div><div class="bu-sub">${d.count} DEAL${d.count!==1?'S':''} · ${pct}% DEL PIPE</div></div>`;}).join('')}
-          <div class="bu-dist"><div class="bu-dist-lbl">Distribución por etapa</div>${buNotes.map(({bu,note,color})=>`<div class="bu-note" style="border-left-color:${color}"><strong>${bu.split(' ')[0]}:</strong> ${note}</div>`).join('')}</div>
-        </div>
-      </div>
-      <div class="main-center">
-        <div class="card">
-          <div class="card-hdr"><div class="card-title"><em>Top 10 oportunidades</em> activas</div><div class="card-meta">Prioridad de cierre · ${pipeDeals.length} en pipe</div></div>
-          <table><colgroup><col style="width:18px"><col style="width:auto"><col style="width:44px"><col style="width:40px"><col style="width:62px"></colgroup>
-          <thead><tr><th>#</th><th>Deal / Empresa</th><th>Etapa</th><th>BU</th><th style="text-align:right">Valor MXN</th></tr></thead>
-          <tbody>${top10.map((d,i)=>{const sc=STAGE_PILL[d.stage]||{bg:'#f0f0f0',text:'#555'};const bc=BU_COLOR[d.bu]||'#aaa';return`<tr><td class="rn">${i+1}</td><td style="max-width:0"><div class="deal-name">${d.name}</div>${d.company?`<div class="deal-co">${d.company}</div>`:''}</td><td><span class="pill" style="background:${sc.bg};color:${sc.text}">${pillLbl[d.stage]||d.stage}</span></td><td><span class="pill" style="background:${bc}18;color:${bc}">${buLbl[d.bu]||d.bu.split(' ')[0]}</span></td><td class="val-r">${fmtFull(d.val)}</td></tr>`;}).join('')}</tbody></table>
-        </div>
-      </div>
-      <div class="main-right">
-        <div class="card">
-          <div class="card-hdr"><div class="card-title"><em>Cierres</em> YTD</div><div class="card-meta">Won vs Lost</div></div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:7px">
-            <div class="ytd-won"><div class="ytd-lbl">WON 🎉</div><div class="ytd-v" style="color:#15803d">${fmtShort(wonVal)}</div><div class="ytd-s">${wonDeals.length} deals · prom ${fmtShort(wonDeals.length>0?wonVal/wonDeals.length:0)}</div></div>
-            <div class="ytd-lost"><div class="ytd-lbl">LOST</div><div class="ytd-v" style="color:#b91c1c">${fmtShort(lostVal)}</div><div class="ytd-s">${lostDeals.length} deals · prom ${fmtShort(lostDeals.length>0?lostVal/lostDeals.length:0)}</div></div>
-          </div>
-          <div style="display:flex;align-items:baseline;gap:14px">
-            <div><div class="conv-big" style="text-align:left;margin-top:0">${convRate.toFixed(1)}%</div><div class="conv-lbl" style="text-align:left">Conv. Rate · Won / Total</div></div>
-            <div class="coverage" style="margin-top:0;padding-top:0;border-top:none"><span class="coverage-val">${pipeVal>0&&wonVal>0?(pipeVal/wonVal).toFixed(1)+'x':'—'}</span><span class="coverage-lbl">Coverage</span></div>
-          </div>
-          <div class="won-bu"><div class="won-bu-lbl">Won por unidad</div>${Object.entries(wonDeals.reduce((acc,d)=>{if(!acc[d.bu])acc[d.bu]={val:0,count:0};acc[d.bu].val+=d.val;acc[d.bu].count++;return acc;},{})).sort((a,b)=>b[1].val-a[1].val).map(([bu,bud])=>`<div class="won-bu-row"><span class="won-bu-dot" style="background:${BU_COLOR[bu]||'#aaa'}"></span><span class="won-bu-name">${bu}</span><span class="won-bu-val">${fmtShort(bud.val)}</span><span class="won-bu-cnt">${bud.count} deals</span></div>`).join('')}</div>
-        </div>
-        <div class="card">
-          <div class="card-hdr"><div class="card-title"><em>Hallazgos</em> & acciones</div><div class="card-meta">Prioridades</div></div>
-          ${hz.map(h=>`<div class="hz" style="border-left-color:${h.color}"><div class="hz-icon" style="color:${h.color}">${h.icon}</div><div class="hz-title">${h.title}</div><div class="hz-text">${h.text}</div></div>`).join('')}
-        </div>
-      </div>
-    </div>
-    <div class="footer"><div>dinkbit · Pipeline Analytics · ${qtr}</div><div class="legend">${Object.entries(BU_COLOR).map(([bu,c])=>`<span><span class="leg-dot" style="background:${c}"></span>${bu.split(' ')[0].toUpperCase()}</span>`).join('')}</div><div>Fuente · Attio CRM · ${dateStr}</div></div>
-  `;
+  dropoffs.push({show:false,text:"",color:"#999"});
+  const top10Raw=[...pipeDeals].filter(d=>d.val>0).sort((a,b)=>b.val-a.val).slice(0,10);
+  const top10=top10Raw.map((d,i)=>{
+    const sc=STAGE_PILL[d.stage]||{bg:"#f0f0f0",text:"#555"};
+    return{rank:i+1,name:d.name,company:d.company||"",hasCompany:!!d.company,stageLbl:STAGE_LBL[d.stage]||d.stage,stagePillBg:sc.bg,stagePillText:sc.text,buLbl:BU_LBL[d.bu]||d.bu.split(" ")[0],buPillBg:BU_BG[d.bu]||"#f0f0f0",buPillText:BU_COLOR[d.bu]||"#aaa",val:fmtFull(d.val)};
+  });
+  const bySrc={};
+  DEALS.forEach(d=>{const s=d.src||"Sin fuente";if(!bySrc[s])bySrc[s]={count:0,value:0,won:0};bySrc[s].count++;bySrc[s].value+=d.val;if(d.stage==="5. Won 🎉")bySrc[s].won++;});
+  const srcListRaw=Object.entries(bySrc).sort((a,b)=>b[1].count-a[1].count);
+  const maxSrcCount=Math.max(1,...srcListRaw.map(([,v])=>v.count));
+  const sourceRows=srcListRaw.map(([src,d])=>({name:src,count:d.count,pct:Math.max(3,(d.count/maxSrcCount)*100)}));
+  const buTotalVal=buListRaw.reduce((s,[,d])=>s+d.value,0);
+  let cursor=0;
+  const buPieSlices=buListRaw.map(([bu,d])=>{
+    const share=buTotalVal>0?d.value/buTotalVal*100:0;
+    const start=cursor;cursor+=share;
+    return{color:BU_COLOR[bu]||"#aaa",start,end:cursor};
+  });
+  const buPieGradient=buTotalVal>0?"conic-gradient("+buPieSlices.map(s=>`${s.color} ${s.start}% ${s.end}%`).join(", ")+")":"conic-gradient(#eceef1 0% 100%)";
+  const buLegend=buListRaw.map(([bu,d])=>({name:bu,pct:totalVal>0?Math.round(d.value/totalVal*100)+"%":"0%",color:BU_COLOR[bu]||"#aaa",value:fmtShort(d.value),count:d.count+(d.count===1?" deal":" deals")}));
+  const ddCount=byStage["4. Due Diligence"]?.count||0,ddVal=byStage["4. Due Diligence"]?.value||0;
+  const noVal=pipeDeals.filter(d=>d.val===0).length;
+  const headline=ddCount>=3?`El pipeline avanza: ${ddCount} deals por ${fmtShort(ddVal)} alcanzaron Due Diligence.`:(convRate>=35?`La conversión se mantiene sólida en ${convRate.toFixed(1)}%.`:`El pipe crece, pero la conversión pide atención.`);
+  const ledeText=`De ${DEALS.length} deals registrados, ${pipeDeals.length} siguen activos por ${fmtShort(pipeVal)}. Vs. el 3 de julio: B Hermanos cerrado (+$117K), 2 pérdidas (Fase Zero, REAC) y 5 nuevas entradas a Proposal. Se excluyen los deals en "On Hold".`;
+  const hallazgos=[];
+  hallazgos.push({title:"Cierre de la semana: Distribuidoras | B Hermanos",text:"Grupo Batta pasa a Won por $117K — primer cierre desde el 3 de julio. La estrategia de eCommerce ($273K) sigue activa en IP. Momentum comprobado con el cliente."});
+  if(ddCount>=3)hallazgos.push({title:`${ddCount} deals en Due Diligence — $${fmtShort(ddVal).slice(1)} en la recta final`,text:`BASHAM, MTA Trust, CMF, QM+3, DiferenciArte y Healthical están a un paso del cierre. Prioridad: seguimiento intensivo antes del 18 de julio.`});
+  hallazgos.push({title:"Proposal se duplicó: 10 vs 5 del 3 de julio",text:`3 Kometia leads progresaron + 2 nuevas oportunidades (Amesa y Bolsas Jennyfer). Calificar y valorizar los deals sin monto para tener forecast más preciso.`});
+  hallazgos.push({title:"2 pérdidas esta semana: Fase Zero y REAC ($122K)",text:"Fase Zero salió tras 4 semanas sin avance. REAC ($122K) también se marcó como perdido. Documentar objeción para detectar patrón en Kometia referrals."});
+  if(noVal>0)hallazgos.push({title:`Higiene: ${noVal} deals sin valor asignado`,text:`${noVal} oportunidades activas sin monto estimado. Afecta el accuracy del forecast. Meta: completar antes del próximo snapshot.`});
+  const heroInsight=hallazgos.find(h=>h.title.includes("Due Diligence"))||hallazgos[0];
+  const restInsights=hallazgos.filter(h=>h!==heroInsight);
+  return{weekRange,qtr,dateStr,headline,ledeText,kpiPipeTotalVal:"MXN"+fmtBig(totalVal),dealCountLbl:DEALS.length+" deals",wonDealsCountLbl:wonDeals.length,wonValShort:fmtShort(wonVal),avgTicketLbl:"ticket prom. "+fmtShort(avgTicket),convRateStr:convRate.toFixed(1)+"%",totalValShort:fmtShort(totalVal),funnelData,dropoffs,top10,heroInsight,restInsights,pipeCountLbl:pipeDeals.length,buPieGradient,buLegend,sourceRows};
 }
 
+function mkStageTable(deals){
+  if(deals.length===0)return div("font-size:13px;color:#9ca3af;padding:16px 0;text-align:center;",[document.createTextNode("Sin deals en esta etapa.")]);
+  const tbl=el("table",{style:"width:100%;border-collapse:separate;border-spacing:0 6px;table-layout:fixed;"},[]);
+  tbl.appendChild(el("colgroup",{},[el("col",{style:"width:auto"},[]),el("col",{style:"width:110px"},[]),el("col",{style:"width:120px"},[]),]));
+  const thS="font-size:10.5px;font-weight:800;letter-spacing:0.5px;text-transform:uppercase;color:#b0b5bd;text-align:left;padding:0 10px;";
+  tbl.appendChild(el("thead",{},[el("tr",{},[el("th",{style:thS},[document.createTextNode("Nombre")]),el("th",{style:thS},[document.createTextNode("Área")]),el("th",{style:thS+"text-align:right;"},[document.createTextNode("Valor MXN")])])]));
+  const tb=el("tbody",{},[]);
+  deals.forEach(d=>{
+    tb.appendChild(el("tr",{},[
+      el("td",{style:"padding:10px;background:oklch(96% 0.012 264);font-size:13px;font-weight:700;color:#161616;border-radius:10px 0 0 10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:0;"},[document.createTextNode(d.name+(d.company?` — ${d.company}`:""))]),
+      el("td",{style:"padding:10px;background:oklch(96% 0.012 264);"}, [span(`display:inline-block;border-radius:99px;padding:3px 10px;font-size:10.5px;font-weight:800;text-transform:uppercase;white-space:nowrap;background:${BU_BG[d.bu]||"#f0f0f0"};color:${BU_COLOR[d.bu]||"#555"};`,[document.createTextNode(BU_LBL[d.bu]||d.bu)])]),
+      el("td",{style:"padding:10px;background:oklch(96% 0.012 264);text-align:right;font-weight:800;font-size:13px;border-radius:0 10px 10px 0;"},[document.createTextNode(fmtFull(d.val))]),
+    ]));
+  });
+  tbl.appendChild(tb);return tbl;
+}
+
+function render(){
+  const C=compute();
+  const root=document.getElementById("root");root.innerHTML="";
+  const page=div("font-family:'Inter',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;color:#161616;min-height:100vh;padding:56px 28px 80px;background-image:radial-gradient(oklch(90% 0.015 264) 1px,transparent 1px);background-size:22px 22px;",[]);
+  const inner=div("max-width:980px;margin:0 auto;",[]);
+
+  // MASTHEAD
+  inner.appendChild(div("display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:#fff;border:1px solid #e2e4e8;border-radius:99px;padding:12px 12px 12px 14px;box-shadow:0 1px 2px rgba(20,20,30,0.04);",[
+    div("display:flex;align-items:center;gap:12px;",[
+      div("height:26px;display:flex;align-items:center;flex-shrink:0;",[el("img",{src:LOGO_SRC,alt:"dinkbit",style:"height:100%;display:block;"},[])]),
+      div("font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#8a8f98;",[document.createTextNode("Pipeline · Weekly")]),
+    ]),
+    div("display:flex;gap:6px;flex-wrap:wrap;",[
+      el("a",{href:"#embudo",style:"font-size:12.5px;font-weight:700;color:#4b5563;background:oklch(95% 0.012 264);border-radius:99px;padding:9px 16px;"},[document.createTextNode("El embudo")]),
+      el("a",{href:"#hallazgos",style:"font-size:12.5px;font-weight:700;color:#4b5563;background:oklch(95% 0.012 264);border-radius:99px;padding:9px 16px;"},[document.createTextNode("Hallazgos")]),
+      el("a",{href:"#prioridades",style:"font-size:12.5px;font-weight:700;color:#4b5563;background:oklch(95% 0.012 264);border-radius:99px;padding:9px 16px;"},[document.createTextNode("Prioridades")]),
+      el("a",{href:"#apendice",style:"font-size:12.5px;font-weight:700;color:#4b5563;background:oklch(95% 0.012 264);border-radius:99px;padding:9px 16px;"},[document.createTextNode("Apéndice")]),
+    ]),
+  ]));
+
+  // LEDE
+  inner.appendChild(div("background:#fff;border:1px solid #e2e4e8;border-radius:28px;padding:40px 44px;margin-top:20px;box-shadow:0 1px 2px rgba(20,20,30,0.04);",[
+    div("font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#254EF4;",[document.createTextNode(C.weekRange+" · "+C.qtr)]),
+    div("font-size:36px;font-weight:800;line-height:1.2;letter-spacing:-0.8px;margin-top:14px;max-width:840px;",[document.createTextNode(C.headline)]),
+    div("font-size:16px;color:#5c6470;line-height:1.6;margin-top:18px;max-width:680px;",[document.createTextNode(C.ledeText)]),
+    div("display:flex;gap:16px;margin-top:36px;flex-wrap:wrap;",[
+      div("flex:1;min-width:180px;background:oklch(96% 0.012 264);border-radius:20px;padding:22px 24px;",[
+        div("font-size:32px;font-weight:800;letter-spacing:-1px;",[document.createTextNode(C.kpiPipeTotalVal)]),
+        div("font-size:12px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:0.5px;margin-top:8px;",[document.createTextNode("Pipe total · "+C.dealCountLbl)]),
+      ]),
+      div("flex:1;min-width:180px;background:#0b0b0c;border-radius:20px;padding:22px 24px;",[
+        div("font-size:32px;font-weight:800;letter-spacing:-1px;color:#5b84ff;",[document.createTextNode(C.convRateStr)]),
+        div("font-size:12px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:0.5px;margin-top:8px;",[document.createTextNode("Conversion rate · "+C.wonDealsCountLbl+" won")]),
+      ]),
+      div("flex:1;min-width:180px;background:oklch(96% 0.012 264);border-radius:20px;padding:22px 24px;",[
+        div("font-size:32px;font-weight:800;letter-spacing:-1px;",[document.createTextNode(C.wonValShort)]),
+        div("font-size:12px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:0.5px;margin-top:8px;",[document.createTextNode("Won YTD · "+C.avgTicketLbl)]),
+      ]),
+    ]),
+  ]));
+
+  // FUNNEL
+  const funnelSec=div("","");
+  funnelSec.id="embudo";
+  funnelSec.style.cssText="margin-top:24px;background:#fff;border:1px solid #e2e4e8;border-radius:28px;padding:36px 40px;box-shadow:0 1px 2px rgba(20,20,30,0.04);";
+  const funnelHeader=div("display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:8px;",[
+    div("font-size:24px;font-weight:800;letter-spacing:-0.3px;",[document.createTextNode("El embudo, paso a paso")]),
+    div("font-size:12.5px;color:#9ca3af;font-weight:700;background:oklch(95% 0.012 264);border-radius:99px;padding:6px 14px;",[document.createTextNode(C.totalValShort+" en juego")]),
+  ]);
+  funnelSec.appendChild(funnelHeader);
+  funnelSec.appendChild(div("font-size:14.5px;color:#8a8f98;max-width:600px;margin-bottom:28px;line-height:1.55;",[document.createTextNode("Cada bloque es el valor de los deals en esa etapa. El ancho de la conexión muestra qué tanto pipe sobrevive al siguiente paso.")]));
+  // Top labels
+  const topRow=div("display:flex;",C.funnelData.map(c=>div("flex:1;text-align:center;font-size:17px;font-weight:800;color:#0b0b0c;",[document.createTextNode(c.topLabel)])));
+  funnelSec.appendChild(topRow);
+  // Funnel bars
+  const barsRow=div("position:relative;height:220px;display:flex;margin-top:10px;border-radius:20px;overflow:hidden;",C.funnelData.map(c=>{
+    const col=div("flex:1;height:100%;position:relative;",[]);
+    const bar=div(`position:absolute;inset:0;background:${c.color};`,[]);
+    bar.style.clipPath=c.clip;col.appendChild(bar);
+    if(c.isNotLast)col.appendChild(div("position:absolute;top:0;bottom:0;right:0;width:3px;background:#fff;",[]));
+    col.appendChild(div("position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;",[
+      div("font-size:11px;font-weight:700;color:#0b0b0c;background:rgba(255,255,255,0.85);border-radius:99px;padding:3px 10px;display:inline-block;",[document.createTextNode(c.countLabel)]),
+    ]));
+    return col;
+  }));
+  funnelSec.appendChild(barsRow);
+  // Toggle buttons
+  const btnRow=div("display:flex;margin-top:14px;",[]);
+  C.funnelData.forEach((c,idx)=>{
+    const btnWrap=div("flex:1;text-align:center;",[]);
+    const isOpen=openStage===idx;
+    const btn=el("button",{style:`cursor:pointer;background:${isOpen?"oklch(90% 0.05 264)":"oklch(95% 0.012 264)"};border:none;padding:6px 8px 6px 14px;border-radius:99px;font-size:13px;font-weight:700;color:${isOpen?"#254EF4":"#6b7280"};font-family:inherit;display:inline-flex;align-items:center;gap:6px;`},[]);
+    btn.appendChild(document.createTextNode(c.bottomLabel+" "));
+    const chevron=el("span",{style:`width:18px;height:18px;border-radius:50%;background:${isOpen?"#254EF4":"#fff"};display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;transform:${isOpen?"rotate(180deg)":"rotate(0deg)"};`},[]);
+    chevron.innerHTML=`<svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 3.5L5 6.5L8 3.5" stroke="${isOpen?"#fff":"#9ca3af"}" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    btn.appendChild(chevron);
+    btn.addEventListener("click",()=>{openStage=(openStage===idx)?null:idx;render();});
+    btnWrap.appendChild(btn);btnRow.appendChild(btnWrap);
+  });
+  funnelSec.appendChild(btnRow);
+  // Dropoff row
+  funnelSec.appendChild(div("display:flex;margin-top:4px;",C.dropoffs.map(d=>div("flex:1;text-align:center;padding:0 4px;font-size:11px;font-weight:700;color:"+(d.color)+";min-height:20px;",[document.createTextNode(d.show?d.text:"")]))));
+  // Open stage drill-down
+  if(openStage!==null){
+    const stg=C.funnelData[openStage];
+    funnelSec.appendChild(div("margin-top:20px;padding-top:20px;border-top:1px solid #eceef1;",[
+      div("font-size:12px;font-weight:800;letter-spacing:0.4px;text-transform:uppercase;color:#9ca3af;margin-bottom:14px;",[document.createTextNode("Deals en "+stg.bottomLabel)]),
+      mkStageTable(stg.deals),
+    ]));
+  }
+  inner.appendChild(funnelSec);
+
+  // HALLAZGOS
+  const hallazgosSec=div("","");
+  hallazgosSec.id="hallazgos";
+  hallazgosSec.style.cssText="margin-top:24px;background:#fff;border:1px solid #e2e4e8;border-radius:28px;padding:36px 40px;box-shadow:0 1px 2px rgba(20,20,30,0.04);display:grid;grid-template-columns:1.4fr 1fr;gap:36px;";
+  hallazgosSec.appendChild(div("background:oklch(95% 0.04 264);border-radius:20px;padding:26px 28px;",[
+    div("font-size:26px;line-height:1.32;font-weight:800;letter-spacing:-0.4px;color:#0b0b0c;",[document.createTextNode(C.heroInsight.title)]),
+    div("font-size:15px;color:#4b5563;line-height:1.65;margin-top:14px;max-width:480px;",[document.createTextNode(C.heroInsight.text)]),
+  ]));
+  const restCol=div("",[div("font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#9ca3af;margin-bottom:14px;",[document.createTextNode("También esta semana")])]);
+  C.restInsights.forEach(h=>{
+    restCol.appendChild(div("padding:14px 16px;border-radius:16px;background:oklch(96% 0.012 264);margin-bottom:10px;",[
+      div("font-size:14px;font-weight:700;color:#0b0b0c;margin-bottom:4px;",[document.createTextNode(h.title)]),
+      div("font-size:12.5px;color:#8a8f98;line-height:1.55;",[document.createTextNode(h.text)]),
+    ]));
+  });
+  hallazgosSec.appendChild(restCol);
+  inner.appendChild(hallazgosSec);
+
+  // PRIORIDADES
+  const prioSec=div("","");
+  prioSec.id="prioridades";
+  prioSec.style.cssText="margin-top:24px;background:#fff;border:1px solid #e2e4e8;border-radius:28px;padding:36px 40px;box-shadow:0 1px 2px rgba(20,20,30,0.04);";
+  prioSec.appendChild(div("display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:20px;",[
+    div("font-size:24px;font-weight:800;letter-spacing:-0.3px;",[document.createTextNode("Diez deals que definen la semana")]),
+    div("font-size:12.5px;color:#9ca3af;font-weight:700;background:oklch(95% 0.012 264);border-radius:99px;padding:6px 14px;",[document.createTextNode(C.pipeCountLbl+" en pipe activo")]),
+  ]));
+  const tbl=el("table",{style:"width:100%;border-collapse:separate;border-spacing:0 6px;table-layout:fixed;"},[]);
+  tbl.appendChild(el("colgroup",{},[el("col",{style:"width:32px"},[]),el("col",{style:"width:auto"},[]),el("col",{style:"width:90px"},[]),el("col",{style:"width:80px"},[]),el("col",{style:"width:130px"},[]),]));
+  const thS2="font-size:11px;font-weight:800;letter-spacing:0.6px;text-transform:uppercase;color:#9ca3af;text-align:left;padding:8px 10px;";
+  tbl.appendChild(el("thead",{},[el("tr",{},[el("th",{style:thS2},[document.createTextNode("#")]),el("th",{style:thS2},[document.createTextNode("Deal / Empresa")]),el("th",{style:thS2},[document.createTextNode("Etapa")]),el("th",{style:thS2},[document.createTextNode("BU")]),el("th",{style:thS2+"text-align:right;"},[document.createTextNode("Valor MXN")])])]));
+  const tb2=el("tbody",{},[]);
+  C.top10.forEach(t=>{
+    tb2.appendChild(el("tr",{},[
+      el("td",{style:"padding:14px 10px;background:oklch(96% 0.012 264);color:#b0b5bd;font-size:12px;font-weight:700;border-radius:12px 0 0 12px;"},[document.createTextNode(String(t.rank))]),
+      el("td",{style:"padding:14px 10px;background:oklch(96% 0.012 264);max-width:0;"},[
+        div("font-weight:700;font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;",[document.createTextNode(t.name)]),
+        t.hasCompany?div("font-size:12.5px;color:#aaa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px;",[document.createTextNode(t.company)]):null,
+      ].filter(Boolean)),
+      el("td",{style:"padding:14px 10px;background:oklch(96% 0.012 264);"}, [span(`display:inline-block;border-radius:99px;padding:3px 10px;font-size:11px;font-weight:800;text-transform:uppercase;white-space:nowrap;background:${t.stagePillBg};color:${t.stagePillText};`,[document.createTextNode(t.stageLbl)])]),
+      el("td",{style:"padding:14px 10px;background:oklch(96% 0.012 264);"}, [span(`display:inline-block;border-radius:99px;padding:3px 10px;font-size:11px;font-weight:800;text-transform:uppercase;white-space:nowrap;background:${t.buPillBg};color:${t.buPillText};`,[document.createTextNode(t.buLbl)])]),
+      el("td",{style:"padding:14px 10px;background:oklch(96% 0.012 264);text-align:right;font-weight:800;font-variant-numeric:tabular-nums;font-size:14.5px;border-radius:0 12px 12px 0;"},[document.createTextNode(t.val)]),
+    ]));
+  });
+  tbl.appendChild(tb2);prioSec.appendChild(tbl);inner.appendChild(prioSec);
+
+  // APPENDIX
+  const appSec=div("","");
+  appSec.id="apendice";
+  appSec.style.cssText="margin-top:24px;background:#fff;border:1px solid #e2e4e8;border-radius:28px;padding:36px 40px;box-shadow:0 1px 2px rgba(20,20,30,0.04);";
+  appSec.appendChild(div("font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:#9ca3af;margin-bottom:28px;",[document.createTextNode("Apéndice")]));
+  const appGrid=div("display:grid;grid-template-columns:1fr 1fr;gap:24px;",[]);
+
+  // BU pie
+  const pie=div("position:absolute;inset:0;border-radius:50%;",[]);
+  pie.style.background=C.buPieGradient;
+  appGrid.appendChild(div("background:oklch(96% 0.012 264);border-radius:20px;padding:24px 26px;",[
+    div("font-size:13px;font-weight:800;color:#0b0b0c;margin-bottom:18px;",[document.createTextNode("Unidades de negocio")]),
+    div("display:flex;align-items:center;gap:28px;",[
+      div("position:relative;width:126px;height:126px;flex-shrink:0;",[
+        pie,
+        div("position:absolute;inset:19px;border-radius:50%;background:oklch(96% 0.012 264);display:flex;flex-direction:column;align-items:center;justify-content:center;",[
+          div("font-size:16px;font-weight:800;letter-spacing:-0.3px;color:#0b0b0c;",[document.createTextNode(C.totalValShort)]),
+          div("font-size:9.5px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:0.3px;margin-top:2px;",[document.createTextNode(C.dealCountLbl)]),
+        ]),
+      ]),
+      div("flex:1;display:flex;flex-direction:column;gap:13px;",C.buLegend.map(b=>div("display:grid;grid-template-columns:12px 1fr auto auto;column-gap:8px;align-items:start;",[
+        span("width:8px;height:8px;border-radius:50%;flex-shrink:0;background:"+b.color+";margin-top:4px;",[]),
+        el("span",{},[span("font-size:13px;font-weight:700;color:#161616;display:block;line-height:1.3;",[document.createTextNode(b.name)]),span("font-size:11px;color:#9ca3af;",[document.createTextNode(b.count)])]),
+        span("font-size:13px;font-weight:800;color:#161616;white-space:nowrap;justify-self:end;",[document.createTextNode(b.value)]),
+        span("font-size:11.5px;font-weight:700;color:#9ca3af;width:30px;text-align:right;",[document.createTextNode(b.pct)]),
+      ]))),
+    ]),
+  ]));
+
+  // Sources
+  appGrid.appendChild(div("background:oklch(96% 0.012 264);border-radius:20px;padding:24px 26px;",[
+    div("font-size:13px;font-weight:800;color:#0b0b0c;margin-bottom:18px;",[document.createTextNode("Fuentes de deals")]),
+    ...C.sourceRows.map(s=>div("display:flex;align-items:center;gap:10px;margin-bottom:11px;",[
+      div("width:100px;flex-shrink:0;font-size:12.5px;font-weight:700;color:#0b0b0c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;",[document.createTextNode(s.name)]),
+      (()=>{const b=div("flex:1;background:#e9eaed;border-radius:99px;height:10px;overflow:hidden;",[]);const f=div("height:10px;border-radius:99px;background:#254EF4;",[]);f.style.width=s.pct+"%";b.appendChild(f);return b;})(),
+      div("width:26px;text-align:right;font-size:12px;font-weight:800;color:#0b0b0c;",[document.createTextNode(String(s.count))]),
+    ])),
+  ]));
+  appSec.appendChild(appGrid);
+
+  // Footer
+  appSec.appendChild(div("margin-top:32px;padding-top:20px;border-top:1px solid #eceef1;display:flex;align-items:center;justify-content:space-between;font-size:11px;color:#9ca3af;font-weight:700;letter-spacing:0.4px;text-transform:uppercase;flex-wrap:wrap;gap:10px;",[
+    div("",[document.createTextNode("dinkbit · Pipeline Analytics")]),
+    div("",[document.createTextNode("Fuente · Attio CRM · "+C.dateStr)]),
+  ]));
+  inner.appendChild(appSec);
+  page.appendChild(inner);root.appendChild(page);
+}
 render();
-document.querySelectorAll('.wow-item').forEach(item=>{
-  item.addEventListener('click',e=>{const drop=item.querySelector('.wow-drop');const wasOpen=drop.classList.contains('open');document.querySelectorAll('.wow-drop').forEach(d=>d.classList.remove('open'));if(!wasOpen)drop.classList.add('open');e.stopPropagation();});
-});
-document.addEventListener('click',()=>{document.querySelectorAll('.wow-drop').forEach(d=>d.classList.remove('open'));});
 </script>
 </body>
 </html>
