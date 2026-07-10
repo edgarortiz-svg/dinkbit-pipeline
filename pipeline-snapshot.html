@@ -1,1 +1,215 @@
-PLACEHOLDER
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dinkbit Pipeline Report</title>
+<style>
+  :root{
+    --bg:#0b0f14; --panel:#121821; --panel2:#161d28; --border:#232b38;
+    --text:#e8edf5; --muted:#8a94a6; --accent:#5b8cff; --accent2:#7c5cff;
+    --won:#2ecc71; --lost:#ff5c5c; --hold:#f5a623; --progress:#5b8cff; --due:#c084fc; --proposal:#4dd0e1;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:radial-gradient(1200px 600px at 10% -10%, #14202f 0%, var(--bg) 60%);color:var(--text);}
+  .wrap{max-width:1180px;margin:0 auto;padding:40px 24px 80px;}
+  header{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-bottom:32px;border-bottom:1px solid var(--border);padding-bottom:24px;}
+  h1{font-size:28px;margin:0 0 6px;letter-spacing:-0.02em;background:linear-gradient(90deg,#fff,#9fb4ff);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .subtitle{color:var(--muted);font-size:14px;}
+  .updated{font-size:13px;color:var(--muted);background:var(--panel);border:1px solid var(--border);padding:8px 14px;border-radius:8px;}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin-bottom:36px;}
+  .card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--border);border-radius:14px;padding:18px 20px;}
+  .card .label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;}
+  .card .value{font-size:24px;font-weight:600;}
+  .card .sub{color:var(--muted);font-size:12px;margin-top:4px;}
+  section{margin-bottom:40px;}
+  h2{font-size:16px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 16px;border-left:3px solid var(--accent);padding-left:10px;}
+  .stage-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:36px;}
+  .stage-pill{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px 16px;}
+  .stage-pill .n{font-size:20px;font-weight:700;}
+  .stage-pill .s{font-size:12px;color:var(--muted);margin-top:2px;}
+  .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;}
+  table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+  thead th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding:12px 16px;border-bottom:1px solid var(--border);background:var(--panel2);}
+  tbody td{padding:12px 16px;border-bottom:1px solid var(--border);font-size:13.5px;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:hover{background:rgba(255,255,255,0.02);}
+  .val{font-variant-numeric:tabular-nums;text-align:right;}
+  .badge{display:inline-flex;align-items:center;font-size:11.5px;padding:4px 10px;border-radius:999px;border:1px solid var(--border);white-space:nowrap;}
+  .b-won{color:var(--won);border-color:rgba(46,204,113,.35);background:rgba(46,204,113,.08);}
+  .b-lost{color:var(--lost);border-color:rgba(255,92,92,.35);background:rgba(255,92,92,.08);}
+  .b-hold{color:var(--hold);border-color:rgba(245,166,35,.35);background:rgba(245,166,35,.08);}
+  .b-progress{color:var(--progress);border-color:rgba(91,140,255,.35);background:rgba(91,140,255,.08);}
+  .b-due{color:var(--due);border-color:rgba(192,132,252,.35);background:rgba(192,132,252,.08);}
+  .b-proposal{color:var(--proposal);border-color:rgba(77,208,225,.35);background:rgba(77,208,225,.08);}
+  .name{font-weight:500;}
+  .muted{color:var(--muted);}
+  .changes{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:18px 20px;}
+  .changes ul{margin:0;padding-left:18px;color:var(--text);font-size:13.5px;line-height:1.8;}
+  .changes li span.tag{color:var(--accent);font-weight:600;}
+  footer{color:var(--muted);font-size:12px;text-align:center;margin-top:48px;padding-top:20px;border-top:1px solid var(--border);}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  @media (max-width:800px){.two-col{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Dinkbit Pipeline Report</h1>
+      <div class="subtitle">Resumen del pipeline de ventas — Attio CRM</div>
+    </div>
+    <div class="updated">Última actualización: 10 de julio de 2026, 00:00 UTC</div>
+  </header>
+
+  <div class="cards">
+    <div class="card">
+      <div class="label">Deals activos</div>
+      <div class="value">85</div>
+      <div class="sub">+5 vs. actualización anterior</div>
+    </div>
+    <div class="card">
+      <div class="label">Valor total del pipeline</div>
+      <div class="value">MX$8,144,645</div>
+      <div class="sub">Suma de todos los deals activos</div>
+    </div>
+    <div class="card">
+      <div class="label">Pipeline abierto (excl. Won/Lost)</div>
+      <div class="value">MX$5,004,440</div>
+      <div class="sub">Proposal + In Progress + Due Diligence + On Hold</div>
+    </div>
+    <div class="card">
+      <div class="label">Tasa de cierre (Won vs. Won+Lost)</div>
+      <div class="value">67.7%</div>
+      <div class="sub">21 ganados / 10 perdidos</div>
+    </div>
+  </div>
+
+  <section>
+    <h2>Deals por etapa</h2>
+    <div class="stage-grid">
+      <div class="stage-pill"><div class="n"><span class="dot" style="background:var(--proposal)"></span>10</div><div class="s">2. Proposal</div></div>
+      <div class="stage-pill"><div class="n"><span class="dot" style="background:var(--progress)"></span>16</div><div class="s">3. In Progress</div></div>
+      <div class="stage-pill"><div class="n"><span class="dot" style="background:var(--due)"></span>6</div><div class="s">4. Due Diligence</div></div>
+      <div class="stage-pill"><div class="n"><span class="dot" style="background:var(--won)"></span>21</div><div class="s">5. Won</div></div>
+      <div class="stage-pill"><div class="n"><span class="dot" style="background:var(--lost)"></span>10</div><div class="s">6. Lost</div></div>
+      <div class="stage-pill"><div class="n"><span class="dot" style="background:var(--hold)"></span>22</div><div class="s">7. On Hold</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Cambios detectados desde la última actualización</h2>
+    <div class="changes">
+      <ul>
+        <li><span class="tag">Nuevos deals (6):</span> Desarrollo de App con Catálogo Infinito, Desarrollo de Sitio Web / eCommerce, App de Matchmaking para Doctores, Desarrollo de Tienda en Línea | SkinCore, Migración de Tienda en Línea (×2), Migración de Tienda en Línea a Shopify.</li>
+        <li><span class="tag">Cambios de etapa:</span> "Estrategia Digital para eCommerce" pasó de In Progress a Due Diligence (valor ajustado de MX$464,032 a MX$211,410); "Estrategia Digital | Fase Zero" pasó de Proposal a Lost; "Desarrollo de Tienda en Línea" (Bradescard-linked) pasó de In Progress a Lost; "Capacitación de Google Workspace" pasó de In Progress a Due Diligence; "App de Matchmaking para Doctores" pasó de Proposal a In Progress.</li>
+        <li><span class="tag">Deal removido del pipeline activo:</span> "[Estrategia Digital MX] Isai Asriel Ramos Hinojosa" (antes en etapa Lead) ya no aparece como activo.</li>
+        <li><span class="tag">Total de deals activos:</span> 80 → 85 (+5).</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Deals activos — Pipeline abierto</h2>
+    <table>
+      <thead>
+        <tr><th>Deal</th><th>Etapa</th><th class="val">Valor (MXN)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Desarrollo de Plataforma para Gestión de Proyectos</td><td><span class="badge b-hold">7. On Hold</span></td><td class="val">522,375</td></tr>
+        <tr><td class="name">Desarrollo Flexible - Grupo Atención</td><td><span class="badge b-hold">7. On Hold</span></td><td class="val">405,000</td></tr>
+        <tr><td class="name">Estrategia Digital Integral</td><td><span class="badge b-progress">3. In Progress</span></td><td class="val">424,100</td></tr>
+        <tr><td class="name">Sitio Web - Bradescard</td><td><span class="badge b-progress">3. In Progress</span></td><td class="val">288,400</td></tr>
+        <tr><td class="name">Estrategia digital para nuevo eCommerce de B Hermanos</td><td><span class="badge b-progress">3. In Progress</span></td><td class="val">273,500</td></tr>
+        <tr><td class="name">Plataforma - My Oppo</td><td><span class="badge b-hold">7. On Hold</span></td><td class="val">225,000</td></tr>
+        <tr><td class="name">Nuevo Sitio Web</td><td><span class="badge b-hold">7. On Hold</span></td><td class="val">224,000</td></tr>
+        <tr><td class="name">Desarrollo de Sitio Web (Bradescard/Cliente)</td><td><span class="badge b-progress">3. In Progress</span></td><td class="val">231,250</td></tr>
+        <tr><td class="name">Estrategia Digital para eCommerce</td><td><span class="badge b-due">4. Due Diligence</span></td><td class="val">211,410</td></tr>
+        <tr><td class="name">Estrategia Digital - Gimbel Mexicana</td><td><span class="badge b-hold">7. On Hold</span></td><td class="val">186,000</td></tr>
+        <tr><td class="name">Estrategia Digital</td><td><span class="badge b-progress">3. In Progress</span></td><td class="val">182,400</td></tr>
+        <tr><td class="name">Estrategia Digital</td><td><span class="badge b-hold">7. On Hold</span></td><td class="val">179,000</td></tr>
+        <tr><td class="name">Desarrollo de Tienda en Línea</td><td><span class="badge b-progress">3. In Progress</span></td><td class="val">177,500</td></tr>
+        <tr><td class="name">Desarrollo de Plataforma sobre Shopify</td><td><span class="badge b-due">4. Due Diligence</span></td><td class="val">173,250</td></tr>
+        <tr><td class="name">Desarrollo de Nuevo Sitio Web y Tienda en Línea</td><td><span class="badge b-progress">3. In Progress</span></td><td class="val">172,500</td></tr>
+        <tr><td class="name">Estrategia Digital - Park Plaza</td><td><span class="badge b-hold">7. On Hold</span></td><td class="val">162,000</td></tr>
+        <tr><td class="name">Diseño y Desarrollo de Sitio Web</td><td><span class="badge b-due">4. Due Diligence</span></td><td class="val">147,000</td></tr>
+        <tr><td class="name">Estrategia Digital para captación de Leads</td><td><span class="badge b-due">4. Due Diligence</span></td><td class="val">129,000</td></tr>
+        <tr><td class="name">Sitio Web - JUMAN Construction</td><td><span class="badge b-hold">7. On Hold</span></td><td class="val">81,900</td></tr>
+        <tr><td class="name">Rediseño de Sitio Web</td><td><span class="badge b-progress">3. In Progress</span></td><td class="val">68,500</td></tr>
+        <tr><td class="name">Shopify - Daniel Ovadía</td><td><span class="badge b-hold">7. On Hold</span></td><td class="val">65,000</td></tr>
+        <tr><td class="name">Sitio Web - Peltre</td><td><span class="badge b-hold">7. On Hold</span></td><td class="val">49,500</td></tr>
+        <tr><td class="name">Sitio Web - Rozen</td><td><span class="badge b-hold">7. On Hold</span></td><td class="val">49,500</td></tr>
+        <tr><td class="name">Desarrollo de Sitio Web + Contenido</td><td><span class="badge b-due">4. Due Diligence</span></td><td class="val">52,500</td></tr>
+        <tr><td class="name">Estrategia Digital - Centro Mexicano de Fertilidad</td><td><span class="badge b-hold">7. On Hold</span></td><td class="val">45,000</td></tr>
+        <tr><td class="name">Desarrollo de Landing Page</td><td><span class="badge b-hold">7. On Hold</span></td><td class="val">32,500</td></tr>
+        <tr><td class="name">App móvil - App Envía Ya</td><td><span class="badge b-hold">7. On Hold</span></td><td class="val">35,280</td></tr>
+        <tr><td class="name">Tienda en Línea - Plan Shopify Basic</td><td><span class="badge b-progress">3. In Progress</span></td><td class="val">38,900</td></tr>
+        <tr><td class="name">Rebranding y Logotipo de Aniversario</td><td><span class="badge b-hold">7. On Hold</span></td><td class="val">28,500</td></tr>
+        <tr><td class="name">Desarrollo de Plataforma Operativa</td><td><span class="badge b-hold">7. On Hold</span></td><td class="val">24,850</td></tr>
+        <tr><td class="name">Desarrollo de Plataforma para Venta de Autos</td><td><span class="badge b-hold">7. On Hold</span></td><td class="val">20,000</td></tr>
+        <tr><td class="name">Capacitación de Google Workspace</td><td><span class="badge b-due">4. Due Diligence</span></td><td class="val">19,700</td></tr>
+        <tr><td class="name">Plataforma de Financiamiento de Motocicletas</td><td><span class="badge b-hold">7. On Hold</span></td><td class="val">14,850</td></tr>
+        <tr><td class="name">Diseño de Sitio Web | A.I.</td><td><span class="badge b-proposal">2. Proposal</span></td><td class="val">15,000</td></tr>
+        <tr><td class="name">Otros deals en Proposal / In Progress (sin valor asignado, 15 deals)</td><td><span class="muted">Varios</span></td><td class="val muted">0</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <div class="two-col">
+      <div>
+        <h2>Deals ganados recientes (21 en total)</h2>
+        <table>
+          <thead><tr><th>Deal</th><th class="val">Valor</th></tr></thead>
+          <tbody>
+            <tr><td class="name">Desarrollo de Tienda en Línea para México y Costa Rica</td><td class="val">297,185</td></tr>
+            <tr><td class="name">Rediseño de Tienda en Línea</td><td class="val">130,125</td></tr>
+            <tr><td class="name">Estrategia Digital para Descargas y Transacciones</td><td class="val">138,250</td></tr>
+            <tr><td class="name">Estrategia Digital para eCommerce</td><td class="val">136,000</td></tr>
+            <tr><td class="name">Estrategia Digital en Google Ads</td><td class="val">122,100</td></tr>
+            <tr><td class="name">Distribuidoras | B Hermanos</td><td class="val">117,200</td></tr>
+            <tr><td class="name">Reconstrucción de Tienda en Línea</td><td class="val">112,995</td></tr>
+            <tr><td class="name">Desarrollo de Tienda en Línea</td><td class="val">99,500</td></tr>
+            <tr><td class="name">Diseño y Desarrollo de Sitio Web</td><td class="val">78,500</td></tr>
+            <tr><td class="name">Rediseño de Sitio Web</td><td class="val">74,500</td></tr>
+            <tr><td class="name">Rediseño y Desarrollo de Nuevo Sitio Web</td><td class="val">69,500</td></tr>
+            <tr><td class="name">DANNA | Creación de Tienda en Línea</td><td class="val">52,500</td></tr>
+            <tr><td class="name">Desarrollo de Nuevo Sitio Web</td><td class="val">50,000</td></tr>
+            <tr><td class="name">Desarrollo de Tienda en Línea</td><td class="val">45,000</td></tr>
+            <tr><td class="name">DANNA | Sitio Web para Lanzamiento de EP</td><td class="val">43,250</td></tr>
+            <tr><td class="name">Desarrollo de Nuevo Sitio Web</td><td class="val">42,750</td></tr>
+            <tr><td class="name">Desarrollo de Nuevo Sitio Web</td><td class="val">36,500</td></tr>
+            <tr><td class="name">Naming y Branding de Nueva Empresa</td><td class="val">21,500</td></tr>
+            <tr><td class="name">Consultoría para Desarrollo de Plataforma Financiera</td><td class="val">20,300</td></tr>
+            <tr><td class="name">Estrategia de Paid Media para Bailey International</td><td class="val">5,100</td></tr>
+            <tr><td class="name">Hoyer | Sitio Web + Tienda en Línea</td><td class="val">5,400</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h2>Deals perdidos recientes (10 en total)</h2>
+        <table>
+          <thead><tr><th>Deal</th><th class="val">Valor</th></tr></thead>
+          <tbody>
+            <tr><td class="name">Licitación para Estrategia Digital 2026</td><td class="val">600,000</td></tr>
+            <tr><td class="name">Migración a Shopify y Desarrollo de Tienda en Línea</td><td class="val">147,800</td></tr>
+            <tr><td class="name">Estrategia de Captación de Leads</td><td class="val">144,000</td></tr>
+            <tr><td class="name">Estrategia de Paid Media para eCommerce</td><td class="val">137,000</td></tr>
+            <tr><td class="name">Desarrollo de Tienda en Línea</td><td class="val">127,500</td></tr>
+            <tr><td class="name">Desarrollo de Tienda en Línea</td><td class="val">121,500</td></tr>
+            <tr><td class="name">Estrategia de Contenidos Rumbo al Mundial 2026</td><td class="val">96,000</td></tr>
+            <tr><td class="name">Estrategia Digital | Mundial 2026</td><td class="val">68,250</td></tr>
+            <tr><td class="name">Estrategia Digital | Fase Zero</td><td class="val">0</td></tr>
+            <tr><td class="name">Licitación de Marcas</td><td class="val">0</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Generado automáticamente para Dinkbit &middot; Fuente: Attio CRM &middot; Última actualización: 2026-07-10T00:00:00Z
+  </footer>
+</div>
+</body>
+</html>
